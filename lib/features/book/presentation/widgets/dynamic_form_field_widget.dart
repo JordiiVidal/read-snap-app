@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomFormField extends StatelessWidget {
+class DynamicFormField extends StatelessWidget {
   final String label;
   final bool required;
   final String hintText;
@@ -8,7 +8,7 @@ class CustomFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
 
-  const CustomFormField({
+  const DynamicFormField({
     required this.label,
     required this.hintText,
     this.required = false,
