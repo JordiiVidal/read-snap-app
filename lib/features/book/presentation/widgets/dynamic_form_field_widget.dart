@@ -50,7 +50,6 @@ class DynamicFormField extends StatelessWidget {
             return null;
           },
         ),
-        const SizedBox(height: 20),
       ],
     );
   }

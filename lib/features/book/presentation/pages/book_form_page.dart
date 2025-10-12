@@ -56,17 +56,19 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
             'Add a book to your reading tracker. Fill in the details below.',
             style: TextStyle(color: Colors.grey, fontSize: 16),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           DynamicFormField(
             label: 'Title',
             hintText: 'Enter book title',
             onChanged: notifier.updateName,
           ),
+          const SizedBox(height: 20),
           DynamicFormField(
             label: 'Author',
             hintText: 'Enter author name',
             onChanged: notifier.updateAuthor,
           ),
+          const SizedBox(height: 20),
           DynamicFormField(
             label: 'Total Pages',
             hintText: 'Enter total pages',
@@ -76,6 +78,7 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
               notifier.updateTotalPages(pages);
             },
           ),
+          const SizedBox(height: 20),
           const Text(
             'Status',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -117,6 +120,7 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
                 },
               ),
             ),
+          const SizedBox(height: 20),
           ColorSelectorWidget(
             selectedColor: bookState.color,
             onColorSelected: notifier.updateColor,
