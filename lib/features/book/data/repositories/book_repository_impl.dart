@@ -45,4 +45,17 @@ class BookRepositoryImpl implements BookRepository {
   Future<void> deleteBook(String id) async {
     await _db.delete(tableBooks, where: '${BookModel.id} = ?', whereArgs: [id]);
   }
+
+  @override
+  Future<BookEntity> getBookById(String id) async {
+    final List<Map<String, dynamic>> maps = await _db.query(
+      tableBooks,
+      where: '${BookModel.id} = ?',
+      whereArgs: [id],
+    );
+    if (maps.isEmpty) {
+      throw ArgumentError('Book not found');
+    }
+    return _bookModel.fromMap(maps.first);
+  }
 }

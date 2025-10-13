@@ -8,4 +8,6 @@ abstract class BookRepository {
   Future<void> updateBook(BookEntity book);
 
   Future<void> deleteBook(String id);
+
+  Future<BookEntity> getBookById(String id);
 }

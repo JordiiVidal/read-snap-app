@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
-import 'package:read_snap/features/book/presentation/pages/book_form_page.dart';
-import 'package:read_snap/features/book/presentation/pages/book_page.dart';
-import 'package:read_snap/features/book/presentation/widgets/book_card.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookListPage extends ConsumerWidget {
   const BookListPage({super.key});
@@ -42,7 +39,7 @@ class BookListPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final book = books[index];
               return InkWell(
-                onTap: () => _navigateToDetails(context),
+                onTap: () => _navigateToDetails(context, book.id),
                 child: BookCard(book),
               );
             },
@@ -58,9 +55,9 @@ class BookListPage extends ConsumerWidget {
     ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
   }
 
-  void _navigateToDetails(BuildContext context) {
+  void _navigateToDetails(BuildContext context, String bookId) {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (context) => const BookPage()));
+    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
   }
 }
