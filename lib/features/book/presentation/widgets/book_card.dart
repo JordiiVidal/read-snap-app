@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
-class BookCardWidget extends StatelessWidget {
+class BookCard extends StatelessWidget {
   final BookEntity book;
-  const BookCardWidget({required this.book, super.key});
+
+  const BookCard(this.book, {super.key});
 
   double get progressPercentage {
     if (book.totalPages == 0 || book.currentPage == null) return 0.0;

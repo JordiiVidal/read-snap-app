@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorSelectorWidget extends StatelessWidget {
+class FormColorSelector extends StatelessWidget {
   final List<String> availableColors = const [
     '#673AB7',
     '#9C27B0',
@@ -14,7 +14,7 @@ class ColorSelectorWidget extends StatelessWidget {
   final String selectedColor;
   final ValueChanged<String> onColorSelected;
 
-  const ColorSelectorWidget({
+  const FormColorSelector({
     required this.selectedColor,
     required this.onColorSelected,
     super.key,
@@ -54,7 +54,6 @@ class ColorSelectorWidget extends StatelessWidget {
             );
           }).toList(),
         ),
-        const SizedBox(height: 20),
       ],
     );
   }

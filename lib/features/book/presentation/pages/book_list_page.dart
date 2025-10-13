@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
 import 'package:read_snap/features/book/presentation/pages/book_form_page.dart';
 import 'package:read_snap/features/book/presentation/pages/book_page.dart';
-import 'package:read_snap/features/book/presentation/widgets/book_card_widget.dart';
-import 'package:read_snap/features/book/presentation/widgets/empty_state_widget.dart';
+import 'package:read_snap/features/book/presentation/widgets/book_card.dart';
 
 class BookListPage extends ConsumerWidget {
   const BookListPage({super.key});
-
-  void _navigateToCreate(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
-  }
-
-  void _navigateToDetails(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const BookPage()));
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,6 +31,9 @@ class BookListPage extends ConsumerWidget {
         data: (books) {
           if (books.isEmpty) {
             return EmptyStateWidget(
+              title: 'No books yet',
+              message: 'Start tracking your reading by adding your first book',
+              buttonText: 'Add Book',
               onPressed: () => _navigateToCreate(context),
             );
           }
@@ -52,12 +43,24 @@ class BookListPage extends ConsumerWidget {
               final book = books[index];
               return InkWell(
                 onTap: () => _navigateToDetails(context),
-                child: BookCardWidget(book: book),
+                child: BookCard(book),
               );
             },
           );
         },
       ),
     );
+  }
+
+  void _navigateToCreate(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
+  }
+
+  void _navigateToDetails(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const BookPage()));
   }
 }
