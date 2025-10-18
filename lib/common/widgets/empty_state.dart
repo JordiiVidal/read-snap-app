@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EmptyStateWidget extends StatelessWidget {
+class EmptyState extends StatelessWidget {
   final String title;
   final String message;
   final IconData? icon;
   final String? buttonText;
   final VoidCallback? onPressed;
 
-  const EmptyStateWidget({
+  const EmptyState({
     super.key,
     required this.title,
     required this.message,

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookDetailNotifier extends StateNotifier<AsyncValue<BookEntity>> {
   final GetBookByIdUseCase _getBookByIdUseCase;

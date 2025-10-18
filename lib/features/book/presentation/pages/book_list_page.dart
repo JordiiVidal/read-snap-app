@@ -27,11 +27,14 @@ class BookListPage extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('An error occurred: $err')),
         data: (books) {
           if (books.isEmpty) {
-            return EmptyStateWidget(
-              title: 'No books yet',
-              message: 'Start tracking your reading by adding your first book',
-              buttonText: 'Add Book',
-              onPressed: () => _navigateToCreate(context),
+            return Center(
+              child: EmptyState(
+                title: 'No books yet',
+                message:
+                    'Start tracking your reading by adding your first book',
+                buttonText: 'Add Book',
+                onPressed: () => _navigateToCreate(context),
+              ),
             );
           }
           return ListView.builder(
