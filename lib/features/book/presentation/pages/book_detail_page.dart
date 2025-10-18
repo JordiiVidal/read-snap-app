@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/presentation/notifiers/book_detail_notifier.dart';
-import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
-import 'package:read_snap/features/book/presentation/widgets/book_header.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class BookDetailPage extends ConsumerWidget {
   final String bookId;
@@ -16,7 +15,13 @@ class BookDetailPage extends ConsumerWidget {
     final bookAsync = ref.watch(bookDetailNotifierProvider(bookId));
     final notifier = ref.read(bookDetailNotifierProvider(bookId).notifier);
 
-    Future<void> confirmDelete(BuildContext context) async {
+    void navigateToCreateSession() {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (ctx) => SessionFormPage(bookId)));
+    }
+
+    Future<void> confirmDelete() async {
       final bool? confirm = await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -63,7 +68,7 @@ class BookDetailPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BookHeader(book: book),
-              actions(confirmDelete, context),
+              actions(confirmDelete, navigateToCreateSession),
               cards(book),
             ],
           ),
@@ -118,8 +123,8 @@ class BookDetailPage extends ConsumerWidget {
   }
 
   Widget actions(
-    Future<void> Function(BuildContext context) confirmDelete,
-    BuildContext context,
+    Future<void> Function() confirmDelete,
+    void Function() navigateToCreateSession,
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,13 +132,13 @@ class BookDetailPage extends ConsumerWidget {
         ActionButton(
           icon: Icons.access_time,
           label: 'Record Session',
-          onPressed: () {},
+          onPressed: () => navigateToCreateSession(),
         ),
         ActionButton(
           icon: Icons.delete_outline,
           label: 'Delete Book',
           color: Colors.red,
-          onPressed: () => confirmDelete(context),
+          onPressed: () => confirmDelete(),
         ),
       ],
     );

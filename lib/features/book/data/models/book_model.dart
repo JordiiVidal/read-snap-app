@@ -1,9 +1,8 @@
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
 
-const String tableBooks = 'books';
-const BookStatus defaultStatus = BookStatus.toRead;
-
 class BookModel {
+  static const String table = 'books';
+  static const BookStatus defaultStatus = BookStatus.toRead;
   // Columns
   static const String id = 'id';
   static const String name = 'name';

@@ -12,7 +12,7 @@ class BookRepositoryImpl implements BookRepository {
 
   @override
   Future<List<BookEntity>> getBooks() async {
-    final List<Map<String, dynamic>> maps = await _db.query(tableBooks);
+    final List<Map<String, dynamic>> maps = await _db.query(BookModel.table);
     return List.generate(maps.length, (i) => _bookModel.fromMap(maps[i]));
   }
 
@@ -24,7 +24,7 @@ class BookRepositoryImpl implements BookRepository {
       updatedAt: DateTime.now(),
     );
     await _db.insert(
-      tableBooks,
+      BookModel.table,
       _bookModel.toMap(bookToCreate),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -34,7 +34,7 @@ class BookRepositoryImpl implements BookRepository {
   Future<void> updateBook(BookEntity book) async {
     final bookToUpdate = book.copyWith(updatedAt: DateTime.now());
     await _db.update(
-      tableBooks,
+      BookModel.table,
       _bookModel.toMap(bookToUpdate),
       where: '${BookModel.id} = ?',
       whereArgs: [bookToUpdate.id],
@@ -43,13 +43,17 @@ class BookRepositoryImpl implements BookRepository {
 
   @override
   Future<void> deleteBook(String id) async {
-    await _db.delete(tableBooks, where: '${BookModel.id} = ?', whereArgs: [id]);
+    await _db.delete(
+      BookModel.table,
+      where: '${BookModel.id} = ?',
+      whereArgs: [id],
+    );
   }
 
   @override
   Future<BookEntity> getBookById(String id) async {
     final List<Map<String, dynamic>> maps = await _db.query(
-      tableBooks,
+      BookModel.table,
       where: '${BookModel.id} = ?',
       whereArgs: [id],
     );

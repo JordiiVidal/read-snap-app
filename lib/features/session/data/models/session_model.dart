@@ -1,8 +1,7 @@
 import 'package:read_snap/features/session/dominio/domain.dart';
 
-const String tableSessions = 'sessions';
-
 class SessionModel {
+  static const String table = 'sessions';
   // Columns
   static const String id = 'id';
   static const String bookId = 'book_id';

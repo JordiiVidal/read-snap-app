@@ -11,7 +11,7 @@ class SessionRepositoryImpl implements SessionRepository {
 
   @override
   Future<List<SessionEntity>> getSessions() async {
-    final List<Map<String, dynamic>> maps = await _db.query(tableSessions);
+    final List<Map<String, dynamic>> maps = await _db.query(SessionModel.table);
     return List.generate(maps.length, (i) => _sessionModel.fromMap(maps[i]));
   }
 
@@ -23,7 +23,7 @@ class SessionRepositoryImpl implements SessionRepository {
       updatedAt: DateTime.now(),
     );
     await _db.insert(
-      tableSessions,
+      SessionModel.table,
       _sessionModel.toMap(sessionToCreate),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -33,7 +33,7 @@ class SessionRepositoryImpl implements SessionRepository {
   Future<void> updateSession(SessionEntity session) async {
     final sessionToUpdate = session.copyWith(updatedAt: DateTime.now());
     await _db.update(
-      tableSessions,
+      SessionModel.table,
       _sessionModel.toMap(sessionToUpdate),
       where: '${SessionModel.id} = ?',
       whereArgs: [sessionToUpdate.id],
@@ -42,6 +42,10 @@ class SessionRepositoryImpl implements SessionRepository {
 
   @override
   Future<void> deleteSession(String id) async {
-    await _db.delete(tableSessions, where: '${SessionModel.id} = ?', whereArgs: [id]);
+    await _db.delete(
+      SessionModel.table,
+      where: '${SessionModel.id} = ?',
+      whereArgs: [id],
+    );
   }
 }

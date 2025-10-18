@@ -10,6 +10,8 @@ abstract class SessionEntity with _$SessionEntity {
     required String bookId,
     required int pagesRead,
     int? minutesRead,
+    int? startPage,
+    int? endPage,
     required DateTime startedAt,
     DateTime? endedAt,
     required DateTime createdAt,
