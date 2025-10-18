@@ -4,3 +4,4 @@ export 'entities/session_entity.dart';
 export 'repositories/session_repository.dart';
 // Use cases
 export 'use_cases/save_session_use_case.dart';
+export 'use_cases/get_sessions_use_case.dart';

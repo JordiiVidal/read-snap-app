@@ -10,6 +10,18 @@ class BookListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookListState = ref.watch(bookListNotifierProvider);
 
+    void navigateToCreate() {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
+    }
+
+    void navigateToDetails(String bookId) {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('ReadSnap'),
@@ -18,7 +30,7 @@ class BookListPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Add Book',
-            onPressed: () => _navigateToCreate(context),
+            onPressed: navigateToCreate,
           ),
         ],
       ),
@@ -33,7 +45,7 @@ class BookListPage extends ConsumerWidget {
                 message:
                     'Start tracking your reading by adding your first book',
                 buttonText: 'Add Book',
-                onPressed: () => _navigateToCreate(context),
+                onPressed: navigateToCreate,
               ),
             );
           }
@@ -42,7 +54,7 @@ class BookListPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final book = books[index];
               return InkWell(
-                onTap: () => _navigateToDetails(context, book.id),
+                onTap: () => navigateToDetails(book.id),
                 child: BookCard(book),
               );
             },
@@ -50,17 +62,5 @@ class BookListPage extends ConsumerWidget {
         },
       ),
     );
-  }
-
-  void _navigateToCreate(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
-  }
-
-  void _navigateToDetails(BuildContext context, String bookId) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
   }
 }

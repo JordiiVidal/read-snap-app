@@ -13,6 +13,7 @@ class BookHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          //Image
           Container(
             width: 50,
             height: 50,
@@ -31,6 +32,8 @@ class BookHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
+
+          //Title and Author
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

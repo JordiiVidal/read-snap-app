@@ -7,7 +7,6 @@ import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class BookDetailPage extends ConsumerWidget {
   final String bookId;
-
   const BookDetailPage(this.bookId, {super.key});
 
   @override

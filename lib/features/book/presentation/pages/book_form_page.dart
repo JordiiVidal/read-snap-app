@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookFormPage extends ConsumerStatefulWidget {
@@ -11,6 +12,30 @@ class BookFormPage extends ConsumerStatefulWidget {
 
 class _BookFormPageState extends ConsumerState<BookFormPage> {
   final _formKey = GlobalKey<FormState>();
+
+  void handleSubmit(
+    BookFormNotifier notifier,
+    NavigatorState navigator,
+    ScaffoldMessengerState scaffoldMessenger,
+  ) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await notifier.saveBook();
+        await ref.read(bookListNotifierProvider.notifier).refreshBooks();
+        if (!mounted) return;
+        navigator.pop();
+      } catch (e) {
+        if (!mounted) return;
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error: ${e is ArgumentError ? e.message : 'Could not save book'}',
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +60,9 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
               top: false,
               child: SizedBox(
                 width: double.infinity,
-                child: BookFormSubmit(
+                child: FormSubmit(
                   'Add Book',
-                  () => _handleSubmit(notifier, navigator, scaffoldMessenger),
+                  () => handleSubmit(notifier, navigator, scaffoldMessenger),
                 ),
               ),
             ),
@@ -45,29 +70,5 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
         ),
       ),
     );
-  }
-
-  void _handleSubmit(
-    BookFormNotifier notifier,
-    NavigatorState navigator,
-    ScaffoldMessengerState scaffoldMessenger,
-  ) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await notifier.saveBook();
-        await ref.read(bookListNotifierProvider.notifier).refreshBooks();
-        if (!mounted) return;
-        navigator.pop();
-      } catch (e) {
-        if (!mounted) return;
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(
-              'Error: ${e is ArgumentError ? e.message : 'Could not save book'}',
-            ),
-          ),
-        );
-      }
-    }
   }
 }

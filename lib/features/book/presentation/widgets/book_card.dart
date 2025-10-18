@@ -22,6 +22,7 @@ class BookCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Image, Title and Author
             Row(
               children: [
                 Container(
@@ -64,6 +65,8 @@ class BookCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
+
+            // Progress
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -77,6 +80,8 @@ class BookCard extends StatelessWidget {
               backgroundColor: accentColor.withValues(alpha: 0.2),
             ),
             const SizedBox(height: 8),
+
+            // Status and Progress Percentage
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BookFormSubmit extends StatelessWidget {
+class FormSubmit extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  const BookFormSubmit(this.label, this.onPressed, {super.key});
+  const FormSubmit(this.label, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {

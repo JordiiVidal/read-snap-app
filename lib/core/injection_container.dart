@@ -53,3 +53,6 @@ final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
 final saveSessionUseCaseProvider = Provider<SaveSessionUseCase>((ref) {
   return SaveSessionUseCase(ref.watch(sessionRepositoryProvider));
 });
+final getSessionsUseCaseProvider = Provider<GetSessionsUseCase>((ref) {
+  return GetSessionsUseCase(ref.watch(sessionRepositoryProvider));
+});
