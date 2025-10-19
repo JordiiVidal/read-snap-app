@@ -5,9 +5,7 @@ abstract class SessionRepository {
 
   Future<List<SessionEntity>> getSessionsByBook(String bookId);
 
-  Future<void> addSession(SessionEntity session);
-
-  Future<void> updateSession(SessionEntity session);
+  Future<void> saveSession(SessionEntity session);
 
   Future<void> deleteSession(String id);
 }

@@ -8,12 +8,11 @@ abstract class SessionEntity with _$SessionEntity {
   const factory SessionEntity({
     required String id,
     required String bookId,
-    required int pagesRead,
-    int? minutesRead,
-    int? startPage,
-    int? endPage,
-    required DateTime startedAt,
-    DateTime? endedAt,
+    required int startPage,
+    required int endPage,
+    required int minutesRead,
+    int? pagesRead,
+    required DateTime sessionDate,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _SessionEntity;

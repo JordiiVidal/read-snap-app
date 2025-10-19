@@ -12,7 +12,8 @@ Future<void> createBookTable(Database db) async {
         ${BookModel.status} TEXT NOT NULL,
         ${BookModel.color} TEXT NOT NULL,
         ${BookModel.createdAt} INTEGER NOT NULL,
-        ${BookModel.updatedAt} INTEGER NOT NULL
+        ${BookModel.updatedAt} INTEGER NOT NULL,
+        ${BookModel.finishedAt} INTEGER
       )
   ''');
 }

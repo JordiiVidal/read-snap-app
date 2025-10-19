@@ -7,8 +7,8 @@ class BookCard extends StatelessWidget {
   const BookCard(this.book, {super.key});
 
   double get progressPercentage {
-    if (book.totalPages == 0 || book.currentPage == null) return 0.0;
-    return (book.currentPage! / book.totalPages).clamp(0.0, 1.0);
+    if (book.totalPages == 0) return 0.0;
+    return (book.currentPage / book.totalPages).clamp(0.0, 1.0);
   }
 
   @override
@@ -71,7 +71,7 @@ class BookCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Progress', style: TextStyle(color: Colors.grey)),
-                Text('${book.currentPage ?? 0}/${book.totalPages}'),
+                Text('${book.currentPage}/${book.totalPages}'),
               ],
             ),
             LinearProgressIndicator(

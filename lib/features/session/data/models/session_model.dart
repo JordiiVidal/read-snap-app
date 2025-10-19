@@ -5,10 +5,11 @@ class SessionModel {
   // Columns
   static const String id = 'id';
   static const String bookId = 'book_id';
+  static const String startPage = 'start_page';
+  static const String endPage = 'end_page';
   static const String pagesRead = 'pages_read';
   static const String minutesRead = 'minutes_read';
-  static const String startedAt = 'started_at';
-  static const String endedAt = 'ended_at';
+  static const String sessionDate = 'session_date';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
 
@@ -16,10 +17,11 @@ class SessionModel {
     return {
       id: entity.id,
       bookId: entity.bookId,
+      startPage: entity.startPage,
+      endPage: entity.endPage,
       pagesRead: entity.pagesRead,
       minutesRead: entity.minutesRead,
-      startedAt: entity.startedAt.millisecondsSinceEpoch,
-      endedAt: entity.endedAt?.millisecondsSinceEpoch,
+      sessionDate: entity.sessionDate.millisecondsSinceEpoch,
       createdAt: entity.createdAt.millisecondsSinceEpoch,
       updatedAt: entity.updatedAt.millisecondsSinceEpoch,
     };
@@ -29,12 +31,11 @@ class SessionModel {
     return SessionEntity(
       id: map[id],
       bookId: map[bookId],
+      startPage: map[startPage],
+      endPage: map[endPage],
       pagesRead: map[pagesRead],
       minutesRead: map[minutesRead],
-      startedAt: DateTime.fromMillisecondsSinceEpoch(map[startedAt]),
-      endedAt: map[endedAt] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map[endedAt]!)
-          : null,
+      sessionDate: DateTime.fromMillisecondsSinceEpoch(map[sessionDate]),
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt]),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAt]),
     );

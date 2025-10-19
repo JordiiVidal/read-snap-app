@@ -10,9 +10,10 @@ class BookModel {
   static const String totalPages = 'total_pages';
   static const String status = 'status';
   static const String color = 'color';
+  static const String currentPage = 'current_page';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
-  static const String currentPage = 'current_page';
+  static const String finishedAt = 'finisehd_at';
 
   Map<String, dynamic> toMap(BookEntity entity) {
     return {

@@ -7,10 +7,11 @@ Future<void> createSessionTable(Database db) async {
       CREATE TABLE ${SessionModel.table} (
         ${SessionModel.id} TEXT PRIMARY KEY,
         ${SessionModel.bookId} TEXT NOT NULL,
+        ${SessionModel.startPage} INTEGER NOT NULL,
+        ${SessionModel.endPage} INTEGER NOT NULL,
         ${SessionModel.pagesRead} INTEGER NOT NULL,
         ${SessionModel.minutesRead} INTEGER NOT NULL,
-        ${SessionModel.startedAt} INTEGER NOT NULL,
-        ${SessionModel.endedAt} INTEGER,
+        ${SessionModel.sessionDate} INTEGER NOT NULL,
         ${SessionModel.createdAt} INTEGER NOT NULL,
         ${SessionModel.updatedAt} INTEGER NOT NULL,
         FOREIGN KEY(${SessionModel.bookId}) 

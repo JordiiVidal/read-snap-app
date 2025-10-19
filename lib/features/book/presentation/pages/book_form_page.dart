@@ -26,8 +26,7 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             // Title
             Text(
@@ -48,24 +47,19 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
             const SizedBox(height: 20),
 
             // Form Body
-            Expanded(
-              child: SingleChildScrollView(child: BookFormBody(_formKey)),
-            ),
+            BookFormBody(_formKey),
             const SizedBox(height: 16),
 
             // Submit Button
-            SafeArea(
-              top: false,
-              child: SizedBox(
-                width: double.infinity,
-                child: FormSubmit(
-                  'Add Book',
-                  () => _handleSubmit(
-                    notifier,
-                    Navigator.of(context),
-                    ScaffoldMessenger.of(context),
-                  ),
-                  isLoading: isLoading,
+            SizedBox(
+              width: double.infinity,
+              child: FormSubmit(
+                isLoading: isLoading,
+                'Add Book',
+                () => _handleSubmit(
+                  notifier,
+                  Navigator.of(context),
+                  ScaffoldMessenger.of(context),
                 ),
               ),
             ),
@@ -87,6 +81,9 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
         if (!mounted) return;
         navigator.pop();
       } catch (e) {
+        print('-------------------');
+        print(e);
+        print('-------------------');
         if (!mounted) return;
         scaffoldMessenger.showSnackBar(
           SnackBar(

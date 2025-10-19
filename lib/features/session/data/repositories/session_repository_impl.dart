@@ -1,7 +1,6 @@
 import 'package:read_snap/features/session/data/models/session_model.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uuid/uuid.dart';
 
 class SessionRepositoryImpl implements SessionRepository {
   final Database _db;
@@ -11,7 +10,10 @@ class SessionRepositoryImpl implements SessionRepository {
 
   @override
   Future<List<SessionEntity>> getSessions() async {
-    final List<Map<String, dynamic>> maps = await _db.query(SessionModel.table);
+    final List<Map<String, dynamic>> maps = await _db.query(
+      SessionModel.table,
+      orderBy: '${SessionModel.sessionDate} DESC',
+    );
     return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
   }
 
@@ -21,32 +23,17 @@ class SessionRepositoryImpl implements SessionRepository {
       SessionModel.table,
       where: '${SessionModel.bookId} = ?',
       whereArgs: [bookId],
+      orderBy: '${SessionModel.sessionDate} DESC',
     );
     return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
   }
 
   @override
-  Future<void> addSession(SessionEntity session) async {
-    final sessionToCreate = session.copyWith(
-      id: const Uuid().v4(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
+  Future<void> saveSession(SessionEntity session) async {
     await _db.insert(
       SessionModel.table,
-      _model.toMap(sessionToCreate),
+      _model.toMap(session),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  @override
-  Future<void> updateSession(SessionEntity session) async {
-    final sessionToUpdate = session.copyWith(updatedAt: DateTime.now());
-    await _db.update(
-      SessionModel.table,
-      _model.toMap(sessionToUpdate),
-      where: '${SessionModel.id} = ?',
-      whereArgs: [sessionToUpdate.id],
     );
   }
 

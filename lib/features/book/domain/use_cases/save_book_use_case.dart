@@ -8,25 +8,22 @@ class SaveBookUseCase {
   SaveBookUseCase(this._repository);
 
   Future<void> call(BookEntity book) async {
-    // Business logic
-    BookEntity bookToSave = _applyStatusLogic(book);
+    // 1.Business logic
+    BookEntity bookToSave = _applyBusinessLogic(book);
 
-    print(bookToSave);
-
-    // Validations
+    // 2.Validations
     _validateBook(bookToSave);
 
-    // Persistence
+    // 3.Persistence
     if (bookToSave.id.isNotEmpty) {
       // Update
       bookToSave = bookToSave.copyWith(updatedAt: DateTime.now());
       await _repository.updateBook(bookToSave);
     } else {
       // Create
-      final newId = const Uuid().v4();
       final now = DateTime.now();
       bookToSave = bookToSave.copyWith(
-        id: newId,
+        id: const Uuid().v4(),
         createdAt: now,
         updatedAt: now,
       );
@@ -34,7 +31,7 @@ class SaveBookUseCase {
     }
   }
 
-  BookEntity _applyStatusLogic(BookEntity book) {
+  BookEntity _applyBusinessLogic(BookEntity book) {
     switch (book.status) {
       case BookStatus.toRead:
         return book.copyWith(currentPage: 0);

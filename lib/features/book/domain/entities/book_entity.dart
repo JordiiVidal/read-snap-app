@@ -17,6 +17,7 @@ abstract class BookEntity with _$BookEntity {
     required DateTime createdAt,
     required DateTime updatedAt,
     required int currentPage,
+    DateTime? finishedAt,
   }) = _BookEntity;
 
   factory BookEntity.fromJson(Map<String, dynamic> json) =>

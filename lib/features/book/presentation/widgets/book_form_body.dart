@@ -11,10 +11,10 @@ class BookFormBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookAsync = ref.watch(bookFormNotifierProvider);
+    final formAsync = ref.watch(bookFormNotifierProvider);
     final notifier = ref.read(bookFormNotifierProvider.notifier);
     // Ahora mismo solo sirve para la creación de nuevos books
-    final BookEntity bookState = bookAsync.value!;
+    final BookEntity bookState = formAsync.value!;
 
     return Form(
       key: formKey,

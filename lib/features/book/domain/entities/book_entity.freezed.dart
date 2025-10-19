@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookEntity {
 
- String get id; String get name; String get author; int get totalPages; BookStatus get status; String get color; DateTime get createdAt; DateTime get updatedAt; int get currentPage;
+ String get id; String get name; String get author; int get totalPages; BookStatus get status; String get color; DateTime get createdAt; DateTime get updatedAt; int get currentPage; DateTime? get finishedAt;
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $BookEntityCopyWith<BookEntity> get copyWith => _$BookEntityCopyWithImpl<BookEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,author,totalPages,status,color,createdAt,updatedAt,currentPage);
+int get hashCode => Object.hash(runtimeType,id,name,author,totalPages,status,color,createdAt,updatedAt,currentPage,finishedAt);
 
 @override
 String toString() {
-  return 'BookEntity(id: $id, name: $name, author: $author, totalPages: $totalPages, status: $status, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage)';
+  return 'BookEntity(id: $id, name: $name, author: $author, totalPages: $totalPages, status: $status, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage, finishedAt: $finishedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $BookEntityCopyWith<$Res>  {
   factory $BookEntityCopyWith(BookEntity value, $Res Function(BookEntity) _then) = _$BookEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage
+ String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage, DateTime? finishedAt
 });
 
 
@@ -65,7 +65,7 @@ class _$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,Object? finishedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -76,7 +76,8 @@ as BookStatus,color: null == color ? _self.color : color // ignore: cast_nullabl
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int,
+as int,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
-return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
+return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt)  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity():
-return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
+return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
-return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
+return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt);case _:
   return null;
 
 }
@@ -217,7 +218,7 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 @JsonSerializable()
 
 class _BookEntity implements BookEntity {
-  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage});
+  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage, this.finishedAt});
   factory _BookEntity.fromJson(Map<String, dynamic> json) => _$BookEntityFromJson(json);
 
 @override final  String id;
@@ -229,6 +230,7 @@ class _BookEntity implements BookEntity {
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 @override final  int currentPage;
+@override final  DateTime? finishedAt;
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -243,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,author,totalPages,status,color,createdAt,updatedAt,currentPage);
+int get hashCode => Object.hash(runtimeType,id,name,author,totalPages,status,color,createdAt,updatedAt,currentPage,finishedAt);
 
 @override
 String toString() {
-  return 'BookEntity(id: $id, name: $name, author: $author, totalPages: $totalPages, status: $status, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage)';
+  return 'BookEntity(id: $id, name: $name, author: $author, totalPages: $totalPages, status: $status, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage, finishedAt: $finishedAt)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$BookEntityCopyWith<$Res> implements $BookEntityCopyWith<$
   factory _$BookEntityCopyWith(_BookEntity value, $Res Function(_BookEntity) _then) = __$BookEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage
+ String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage, DateTime? finishedAt
 });
 
 
@@ -280,7 +282,7 @@ class __$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,Object? finishedAt = freezed,}) {
   return _then(_BookEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -291,7 +293,8 @@ as BookStatus,color: null == color ? _self.color : color // ignore: cast_nullabl
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int,
+as int,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

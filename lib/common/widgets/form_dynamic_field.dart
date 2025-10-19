@@ -5,6 +5,7 @@ class FormDynamicField extends StatelessWidget {
   final bool required;
   final String hintText;
   final String? initialValue;
+  final bool disabled;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
 
@@ -13,6 +14,7 @@ class FormDynamicField extends StatelessWidget {
     required this.hintText,
     this.required = false,
     this.keyboardType = TextInputType.text,
+    this.disabled = false,
     this.onChanged,
     this.initialValue,
     super.key,
@@ -30,6 +32,7 @@ class FormDynamicField extends StatelessWidget {
         const SizedBox(height: 8),
 
         TextFormField(
+          enabled: !disabled,
           initialValue: initialValue,
           keyboardType: keyboardType,
           onChanged: onChanged,

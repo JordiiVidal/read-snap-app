@@ -8,7 +8,7 @@ class SessionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = session.startedAt; // TODO
+    final formattedDate = session.createdAt; // TODO
     final timeDisplay = '${session.minutesRead} min';
     final pagesDisplay = '${session.pagesRead} pages';
 

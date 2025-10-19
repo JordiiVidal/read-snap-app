@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SessionEntity {
 
- String get id; String get bookId; int get pagesRead; int? get minutesRead; int? get startPage; int? get endPage; DateTime get startedAt; DateTime? get endedAt; DateTime get createdAt; DateTime get updatedAt;
+ String get id; String get bookId; int get startPage; int get endPage; int get minutesRead; int? get pagesRead; DateTime get sessionDate; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SessionEntityCopyWith<SessionEntity> get copyWith => _$SessionEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.bookId, bookId) || other.bookId == bookId)&&(identical(other.pagesRead, pagesRead) || other.pagesRead == pagesRead)&&(identical(other.minutesRead, minutesRead) || other.minutesRead == minutesRead)&&(identical(other.startPage, startPage) || other.startPage == startPage)&&(identical(other.endPage, endPage) || other.endPage == endPage)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.bookId, bookId) || other.bookId == bookId)&&(identical(other.startPage, startPage) || other.startPage == startPage)&&(identical(other.endPage, endPage) || other.endPage == endPage)&&(identical(other.minutesRead, minutesRead) || other.minutesRead == minutesRead)&&(identical(other.pagesRead, pagesRead) || other.pagesRead == pagesRead)&&(identical(other.sessionDate, sessionDate) || other.sessionDate == sessionDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,bookId,pagesRead,minutesRead,startPage,endPage,startedAt,endedAt,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,bookId,startPage,endPage,minutesRead,pagesRead,sessionDate,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'SessionEntity(id: $id, bookId: $bookId, pagesRead: $pagesRead, minutesRead: $minutesRead, startPage: $startPage, endPage: $endPage, startedAt: $startedAt, endedAt: $endedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'SessionEntity(id: $id, bookId: $bookId, startPage: $startPage, endPage: $endPage, minutesRead: $minutesRead, pagesRead: $pagesRead, sessionDate: $sessionDate, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SessionEntityCopyWith<$Res>  {
   factory $SessionEntityCopyWith(SessionEntity value, $Res Function(SessionEntity) _then) = _$SessionEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String bookId, int pagesRead, int? minutesRead, int? startPage, int? endPage, DateTime startedAt, DateTime? endedAt, DateTime createdAt, DateTime updatedAt
+ String id, String bookId, int startPage, int endPage, int minutesRead, int? pagesRead, DateTime sessionDate, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -65,17 +65,16 @@ class _$SessionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? bookId = null,Object? pagesRead = null,Object? minutesRead = freezed,Object? startPage = freezed,Object? endPage = freezed,Object? startedAt = null,Object? endedAt = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? bookId = null,Object? startPage = null,Object? endPage = null,Object? minutesRead = null,Object? pagesRead = freezed,Object? sessionDate = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,bookId: null == bookId ? _self.bookId : bookId // ignore: cast_nullable_to_non_nullable
-as String,pagesRead: null == pagesRead ? _self.pagesRead : pagesRead // ignore: cast_nullable_to_non_nullable
-as int,minutesRead: freezed == minutesRead ? _self.minutesRead : minutesRead // ignore: cast_nullable_to_non_nullable
-as int?,startPage: freezed == startPage ? _self.startPage : startPage // ignore: cast_nullable_to_non_nullable
-as int?,endPage: freezed == endPage ? _self.endPage : endPage // ignore: cast_nullable_to_non_nullable
-as int?,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,startPage: null == startPage ? _self.startPage : startPage // ignore: cast_nullable_to_non_nullable
+as int,endPage: null == endPage ? _self.endPage : endPage // ignore: cast_nullable_to_non_nullable
+as int,minutesRead: null == minutesRead ? _self.minutesRead : minutesRead // ignore: cast_nullable_to_non_nullable
+as int,pagesRead: freezed == pagesRead ? _self.pagesRead : pagesRead // ignore: cast_nullable_to_non_nullable
+as int?,sessionDate: null == sessionDate ? _self.sessionDate : sessionDate // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -162,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String bookId,  int pagesRead,  int? minutesRead,  int? startPage,  int? endPage,  DateTime startedAt,  DateTime? endedAt,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String bookId,  int startPage,  int endPage,  int minutesRead,  int? pagesRead,  DateTime sessionDate,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SessionEntity() when $default != null:
-return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.startPage,_that.endPage,_that.startedAt,_that.endedAt,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.bookId,_that.startPage,_that.endPage,_that.minutesRead,_that.pagesRead,_that.sessionDate,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -183,10 +182,10 @@ return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.st
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String bookId,  int pagesRead,  int? minutesRead,  int? startPage,  int? endPage,  DateTime startedAt,  DateTime? endedAt,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String bookId,  int startPage,  int endPage,  int minutesRead,  int? pagesRead,  DateTime sessionDate,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _SessionEntity():
-return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.startPage,_that.endPage,_that.startedAt,_that.endedAt,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.bookId,_that.startPage,_that.endPage,_that.minutesRead,_that.pagesRead,_that.sessionDate,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +202,10 @@ return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.st
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String bookId,  int pagesRead,  int? minutesRead,  int? startPage,  int? endPage,  DateTime startedAt,  DateTime? endedAt,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String bookId,  int startPage,  int endPage,  int minutesRead,  int? pagesRead,  DateTime sessionDate,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _SessionEntity() when $default != null:
-return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.startPage,_that.endPage,_that.startedAt,_that.endedAt,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.bookId,_that.startPage,_that.endPage,_that.minutesRead,_that.pagesRead,_that.sessionDate,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -218,17 +217,16 @@ return $default(_that.id,_that.bookId,_that.pagesRead,_that.minutesRead,_that.st
 @JsonSerializable()
 
 class _SessionEntity implements SessionEntity {
-  const _SessionEntity({required this.id, required this.bookId, required this.pagesRead, this.minutesRead, this.startPage, this.endPage, required this.startedAt, this.endedAt, required this.createdAt, required this.updatedAt});
+  const _SessionEntity({required this.id, required this.bookId, required this.startPage, required this.endPage, required this.minutesRead, this.pagesRead, required this.sessionDate, required this.createdAt, required this.updatedAt});
   factory _SessionEntity.fromJson(Map<String, dynamic> json) => _$SessionEntityFromJson(json);
 
 @override final  String id;
 @override final  String bookId;
-@override final  int pagesRead;
-@override final  int? minutesRead;
-@override final  int? startPage;
-@override final  int? endPage;
-@override final  DateTime startedAt;
-@override final  DateTime? endedAt;
+@override final  int startPage;
+@override final  int endPage;
+@override final  int minutesRead;
+@override final  int? pagesRead;
+@override final  DateTime sessionDate;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 
@@ -245,16 +243,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.bookId, bookId) || other.bookId == bookId)&&(identical(other.pagesRead, pagesRead) || other.pagesRead == pagesRead)&&(identical(other.minutesRead, minutesRead) || other.minutesRead == minutesRead)&&(identical(other.startPage, startPage) || other.startPage == startPage)&&(identical(other.endPage, endPage) || other.endPage == endPage)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.bookId, bookId) || other.bookId == bookId)&&(identical(other.startPage, startPage) || other.startPage == startPage)&&(identical(other.endPage, endPage) || other.endPage == endPage)&&(identical(other.minutesRead, minutesRead) || other.minutesRead == minutesRead)&&(identical(other.pagesRead, pagesRead) || other.pagesRead == pagesRead)&&(identical(other.sessionDate, sessionDate) || other.sessionDate == sessionDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,bookId,pagesRead,minutesRead,startPage,endPage,startedAt,endedAt,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,bookId,startPage,endPage,minutesRead,pagesRead,sessionDate,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'SessionEntity(id: $id, bookId: $bookId, pagesRead: $pagesRead, minutesRead: $minutesRead, startPage: $startPage, endPage: $endPage, startedAt: $startedAt, endedAt: $endedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'SessionEntity(id: $id, bookId: $bookId, startPage: $startPage, endPage: $endPage, minutesRead: $minutesRead, pagesRead: $pagesRead, sessionDate: $sessionDate, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -265,7 +263,7 @@ abstract mixin class _$SessionEntityCopyWith<$Res> implements $SessionEntityCopy
   factory _$SessionEntityCopyWith(_SessionEntity value, $Res Function(_SessionEntity) _then) = __$SessionEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String bookId, int pagesRead, int? minutesRead, int? startPage, int? endPage, DateTime startedAt, DateTime? endedAt, DateTime createdAt, DateTime updatedAt
+ String id, String bookId, int startPage, int endPage, int minutesRead, int? pagesRead, DateTime sessionDate, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -282,17 +280,16 @@ class __$SessionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SessionEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? bookId = null,Object? pagesRead = null,Object? minutesRead = freezed,Object? startPage = freezed,Object? endPage = freezed,Object? startedAt = null,Object? endedAt = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? bookId = null,Object? startPage = null,Object? endPage = null,Object? minutesRead = null,Object? pagesRead = freezed,Object? sessionDate = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_SessionEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,bookId: null == bookId ? _self.bookId : bookId // ignore: cast_nullable_to_non_nullable
-as String,pagesRead: null == pagesRead ? _self.pagesRead : pagesRead // ignore: cast_nullable_to_non_nullable
-as int,minutesRead: freezed == minutesRead ? _self.minutesRead : minutesRead // ignore: cast_nullable_to_non_nullable
-as int?,startPage: freezed == startPage ? _self.startPage : startPage // ignore: cast_nullable_to_non_nullable
-as int?,endPage: freezed == endPage ? _self.endPage : endPage // ignore: cast_nullable_to_non_nullable
-as int?,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,startPage: null == startPage ? _self.startPage : startPage // ignore: cast_nullable_to_non_nullable
+as int,endPage: null == endPage ? _self.endPage : endPage // ignore: cast_nullable_to_non_nullable
+as int,minutesRead: null == minutesRead ? _self.minutesRead : minutesRead // ignore: cast_nullable_to_non_nullable
+as int,pagesRead: freezed == pagesRead ? _self.pagesRead : pagesRead // ignore: cast_nullable_to_non_nullable
+as int?,sessionDate: null == sessionDate ? _self.sessionDate : sessionDate // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

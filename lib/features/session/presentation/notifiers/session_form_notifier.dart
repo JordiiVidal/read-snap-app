@@ -5,60 +5,102 @@ import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
 
 final sessionFormNotifierProvider = StateNotifierProvider.family
-    .autoDispose<SessionFormNotifier, SessionEntity, String>((ref, bookId) {
+    .autoDispose<SessionFormNotifier, AsyncValue<SessionEntity>, String>((
+      ref,
+      bookId,
+    ) {
       final bookAsync = ref.watch(bookDetailNotifierProvider(bookId));
       final saveSessionUseCase = ref.watch(saveSessionUseCaseProvider);
       return SessionFormNotifier(saveSessionUseCase, bookId, bookAsync);
     });
 
-class SessionFormNotifier extends StateNotifier<SessionEntity> {
+class SessionFormNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
   final SaveSessionUseCase _saveSessionUseCase;
 
   SessionFormNotifier(
     this._saveSessionUseCase,
     String bookId,
     AsyncValue<BookEntity> bookAsync,
-  ) : super(
-        SessionEntity(
-          id: '',
-          bookId: bookId,
-          pagesRead: 0,
-          minutesRead: 0,
-          startPage: 0,
-          endPage: 0,
-          startedAt: DateTime.now(),
-          endedAt: DateTime.now(),
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        ),
-      ) {
-    bookAsync.whenData((book) {
-      final currentPage = book.currentPage ?? 0;
-      if (state.startPage == 0) {
-        state = state.copyWith(startPage: currentPage);
-      }
+  ) : super(const AsyncValue.loading()) {
+    _initializeForm(bookId, bookAsync);
+  }
+
+  SessionEntity get _currentSessionEntity => state.value!;
+
+  void _initializeForm(String bookId, AsyncValue<BookEntity> bookAsync) {
+    final baseSession = SessionEntity(
+      id: '',
+      bookId: bookId,
+      startPage: 0,
+      endPage: 0,
+      minutesRead: 1,
+      pagesRead: 0,
+      sessionDate: DateTime.now(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    bookAsync.when(
+      loading: () {},
+      error: (e, st) {
+        state = AsyncValue.error(e, st);
+      },
+      data: (book) {
+        final initialStartPage = book.currentPage;
+        final initialEndPage = initialStartPage;
+
+        state = AsyncValue.data(
+          baseSession.copyWith(
+            startPage: initialStartPage,
+            endPage: initialEndPage,
+          ),
+        );
+      },
+    );
+  }
+
+  void updateMinutesRead(int minutesRead) {
+    state.whenData((session) {
+      state = AsyncValue.data(session.copyWith(minutesRead: minutesRead));
     });
   }
 
-  void updatePagesRead(int pagesRead) =>
-      state = state.copyWith(pagesRead: pagesRead);
-  void updateMinutesRead(int minutesRead) =>
-      state = state.copyWith(minutesRead: minutesRead);
-  void updateStartPage(int startPage) =>
-      state = state.copyWith(startPage: startPage);
-  void updateEndPage(int endPage) => state = state.copyWith(endPage: endPage);
-  void updateStartedAt(DateTime startedAt) =>
-      state = state.copyWith(startedAt: startedAt);
-  void updateEndedAt(DateTime endedAt) =>
-      state = state.copyWith(endedAt: endedAt);
+  void updateStartPage(int startPage) {
+    state.whenData((session) {
+      state = AsyncValue.data(session.copyWith(startPage: startPage));
+    });
+  }
+
+  void updateEndPage(int endPage) {
+    state.whenData((session) {
+      state = AsyncValue.data(session.copyWith(endPage: endPage));
+    });
+  }
+
+  void updateSessionDate(DateTime sessionDate) {
+    state.whenData((session) {
+      final dateOnly = DateTime(
+        sessionDate.year,
+        sessionDate.month,
+        sessionDate.day,
+      );
+      state = AsyncValue.data(session.copyWith(sessionDate: dateOnly));
+    });
+  }
 
   Future<void> saveSession() async {
-    state = state.copyWith(
-      updatedAt: DateTime.now(),
-      pagesRead: state.endPage! - state.startPage!,
-      startedAt: DateTime.now(), // TODO
-      endedAt: DateTime.now(), // TODO
-    );
-    await _saveSessionUseCase.call(state);
+    final previousState = state;
+    state = AsyncValue<SessionEntity>.loading().copyWithPrevious(previousState);
+    try {
+      await _saveSessionUseCase.call(_currentSessionEntity);
+    } on ArgumentError catch (_) {
+      // Error to widget
+      state = previousState;
+      rethrow;
+    } catch (e, _) {
+      // Error to widget
+      state = previousState;
+      rethrow;
+    }
   }
 }
