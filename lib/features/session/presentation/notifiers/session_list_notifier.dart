@@ -2,28 +2,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
 
-class SessionListNotifier extends AsyncNotifier<List<SessionEntity>> {
-  @override
-  Future<List<SessionEntity>> build() async {
-    return _fetchSessions();
+final sessionListNotifierProvider = StateNotifierProvider.family
+    .autoDispose<SessionListNotifier, AsyncValue<List<SessionEntity>>, String>((
+      ref,
+      bookId,
+    ) {
+      final getSessionsByBookUseCase = ref.watch(
+        getSessionsByBookUseCaseProvider,
+      );
+      return SessionListNotifier(getSessionsByBookUseCase, bookId);
+    });
+
+class SessionListNotifier
+    extends StateNotifier<AsyncValue<List<SessionEntity>>> {
+  final GetSessionsByBookUseCase _getSessionsByBookUseCase;
+  final String _bookId;
+
+  SessionListNotifier(this._getSessionsByBookUseCase, this._bookId)
+    : super(const AsyncValue.loading()) {
+    loadSessions();
   }
 
-  Future<List<SessionEntity>> _fetchSessions() async {
-    final getSessions = ref.read(getSessionsUseCaseProvider);
-    return await getSessions.call();
-  }
-
-  Future<void> refreshSessions() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(_fetchSessions);
-  }
-
-  Future<void> sessionOperationCompleted() async {
-    await refreshSessions();
+  Future<void> loadSessions() async {
+    state = const AsyncValue.loading();
+    try {
+      final sessions = await _getSessionsByBookUseCase.call(_bookId);
+      state = AsyncValue.data(sessions);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+    }
   }
 }
-
-final sessionListNotifierProvider =
-    AsyncNotifierProvider<SessionListNotifier, List<SessionEntity>>(
-      () => SessionListNotifier(),
-    );

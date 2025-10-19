@@ -7,6 +7,7 @@ import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class BookDetailPage extends ConsumerWidget {
   final String bookId;
+
   const BookDetailPage(this.bookId, {super.key});
 
   @override
@@ -69,6 +70,12 @@ class BookDetailPage extends ConsumerWidget {
               BookHeader(book: book),
               actions(confirmDelete, navigateToCreateSession),
               cards(book),
+              Expanded(
+                child: SessionList(
+                  bookId,
+                  createAction: navigateToCreateSession,
+                ),
+              ),
             ],
           ),
         ),

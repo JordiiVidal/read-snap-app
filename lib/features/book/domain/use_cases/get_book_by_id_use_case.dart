@@ -1,11 +1,11 @@
 import 'package:read_snap/features/book/domain/domain.dart';
 
 class GetBookByIdUseCase {
-  final BookRepository _bookRepository;
+  final BookRepository _repository;
 
-  GetBookByIdUseCase(this._bookRepository);
+  GetBookByIdUseCase(this._repository);
 
   Future<BookEntity> call(String id) async {
-    return await _bookRepository.getBookById(id);
+    return await _repository.getBookById(id);
   }
 }

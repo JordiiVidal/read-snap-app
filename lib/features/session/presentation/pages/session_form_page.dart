@@ -5,6 +5,7 @@ import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormPage extends ConsumerStatefulWidget {
   final String bookId;
+
   const SessionFormPage(this.bookId, {super.key});
 
   @override
@@ -16,7 +17,9 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.read(sessionFormNotifierProvider.notifier);
+    final notifier = ref.read(
+      sessionFormNotifierProvider(widget.bookId).notifier,
+    );
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     void close() => Navigator.of(context).pop();
@@ -24,13 +27,14 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
     void handleSubmit(
       SessionFormNotifier notifier,
       ScaffoldMessengerState scaffoldMessenger,
+      String bookId,
     ) async {
       if (_formKey.currentState!.validate()) {
         try {
           await notifier.saveSession();
           await ref
-              .read(sessionListNotifierProvider.notifier)
-              .refreshSessions();
+              .read(sessionListNotifierProvider(bookId).notifier)
+              .loadSessions();
           if (!mounted) return;
           close();
         } catch (e) {
@@ -77,7 +81,8 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
                 width: double.infinity,
                 child: FormSubmit(
                   'Record Session',
-                  () => handleSubmit(notifier, scaffoldMessenger),
+                  () =>
+                      handleSubmit(notifier, scaffoldMessenger, widget.bookId),
                 ),
               ),
             ),

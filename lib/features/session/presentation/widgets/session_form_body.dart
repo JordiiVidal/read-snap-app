@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormBody extends ConsumerWidget {
@@ -12,19 +11,12 @@ class SessionFormBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookAsync = ref.watch(bookDetailNotifierProvider(bookId));
-    final notifier = ref.read(sessionFormNotifierProvider.notifier);
+    final sessionState = ref.watch(sessionFormNotifierProvider(bookId));
+    final notifier = ref.read(sessionFormNotifierProvider(bookId).notifier);
 
-    if (bookAsync.isLoading || bookAsync.hasError) {
-      return Center(
-        child: bookAsync.hasError
-            ? Text('Error loading book details')
-            : const CircularProgressIndicator(),
-      );
+    if (sessionState.bookId != bookId) {
+      return const Center(child: CircularProgressIndicator());
     }
-
-    final book = bookAsync.value!;
-    final startPageInitialValue = (book.currentPage ?? 0).toString();
 
     return Form(
       key: formKey,
@@ -36,7 +28,6 @@ class SessionFormBody extends ConsumerWidget {
             label: 'Start Page',
             hintText: 'Enter start page',
             keyboardType: TextInputType.number,
-            controller: TextEditingController(text: startPageInitialValue),
             onChanged: (value) {
               final pages = int.tryParse(value) ?? 0;
               notifier.updateStartPage(pages);

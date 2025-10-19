@@ -2,6 +2,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
+final bookDetailNotifierProvider = StateNotifierProvider.family
+    .autoDispose<BookDetailNotifier, AsyncValue<BookEntity>, String>((
+      ref,
+      bookId,
+    ) {
+      final getBookByIdUseCase = ref.watch(getBookByIdUseCaseProvider);
+      final deleteBookUseCase = ref.watch(deleteBookUseCaseProvider);
+      return BookDetailNotifier(bookId, getBookByIdUseCase, deleteBookUseCase);
+    });
+
 class BookDetailNotifier extends StateNotifier<AsyncValue<BookEntity>> {
   final GetBookByIdUseCase _getBookByIdUseCase;
   final DeleteBookUseCase _deleteBookUseCase;
@@ -31,13 +41,3 @@ class BookDetailNotifier extends StateNotifier<AsyncValue<BookEntity>> {
     }
   }
 }
-
-final bookDetailNotifierProvider = StateNotifierProvider.family
-    .autoDispose<BookDetailNotifier, AsyncValue<BookEntity>, String>((
-      ref,
-      bookId,
-    ) {
-      final getBookByIdUseCase = ref.watch(getBookByIdUseCaseProvider);
-      final deleteBookUseCase = ref.watch(deleteBookUseCaseProvider);
-      return BookDetailNotifier(bookId, getBookByIdUseCase, deleteBookUseCase);
-    });

@@ -6,14 +6,14 @@ import 'package:uuid/uuid.dart';
 
 class BookRepositoryImpl implements BookRepository {
   final Database _db;
-  final BookModel _bookModel = BookModel();
+  final BookModel _model = BookModel();
 
   BookRepositoryImpl(this._db);
 
   @override
   Future<List<BookEntity>> getBooks() async {
     final List<Map<String, dynamic>> maps = await _db.query(BookModel.table);
-    return List.generate(maps.length, (i) => _bookModel.fromMap(maps[i]));
+    return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
   }
 
   @override
@@ -25,7 +25,7 @@ class BookRepositoryImpl implements BookRepository {
     );
     await _db.insert(
       BookModel.table,
-      _bookModel.toMap(bookToCreate),
+      _model.toMap(bookToCreate),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -35,7 +35,7 @@ class BookRepositoryImpl implements BookRepository {
     final bookToUpdate = book.copyWith(updatedAt: DateTime.now());
     await _db.update(
       BookModel.table,
-      _bookModel.toMap(bookToUpdate),
+      _model.toMap(bookToUpdate),
       where: '${BookModel.id} = ?',
       whereArgs: [bookToUpdate.id],
     );
@@ -60,6 +60,6 @@ class BookRepositoryImpl implements BookRepository {
     if (maps.isEmpty) {
       throw ArgumentError('Book not found');
     }
-    return _bookModel.fromMap(maps.first);
+    return _model.fromMap(maps.first);
   }
 }

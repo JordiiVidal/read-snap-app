@@ -5,14 +5,24 @@ import 'package:uuid/uuid.dart';
 
 class SessionRepositoryImpl implements SessionRepository {
   final Database _db;
-  final SessionModel _sessionModel = SessionModel();
+  final SessionModel _model = SessionModel();
 
   SessionRepositoryImpl(this._db);
 
   @override
   Future<List<SessionEntity>> getSessions() async {
     final List<Map<String, dynamic>> maps = await _db.query(SessionModel.table);
-    return List.generate(maps.length, (i) => _sessionModel.fromMap(maps[i]));
+    return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
+  }
+
+  @override
+  Future<List<SessionEntity>> getSessionsByBook(String bookId) async {
+    final List<Map<String, dynamic>> maps = await _db.query(
+      SessionModel.table,
+      where: '${SessionModel.bookId} = ?',
+      whereArgs: [bookId],
+    );
+    return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
   }
 
   @override
@@ -24,7 +34,7 @@ class SessionRepositoryImpl implements SessionRepository {
     );
     await _db.insert(
       SessionModel.table,
-      _sessionModel.toMap(sessionToCreate),
+      _model.toMap(sessionToCreate),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -34,7 +44,7 @@ class SessionRepositoryImpl implements SessionRepository {
     final sessionToUpdate = session.copyWith(updatedAt: DateTime.now());
     await _db.update(
       SessionModel.table,
-      _sessionModel.toMap(sessionToUpdate),
+      _model.toMap(sessionToUpdate),
       where: '${SessionModel.id} = ?',
       whereArgs: [sessionToUpdate.id],
     );

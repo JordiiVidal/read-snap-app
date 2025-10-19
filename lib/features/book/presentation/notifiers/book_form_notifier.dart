@@ -2,6 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
+final bookFormNotifierProvider =
+    StateNotifierProvider.autoDispose<BookFormNotifier, BookEntity>((ref) {
+      final saveBookUseCase = ref.watch(saveBookUseCaseProvider);
+      return BookFormNotifier(saveBookUseCase);
+    });
+
 class BookFormNotifier extends StateNotifier<BookEntity> {
   final SaveBookUseCase _saveBookUseCase;
 
@@ -47,9 +53,3 @@ class BookFormNotifier extends StateNotifier<BookEntity> {
     await _saveBookUseCase.call(state);
   }
 }
-
-final bookFormNotifierProvider =
-    StateNotifierProvider.autoDispose<BookFormNotifier, BookEntity>((ref) {
-      final saveBookUseCase = ref.watch(saveBookUseCaseProvider);
-      return BookFormNotifier(saveBookUseCase);
-    });

@@ -4,7 +4,7 @@ class FormDynamicField extends StatelessWidget {
   final String label;
   final bool required;
   final String hintText;
-  final TextEditingController? controller;
+  final String? initialValue;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
 
@@ -12,9 +12,9 @@ class FormDynamicField extends StatelessWidget {
     required this.label,
     required this.hintText,
     this.required = false,
-    this.controller,
     this.keyboardType = TextInputType.text,
     this.onChanged,
+    this.initialValue,
     super.key,
   });
 
@@ -29,7 +29,7 @@ class FormDynamicField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          controller: controller,
+          initialValue: initialValue,
           keyboardType: keyboardType,
           onChanged: onChanged,
           decoration: InputDecoration(

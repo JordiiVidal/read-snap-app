@@ -2,9 +2,9 @@ import 'package:read_snap/features/book/domain/entities/book_entity.dart';
 import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
 
 class SaveBookUseCase {
-  final BookRepository _bookRepository;
+  final BookRepository _repository;
 
-  SaveBookUseCase(this._bookRepository);
+  SaveBookUseCase(this._repository);
 
   Future<void> call(BookEntity book) async {
     // Business logic
@@ -24,9 +24,9 @@ class SaveBookUseCase {
     }
     // Persistence
     if (bookToSave.id.isNotEmpty) {
-      await _bookRepository.updateBook(bookToSave);
+      await _repository.updateBook(bookToSave);
     } else {
-      await _bookRepository.addBook(bookToSave);
+      await _repository.addBook(bookToSave);
     }
   }
 }

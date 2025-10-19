@@ -56,3 +56,8 @@ final saveSessionUseCaseProvider = Provider<SaveSessionUseCase>((ref) {
 final getSessionsUseCaseProvider = Provider<GetSessionsUseCase>((ref) {
   return GetSessionsUseCase(ref.watch(sessionRepositoryProvider));
 });
+final getSessionsByBookUseCaseProvider = Provider<GetSessionsByBookUseCase>((
+  ref,
+) {
+  return GetSessionsByBookUseCase(ref.watch(sessionRepositoryProvider));
+});

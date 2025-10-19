@@ -2,6 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
+final bookListNotifierProvider =
+    AsyncNotifierProvider<BookListNotifier, List<BookEntity>>(
+      () => BookListNotifier(),
+    );
+
 class BookListNotifier extends AsyncNotifier<List<BookEntity>> {
   @override
   Future<List<BookEntity>> build() async {
@@ -22,8 +27,3 @@ class BookListNotifier extends AsyncNotifier<List<BookEntity>> {
     await refreshBooks();
   }
 }
-
-final bookListNotifierProvider =
-    AsyncNotifierProvider<BookListNotifier, List<BookEntity>>(
-      () => BookListNotifier(),
-    );
