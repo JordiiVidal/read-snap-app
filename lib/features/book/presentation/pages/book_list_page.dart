@@ -6,21 +6,22 @@ import 'package:read_snap/features/book/presentation/presentation.dart';
 class BookListPage extends ConsumerWidget {
   const BookListPage({super.key});
 
+  void _navigateToCreate(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
+  }
+
+  void _navigateToDetails(String bookId, BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookListState = ref.watch(bookListNotifierProvider);
-
-    void navigateToCreate() {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
-    }
-
-    void navigateToDetails(String bookId) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
-    }
+    final bookListNotifier = ref.read(bookListNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,36 +31,45 @@ class BookListPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Add Book',
-            onPressed: navigateToCreate,
+            onPressed: () => _navigateToCreate(context),
           ),
         ],
       ),
-      body: bookListState.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('An error occurred: $err')),
-        data: (books) {
-          if (books.isEmpty) {
-            return Center(
-              child: EmptyState(
-                title: 'No books yet',
-                message:
-                    'Start tracking your reading by adding your first book',
-                buttonText: 'Add Book',
-                onPressed: navigateToCreate,
-              ),
-            );
-          }
-          return ListView.builder(
-            itemCount: books.length,
-            itemBuilder: (context, index) {
-              final book = books[index];
-              return InkWell(
-                onTap: () => navigateToDetails(book.id),
-                child: BookCard(book),
+      body: RefreshIndicator(
+        onRefresh: bookListNotifier.refreshBooks,
+        child: bookListState.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+
+          error: (err, stack) => Center(child: Text('An error occurred: $err')),
+
+          data: (books) {
+            if (books.isEmpty) {
+              return Center(
+                child: ListView(
+                  children: [
+                    EmptyState(
+                      title: 'No books yet',
+                      message:
+                          'Start tracking your reading by adding your first book',
+                      buttonText: 'Add Book',
+                      onPressed: () => _navigateToCreate(context),
+                    ),
+                  ],
+                ),
               );
-            },
-          );
-        },
+            }
+            return ListView.builder(
+              itemCount: books.length,
+              itemBuilder: (context, index) {
+                final book = books[index];
+                return InkWell(
+                  onTap: () => _navigateToDetails(book.id, context),
+                  child: BookCard(book),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

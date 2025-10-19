@@ -11,25 +11,21 @@ class BookFormBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookState = ref.watch(bookFormNotifierProvider);
+    final bookAsync = ref.watch(bookFormNotifierProvider);
     final notifier = ref.read(bookFormNotifierProvider.notifier);
+    // Ahora mismo solo sirve para la creación de nuevos books
+    final BookEntity bookState = bookAsync.value!;
 
     return Form(
       key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Description
-          const Text(
-            'Add a book to your reading tracker. Fill in the details below.',
-            style: TextStyle(color: Colors.grey, fontSize: 16),
-          ),
-          const SizedBox(height: 20),
-
           // Title Field
           FormDynamicField(
             label: 'Title',
             hintText: 'Enter book title',
+            initialValue: bookState.name,
             onChanged: notifier.updateName,
           ),
           const SizedBox(height: 20),
@@ -38,6 +34,7 @@ class BookFormBody extends ConsumerWidget {
           FormDynamicField(
             label: 'Author',
             hintText: 'Enter author name',
+            initialValue: bookState.author,
             onChanged: notifier.updateAuthor,
           ),
           const SizedBox(height: 20),

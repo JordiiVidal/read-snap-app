@@ -4,7 +4,7 @@ import 'package:read_snap/features/book/domain/domain.dart';
 
 final bookListNotifierProvider =
     AsyncNotifierProvider<BookListNotifier, List<BookEntity>>(
-      () => BookListNotifier(),
+      BookListNotifier.new,
     );
 
 class BookListNotifier extends AsyncNotifier<List<BookEntity>> {
@@ -19,11 +19,7 @@ class BookListNotifier extends AsyncNotifier<List<BookEntity>> {
   }
 
   Future<void> refreshBooks() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(_fetchBooks);
-  }
-
-  Future<void> bookOperationCompleted() async {
-    await refreshBooks();
+    ref.invalidateSelf();
+    await future;
   }
 }

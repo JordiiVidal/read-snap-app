@@ -1,8 +1,8 @@
 import 'package:read_snap/features/book/data/models/book_model.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/domain/exceptions.dart';
 import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:uuid/uuid.dart';
 
 class BookRepositoryImpl implements BookRepository {
   final Database _db;
@@ -18,26 +18,20 @@ class BookRepositoryImpl implements BookRepository {
 
   @override
   Future<void> addBook(BookEntity book) async {
-    final bookToCreate = book.copyWith(
-      id: const Uuid().v4(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
     await _db.insert(
       BookModel.table,
-      _model.toMap(bookToCreate),
+      _model.toMap(book),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
   @override
   Future<void> updateBook(BookEntity book) async {
-    final bookToUpdate = book.copyWith(updatedAt: DateTime.now());
     await _db.update(
       BookModel.table,
-      _model.toMap(bookToUpdate),
+      _model.toMap(book),
       where: '${BookModel.id} = ?',
-      whereArgs: [bookToUpdate.id],
+      whereArgs: [book.id],
     );
   }
 
@@ -58,7 +52,7 @@ class BookRepositoryImpl implements BookRepository {
       whereArgs: [id],
     );
     if (maps.isEmpty) {
-      throw ArgumentError('Book not found');
+      throw BookNotFoundException();
     }
     return _model.fromMap(maps.first);
   }

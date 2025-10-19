@@ -15,7 +15,7 @@ _BookEntity _$BookEntityFromJson(Map<String, dynamic> json) => _BookEntity(
   color: json['color'] as String,
   createdAt: DateTime.parse(json['createdAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
-  currentPage: (json['currentPage'] as num?)?.toInt(),
+  currentPage: (json['currentPage'] as num).toInt(),
 );
 
 Map<String, dynamic> _$BookEntityToJson(_BookEntity instance) =>

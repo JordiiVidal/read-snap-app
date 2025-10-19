@@ -30,6 +30,11 @@ class BookDetailNotifier extends StateNotifier<AsyncValue<BookEntity>> {
     try {
       final book = await _getBookByIdUseCase.call(_bookId);
       state = AsyncValue.data(book);
+    } on BookNotFoundException {
+      state = AsyncValue.error(
+        'The book with ID $_bookId was not found.',
+        StackTrace.current,
+      );
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
@@ -37,7 +42,11 @@ class BookDetailNotifier extends StateNotifier<AsyncValue<BookEntity>> {
 
   Future<void> deleteBook() async {
     if (state.hasValue) {
-      await _deleteBookUseCase.call(state.value!.id);
+      try {
+        await _deleteBookUseCase.call(state.value!.id);
+      } catch (e) {
+        rethrow;
+      }
     }
   }
 }

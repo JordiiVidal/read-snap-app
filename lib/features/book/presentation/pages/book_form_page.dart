@@ -13,7 +13,69 @@ class BookFormPage extends ConsumerStatefulWidget {
 class _BookFormPageState extends ConsumerState<BookFormPage> {
   final _formKey = GlobalKey<FormState>();
 
-  void handleSubmit(
+  @override
+  Widget build(BuildContext context) {
+    final formState = ref.watch(bookFormNotifierProvider);
+    final notifier = ref.read(bookFormNotifierProvider.notifier);
+    final isLoading = formState.maybeWhen(
+      loading: () => true,
+      orElse: () => false,
+    );
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              'Add New Book',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Descripiton
+            const Text(
+              'Add a book to your reading tracker. Fill in the details below.',
+              style: TextStyle(color: Colors.grey, fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+
+            // Form Body
+            Expanded(
+              child: SingleChildScrollView(child: BookFormBody(_formKey)),
+            ),
+            const SizedBox(height: 16),
+
+            // Submit Button
+            SafeArea(
+              top: false,
+              child: SizedBox(
+                width: double.infinity,
+                child: FormSubmit(
+                  'Add Book',
+                  () => _handleSubmit(
+                    notifier,
+                    Navigator.of(context),
+                    ScaffoldMessenger.of(context),
+                  ),
+                  isLoading: isLoading,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _handleSubmit(
     BookFormNotifier notifier,
     NavigatorState navigator,
     ScaffoldMessengerState scaffoldMessenger,
@@ -35,40 +97,5 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
         );
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final notifier = ref.read(bookFormNotifierProvider.notifier);
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Add New Book')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Form Body
-            Expanded(
-              child: SingleChildScrollView(child: BookFormBody(_formKey)),
-            ),
-            const SizedBox(height: 16),
-
-            // Submit Button
-            SafeArea(
-              top: false,
-              child: SizedBox(
-                width: double.infinity,
-                child: FormSubmit(
-                  'Add Book',
-                  () => handleSubmit(notifier, navigator, scaffoldMessenger),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

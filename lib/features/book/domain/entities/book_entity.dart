@@ -16,7 +16,7 @@ abstract class BookEntity with _$BookEntity {
     required String color,
     required DateTime createdAt,
     required DateTime updatedAt,
-    int? currentPage,
+    required int currentPage,
   }) = _BookEntity;
 
   factory BookEntity.fromJson(Map<String, dynamic> json) =>

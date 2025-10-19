@@ -28,6 +28,7 @@ class FormDynamicField extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
+
         TextFormField(
           initialValue: initialValue,
           keyboardType: keyboardType,

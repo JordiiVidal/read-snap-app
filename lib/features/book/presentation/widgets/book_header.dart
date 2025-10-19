@@ -4,7 +4,7 @@ import 'package:read_snap/features/book/domain/domain.dart';
 class BookHeader extends StatelessWidget {
   final BookEntity book;
 
-  const BookHeader({super.key, required this.book});
+  const BookHeader(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {

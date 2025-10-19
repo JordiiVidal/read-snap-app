@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookEntity {
 
- String get id; String get name; String get author; int get totalPages; BookStatus get status; String get color; DateTime get createdAt; DateTime get updatedAt; int? get currentPage;
+ String get id; String get name; String get author; int get totalPages; BookStatus get status; String get color; DateTime get createdAt; DateTime get updatedAt; int get currentPage;
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $BookEntityCopyWith<$Res>  {
   factory $BookEntityCopyWith(BookEntity value, $Res Function(BookEntity) _then) = _$BookEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int? currentPage
+ String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage
 });
 
 
@@ -65,7 +65,7 @@ class _$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -75,8 +75,8 @@ as int,status: null == status ? _self.status : status // ignore: cast_nullable_t
 as BookStatus,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,
+as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int? currentPage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
 return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int? currentPage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity():
 return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int? currentPage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String author,  int totalPages,  BookStatus status,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage)?  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
 return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage);case _:
@@ -217,7 +217,7 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 @JsonSerializable()
 
 class _BookEntity implements BookEntity {
-  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, this.currentPage});
+  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage});
   factory _BookEntity.fromJson(Map<String, dynamic> json) => _$BookEntityFromJson(json);
 
 @override final  String id;
@@ -228,7 +228,7 @@ class _BookEntity implements BookEntity {
 @override final  String color;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
-@override final  int? currentPage;
+@override final  int currentPage;
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -263,7 +263,7 @@ abstract mixin class _$BookEntityCopyWith<$Res> implements $BookEntityCopyWith<$
   factory _$BookEntityCopyWith(_BookEntity value, $Res Function(_BookEntity) _then) = __$BookEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int? currentPage
+ String id, String name, String author, int totalPages, BookStatus status, String color, DateTime createdAt, DateTime updatedAt, int currentPage
 });
 
 
@@ -280,7 +280,7 @@ class __$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? author = null,Object? totalPages = null,Object? status = null,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,}) {
   return _then(_BookEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -290,8 +290,8 @@ as int,status: null == status ? _self.status : status // ignore: cast_nullable_t
 as BookStatus,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,
+as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

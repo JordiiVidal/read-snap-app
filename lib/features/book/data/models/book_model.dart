@@ -39,7 +39,7 @@ class BookModel {
       name: map[name] as String,
       author: map[author] as String,
       totalPages: map[totalPages] as int,
-      currentPage: map[currentPage] as int?,
+      currentPage: map[currentPage] as int,
       status: status,
       color: map[color] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt] as int),

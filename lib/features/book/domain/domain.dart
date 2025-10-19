@@ -1,3 +1,5 @@
+// Exceptions
+export 'exceptions.dart';
 // Entities
 export 'entities/book_entity.dart';
 // Repositories
