@@ -81,9 +81,6 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
         if (!mounted) return;
         navigator.pop();
       } catch (e) {
-        print('-------------------');
-        print(e);
-        print('-------------------');
         if (!mounted) return;
         scaffoldMessenger.showSnackBar(
           SnackBar(

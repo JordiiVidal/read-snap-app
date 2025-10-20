@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
@@ -117,11 +118,12 @@ class BookDetailPage extends ConsumerWidget {
           children: [
             BookHeader(book),
             _cards(book),
-            ActionButton(
-              icon: Icons.access_time,
-              label: 'Record Session',
-              onPressed: () => _navigateToCreateSession(context),
-            ),
+            if (book.status == BookStatus.reading)
+              ActionButton(
+                icon: Icons.access_time,
+                label: 'Record Session',
+                onPressed: () => _navigateToCreateSession(context),
+              ),
             Expanded(
               child: SessionList(
                 bookId,

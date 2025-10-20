@@ -44,12 +44,20 @@ class SaveSessionUseCase {
     final book = await _bookRepository.getBookById(session.bookId);
     final isCompleted = session.endPage >= book.totalPages;
 
+    _validateBook(book);
+
     return book.copyWith(
       currentPage: session.endPage,
       status: isCompleted ? BookStatus.completed : BookStatus.reading,
       finishedAt: isCompleted ? DateTime.now() : book.finishedAt,
       updatedAt: DateTime.now(),
     );
+  }
+
+  void _validateBook(BookEntity book) {
+    if (book.status != BookStatus.reading) {
+      throw ArgumentError('The book must be in reading status.');
+    }
   }
 
   void _validateSession(SessionEntity session) {
