@@ -21,15 +21,6 @@ class BookHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: Color(int.parse(book.color.replaceFirst('#', '0xFF'))),
             ),
-            child: Center(
-              child: Text(
-                book.name.isNotEmpty ? book.name[0].toUpperCase() : '?',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
           ),
           const SizedBox(width: 12),
 

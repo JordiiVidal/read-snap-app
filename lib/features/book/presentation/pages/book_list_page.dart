@@ -62,9 +62,9 @@ class BookListPage extends ConsumerWidget {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
-                return InkWell(
-                  onTap: () => _navigateToDetails(book.id, context),
-                  child: BookCard(book),
+                return BookCard(
+                  book,
+                  onTap: (bookId) => _navigateToDetails(bookId, context),
                 );
               },
             );

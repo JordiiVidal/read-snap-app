@@ -1,16 +1,10 @@
-String formatMinutesToTime(int totalMinutes) {
+Map<String, int> formatMinutesToTime(int totalMinutes) {
   if (totalMinutes <= 0) {
-    return '0 min';
-  }
-  if (totalMinutes < 60) {
-    return '$totalMinutes min';
+    return {'hours': 0, 'minutes': 0};
   }
 
   final hours = totalMinutes ~/ 60;
   final minutes = totalMinutes % 60;
 
-  final hourPart = '${hours}h';
-  final minPart = minutes > 0 ? ' ${minutes}m' : '';
-
-  return '$hourPart$minPart';
+  return {'hours': hours, 'minutes': minutes};
 }

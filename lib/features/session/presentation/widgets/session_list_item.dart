@@ -56,7 +56,7 @@ class SessionListItem extends StatelessWidget {
               children: [
                 const Icon(Icons.timer, size: 16, color: Colors.grey),
                 const SizedBox(width: 4),
-                Text(durationDisplay, style: const TextStyle(fontSize: 13)),
+                //Text(durationDisplay, style: const TextStyle(fontSize: 13)),
               ],
             ),
           ],

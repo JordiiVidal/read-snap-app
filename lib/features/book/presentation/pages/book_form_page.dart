@@ -25,7 +25,7 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
             // Title

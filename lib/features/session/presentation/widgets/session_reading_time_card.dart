@@ -4,10 +4,10 @@ import 'package:read_snap/common/utils/utils.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
 
-class ReadingTimeCard extends ConsumerWidget {
+class SessionReadingTimeCard extends ConsumerWidget {
   final String bookId;
 
-  const ReadingTimeCard(this.bookId, {super.key});
+  const SessionReadingTimeCard(this.bookId, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,7 +15,7 @@ class ReadingTimeCard extends ConsumerWidget {
     final totalTimeAsync = ref.watch(totalTimeProvider(bookId));
 
     return totalTimeAsync.when(
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const SkeletonCard(),
       error: (e, st) => const Text('Error'),
       data: (totalMinutes) {
         final formattedTime = formatMinutesToTime(totalMinutes);
@@ -25,11 +25,15 @@ class ReadingTimeCard extends ConsumerWidget {
           error: (e, st) => 0,
         );
 
-        return InfoCard(
-          header: 'Readings Time',
-          title: formattedTime,
-          content: const Text('Total reading time recorded.'),
-          footer: '$sessionCount sessions.',
+        return CustomCard(
+          header: const Text('Readings Time'),
+          footer: Text('$sessionCount sessions.'),
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: TimeDisplay(timeParts: formattedTime),
+            ),
+          ],
         );
       },
     );

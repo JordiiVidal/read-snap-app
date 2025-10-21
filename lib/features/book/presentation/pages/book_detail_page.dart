@@ -4,7 +4,7 @@ import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
-import 'package:read_snap/features/session/presentation/widgets/reading_time_card.dart';
+import 'package:read_snap/features/session/presentation/widgets/session_reading_time_card.dart';
 
 final _isDeletingProvider = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -117,58 +117,41 @@ class BookDetailPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BookHeader(book),
-            _cards(book),
+            const SizedBox(height: 16),
+
+            // Cards
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: BookProgressCard(book),
+                  ),
+                  SessionReadingTimeCard(bookId),
+                  BookStatusCard(book),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Action Button
             if (book.status == BookStatus.reading)
               ActionButton(
                 icon: Icons.access_time,
                 label: 'Record Session',
                 onPressed: () => _navigateToCreateSession(context),
               ),
+
+            // Sessions List
             Expanded(
               child: SessionList(
                 bookId,
                 createAction: () => _navigateToCreateSession(context),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _cards(BookEntity book) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 8,
-          children: [
-            // Progress Card
-            InfoCard(
-              header: 'Progress',
-              title: '${book.progressPercentage}%',
-              content: LinearProgressIndicator(
-                value: book.progressValue,
-                backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Color(int.parse(book.color.replaceFirst('#', '0xFF'))),
-                ),
-              ),
-              footer: '${book.currentPage} / ${book.totalPages} pages',
-            ),
-
-            // Reading Time Card
-            ReadingTimeCard(bookId),
-
-            // Status Card
-            InfoCard(
-              header: 'Status',
-              title: book.status.name.toUpperCase(),
-              content: Text(book.status.name.toUpperCase()),
-              footer: 'Started 13/10/2025',
             ),
           ],
         ),

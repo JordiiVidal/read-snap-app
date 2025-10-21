@@ -21,6 +21,13 @@ class BookFormBody extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Color Selector Widget
+          FormColorSelector(
+            selectedColor: bookState.color,
+            onColorSelected: notifier.updateColor,
+          ),
+          const SizedBox(height: 20),
+
           // Title Field
           FormDynamicField(
             label: 'Title',
@@ -51,33 +58,24 @@ class BookFormBody extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
-          // Status Dropdown Field
+          // Status Select Button Group
           const Text(
             'Status',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          DropdownButtonFormField<BookStatus>(
-            initialValue: bookState.status,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-            ),
-            items: BookStatus.values.map((status) {
-              return DropdownMenuItem(
-                value: status,
-                child: Text(status.name.toUpperCase()),
+          SelectButtonGroup(
+            options: {
+              BookStatus.reading.name: 'Reading',
+              BookStatus.completed.name: 'Completed',
+              BookStatus.toRead.name: 'To Read',
+            },
+            selectedValues: [bookState.status.name],
+            onSelectionChanged: (values) {
+              final status = BookStatus.values.firstWhere(
+                (status) => status.name == values.first,
               );
-            }).toList(),
-            onChanged: (BookStatus? newStatus) {
-              if (newStatus != null) {
-                notifier.updateStatus(newStatus);
-              }
+              notifier.updateStatus(status);
             },
           ),
 
@@ -96,12 +94,6 @@ class BookFormBody extends ConsumerWidget {
               ),
             ),
           const SizedBox(height: 20),
-
-          // Color Selector Widget
-          FormColorSelector(
-            selectedColor: bookState.color,
-            onColorSelected: notifier.updateColor,
-          ),
         ],
       ),
     );

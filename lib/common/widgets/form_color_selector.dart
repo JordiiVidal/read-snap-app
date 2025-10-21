@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 class FormColorSelector extends StatelessWidget {
   final List<String> availableColors = const [
-    '#673AB7',
-    '#9C27B0',
-    '#E91E63',
-    '#FFC107',
-    '#4CAF50',
-    '#2196F3',
-    '#F44336',
-    '#00BCD4',
+    '#673AB7', // Morado principal
+    '#E91E63', // Rosa/Rojo
+    '#4CAF50', // Verde
+    '#2196F3', // Azul
+    '#FFC107', // Ámbar
+    '#00BCD4', // Cyan
   ];
+
   final String selectedColor;
   final ValueChanged<String> onColorSelected;
 
@@ -20,8 +19,15 @@ class FormColorSelector extends StatelessWidget {
     super.key,
   });
 
+  Color _hexToColor(String hexCode) {
+    return Color(int.parse(hexCode.replaceFirst('#', '0xFF')));
+  }
+
   @override
   Widget build(BuildContext context) {
+    const double size = 38.0;
+    const double borderRadius = 8.0;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,27 +35,42 @@ class FormColorSelector extends StatelessWidget {
           'Cover Color',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: availableColors.map((hexColor) {
-            final colorValue = Color(
-              int.parse(hexColor.replaceFirst('#', '0xFF')),
-            );
+            final colorValue = _hexToColor(hexColor);
             final isSelected = hexColor == selectedColor;
 
             return GestureDetector(
               onTap: () => onColorSelected(hexColor),
               child: Container(
-                width: 30,
-                height: 30,
+                width: size,
+                height: size,
                 decoration: BoxDecoration(
                   color: colorValue,
-                  shape: BoxShape.circle,
+                  borderRadius: BorderRadius.circular(borderRadius),
                   border: isSelected
-                      ? Border.all(color: Colors.black, width: 3)
-                      : null,
+                      ? Border.all(
+                          color: colorValue.computeLuminance() > 0.5
+                              ? Colors.black54
+                              : Colors.white,
+                          width: 3.5,
+                        )
+                      : Border.all(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          width: 0.5,
+                        ),
                 ),
+                child: isSelected
+                    ? Icon(
+                        Icons.check,
+                        size: 22,
+                        color: colorValue.computeLuminance() > 0.5
+                            ? Colors.black87
+                            : Colors.white,
+                      )
+                    : null,
               ),
             );
           }).toList(),
