@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/features/session/presentation/widgets/reading_time_card.dart';
 
 final _isDeletingProvider = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -137,7 +137,6 @@ class BookDetailPage extends ConsumerWidget {
   }
 
   Widget _cards(BookEntity book) {
-    final currentProgress = ((book.currentPage) / book.totalPages).toDouble();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: SingleChildScrollView(
@@ -150,9 +149,9 @@ class BookDetailPage extends ConsumerWidget {
             // Progress Card
             InfoCard(
               header: 'Progress',
-              title: currentProgress.toInt().toString(),
+              title: '${book.progressPercentage}%',
               content: LinearProgressIndicator(
-                value: currentProgress,
+                value: book.progressValue,
                 backgroundColor: Colors.grey[300],
                 valueColor: AlwaysStoppedAnimation<Color>(
                   Color(int.parse(book.color.replaceFirst('#', '0xFF'))),
@@ -162,12 +161,7 @@ class BookDetailPage extends ConsumerWidget {
             ),
 
             // Reading Time Card
-            const InfoCard(
-              header: 'Reading Time',
-              title: '0 minutes',
-              content: Text('---'),
-              footer: '0 minutes',
-            ),
+            ReadingTimeCard(bookId),
 
             // Status Card
             InfoCard(

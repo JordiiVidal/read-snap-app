@@ -34,6 +34,8 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
       final sessionListNotifier = ref.read(
         sessionListNotifierProvider(widget.bookId).notifier,
       );
+      // Stats
+      ref.invalidate(totalTimeProvider(widget.bookId));
 
       await bookDetailNotifier.loadBook();
       await sessionListNotifier.loadSessions();

@@ -217,8 +217,8 @@ return $default(_that.id,_that.name,_that.author,_that.totalPages,_that.status,_
 /// @nodoc
 @JsonSerializable()
 
-class _BookEntity implements BookEntity {
-  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage, this.finishedAt});
+class _BookEntity extends BookEntity {
+  const _BookEntity({required this.id, required this.name, required this.author, required this.totalPages, required this.status, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage, this.finishedAt}): super._();
   factory _BookEntity.fromJson(Map<String, dynamic> json) => _$BookEntityFromJson(json);
 
 @override final  String id;

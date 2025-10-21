@@ -56,4 +56,17 @@ class BookRepositoryImpl implements BookRepository {
     }
     return _model.fromMap(maps.first);
   }
+
+  @override
+  Future<BookEntity?> getBookByName(String name) async {
+    final List<Map<String, dynamic>> maps = await _db.query(
+      BookModel.table,
+      where: '${BookModel.name} = ?',
+      whereArgs: [name],
+    );
+    if (maps.isEmpty) {
+      return null;
+    }
+    return _model.fromMap(maps.first);
+  }
 }

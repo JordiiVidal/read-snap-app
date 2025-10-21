@@ -24,16 +24,20 @@ final bookRepositoryProvider = Provider<BookRepository>((ref) {
   return BookRepositoryImpl(database);
 });
 /* Use Cases */
-final getBooksUseCaseProvider = Provider<GetBooksUseCase>((ref) {
-  return GetBooksUseCase(ref.watch(bookRepositoryProvider));
-});
-
 final saveBookUseCaseProvider = Provider<SaveBookUseCase>((ref) {
   return SaveBookUseCase(ref.watch(bookRepositoryProvider));
 });
 
+final getBooksUseCaseProvider = Provider<GetBooksUseCase>((ref) {
+  return GetBooksUseCase(ref.watch(bookRepositoryProvider));
+});
+
 final getBookByIdUseCaseProvider = Provider<GetBookByIdUseCase>((ref) {
   return GetBookByIdUseCase(ref.watch(bookRepositoryProvider));
+});
+
+final getBookByNameUseCaseProvider = Provider<GetBookByNameUseCase>((ref) {
+  return GetBookByNameUseCase(ref.watch(bookRepositoryProvider));
 });
 
 final deleteBookUseCaseProvider = Provider<DeleteBookUseCase>((ref) {
@@ -61,3 +65,8 @@ final getSessionsByBookUseCaseProvider = Provider<GetSessionsByBookUseCase>((
 ) {
   return GetSessionsByBookUseCase(ref.watch(sessionRepositoryProvider));
 });
+final getTotalReadingTimeUseCaseProvider = Provider<GetTotalReadingTimeUseCase>(
+  (ref) {
+    return GetTotalReadingTimeUseCase(ref.watch(sessionRepositoryProvider));
+  },
+);

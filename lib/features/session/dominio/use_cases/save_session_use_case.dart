@@ -9,14 +9,14 @@ class SaveSessionUseCase {
   SaveSessionUseCase(this._sessionRepository, this._bookRepository);
 
   Future<void> call(SessionEntity session) async {
-    // 1.Validations
+    // Validations
     _validateSession(session);
 
-    // 2.Business logic
+    // Business logic
     SessionEntity sessionToSave = _applyBusinessLogic(session);
     BookEntity bookToUpdate = await _appBookBusinessLogic(session);
 
-    // 3.Persistence
+    // Persistence
     if (session.id.isNotEmpty) {
       // Update
       sessionToSave = sessionToSave.copyWith(updatedAt: DateTime.now());
@@ -44,7 +44,8 @@ class SaveSessionUseCase {
     final book = await _bookRepository.getBookById(session.bookId);
     final isCompleted = session.endPage >= book.totalPages;
 
-    _validateBook(book);
+    // Validations
+    _validateBook(book, session);
 
     return book.copyWith(
       currentPage: session.endPage,
@@ -54,9 +55,24 @@ class SaveSessionUseCase {
     );
   }
 
-  void _validateBook(BookEntity book) {
-    if (book.status != BookStatus.reading) {
-      throw ArgumentError('The book must be in reading status.');
+  void _validateBook(BookEntity book, SessionEntity session) {
+    if (book.status == BookStatus.completed) {
+      throw ArgumentError('The book is already completed.');
+    }
+    if (session.startPage < book.currentPage) {
+      throw ArgumentError(
+        'The session start page must be greater to the book current page.',
+      );
+    }
+    if (session.endPage < book.currentPage) {
+      throw ArgumentError(
+        'The session end page must be greater than the book current page.',
+      );
+    }
+    if (session.endPage > book.totalPages) {
+      throw ArgumentError(
+        'The session end page must be less than the book total pages.',
+      );
     }
   }
 

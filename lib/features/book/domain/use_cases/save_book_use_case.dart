@@ -13,6 +13,12 @@ class SaveBookUseCase {
 
     // 2.Validations
     _validateBook(bookToSave);
+    final existingBook = await _repository.getBookByName(book.name);
+    if (existingBook != null && existingBook.id != book.id) {
+      throw ArgumentError(
+        'A book with the name "${book.name}" already exists.',
+      );
+    }
 
     // 3.Persistence
     if (bookToSave.id.isNotEmpty) {
