@@ -6,13 +6,15 @@ class SelectButtonGroup extends StatelessWidget {
   final bool isMultiSelect;
   final ValueChanged<List<String>> onSelectionChanged;
   final double height;
+  final String color;
 
   const SelectButtonGroup({
     required this.options,
     required this.selectedValues,
     required this.onSelectionChanged,
     this.isMultiSelect = false,
-    this.height = 48.0,
+    this.height = 38.0,
+    this.color = '#673AB7',
     super.key,
   });
 
@@ -36,10 +38,10 @@ class SelectButtonGroup extends StatelessWidget {
               height: height,
               child: Material(
                 color: isSelected
-                    ? theme.colorScheme.primary
+                    ? Color(int.parse(color.replaceFirst('#', '0xFF')))
                     : theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(8.0),
-                elevation: isSelected ? 4 : 0,
+                elevation: isSelected ? 2 : 0,
                 shadowColor: theme.colorScheme.primary.withValues(alpha: 0.5),
 
                 child: InkWell(

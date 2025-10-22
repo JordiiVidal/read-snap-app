@@ -34,8 +34,10 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
       final sessionListNotifier = ref.read(
         sessionListNotifierProvider(widget.bookId).notifier,
       );
+
       // Stats
       ref.invalidate(totalTimeProvider(widget.bookId));
+      ref.invalidate(sessionCountProvider(widget.bookId));
 
       await bookDetailNotifier.loadBook();
       await sessionListNotifier.loadSessions();
@@ -65,37 +67,35 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
     final isLoading = formState.isLoading;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Record Reading Session',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
+      appBar: AppBar(),
       body: formState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, st) => _buildErrorState(e),
         data: (sessionEntity) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Description
+              // Title
               Text(
+                'Record Reading Session',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Descripiton
+              const Text(
                 'Track your reading time and pages read.',
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
               const SizedBox(height: 20),
 
               // Form Body
-              Expanded(
-                child: SessionFormBody(_formKey, sessionEntity, notifier),
-              ),
+              Expanded(child: SessionForm(_formKey, sessionEntity, notifier)),
 
               // Submit Button
               const SizedBox(height: 20),

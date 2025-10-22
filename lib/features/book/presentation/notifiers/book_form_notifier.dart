@@ -23,7 +23,7 @@ class BookFormNotifier extends StateNotifier<AsyncValue<BookEntity>> {
             totalPages: 0,
             currentPage: 0,
             status: BookStatus.toRead,
-            color: '#808080',
+            color: '#673AB7',
             createdAt: DateTime.now(),
             updatedAt: DateTime.now(),
           ),

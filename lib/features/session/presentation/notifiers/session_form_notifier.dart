@@ -16,6 +16,7 @@ final sessionFormNotifierProvider = StateNotifierProvider.family
 
 class SessionFormNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
   final SaveSessionUseCase _saveSessionUseCase;
+  int _bookTotalPages = 0;
 
   SessionFormNotifier(
     this._saveSessionUseCase,
@@ -48,6 +49,7 @@ class SessionFormNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
       data: (book) {
         final initialStartPage = book.currentPage;
         final initialEndPage = initialStartPage;
+        _bookTotalPages = book.totalPages;
 
         state = AsyncValue.data(
           baseSession.copyWith(
@@ -57,6 +59,29 @@ class SessionFormNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
         );
       },
     );
+  }
+
+  int get totalPages => _bookTotalPages;
+
+  void restart() {
+    updateStartPage(0);
+    updateEndPage(0);
+  }
+
+  void markAsFinished() {
+    updateEndPage(totalPages);
+  }
+
+  void today() {
+    updateSessionDate(DateTime.now());
+  }
+
+  void yesterday() {
+    updateSessionDate(DateTime.now().subtract(const Duration(days: 1)));
+  }
+
+  void plusMinuts(int sum) {
+    updateMinutesRead(_currentSessionEntity.minutesRead + sum);
   }
 
   void updateMinutesRead(int minutesRead) {

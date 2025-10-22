@@ -65,6 +65,7 @@ class BookFormBody extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           SelectButtonGroup(
+            color: bookState.color,
             options: {
               BookStatus.reading.name: 'Reading',
               BookStatus.completed.name: 'Completed',

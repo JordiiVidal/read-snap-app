@@ -56,15 +56,16 @@ class SaveSessionUseCase {
   }
 
   void _validateBook(BookEntity book, SessionEntity session) {
+    final isRestart = session.startPage == 0;
     if (book.status == BookStatus.completed) {
       throw ArgumentError('The book is already completed.');
     }
-    if (session.startPage < book.currentPage) {
+    if (session.startPage < book.currentPage && !isRestart) {
       throw ArgumentError(
         'The session start page must be greater to the book current page.',
       );
     }
-    if (session.endPage < book.currentPage) {
+    if (session.endPage < book.currentPage && !isRestart) {
       throw ArgumentError(
         'The session end page must be greater than the book current page.',
       );
@@ -77,10 +78,13 @@ class SaveSessionUseCase {
   }
 
   void _validateSession(SessionEntity session) {
-    if (session.endPage <= session.startPage) {
+    if (session.endPage < session.startPage) {
       throw ArgumentError(
         'The end page must be strictly greater than the start page.',
       );
+    }
+    if (session.endPage == 0) {
+      throw ArgumentError('The end page must be greater than 0.');
     }
     if (session.minutesRead <= 0) {
       throw ArgumentError('The session must be at least one minute long.');
