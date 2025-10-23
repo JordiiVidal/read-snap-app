@@ -6,11 +6,13 @@ class FormDynamicField extends StatelessWidget {
   final bool required;
   final String hintText;
   final String? initialValue;
-  final String? suffixText;
+  final IconData? prefixIcon;
   final TextEditingController? controller;
   final bool disabled;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
+  final void Function()? onPrefixPressed;
+  final String? suffixText;
 
   const FormDynamicField({
     this.label,
@@ -19,8 +21,10 @@ class FormDynamicField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.disabled = false,
     this.onChanged,
+    this.onPrefixPressed,
     this.initialValue,
     this.controller,
+    this.prefixIcon,
     this.suffixText,
     super.key,
   });
@@ -38,6 +42,12 @@ class FormDynamicField extends StatelessWidget {
           keyboardType: keyboardType,
           onChanged: onChanged,
           decoration: InputDecoration(
+            prefixIcon: prefixIcon != null
+                ? GestureDetector(
+                    onTap: onPrefixPressed,
+                    child: Icon(prefixIcon),
+                  )
+                : null,
             hintText: hintText,
             suffixText: suffixText,
             suffixStyle: const TextStyle(

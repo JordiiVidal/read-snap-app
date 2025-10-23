@@ -72,7 +72,7 @@ class _SessionFormPageState extends ConsumerState<SessionFormPage> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, st) => _buildErrorState(e),
         data: (sessionEntity) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

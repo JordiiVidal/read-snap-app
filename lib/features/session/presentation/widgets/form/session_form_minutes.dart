@@ -12,34 +12,35 @@ class SessionFormMinutes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 15,
       children: [
-        FormLabelField('Minutes Read'),
+        FormDynamicField(
+          label: 'Minutes Read',
+          hintText: 'Enter duration in minutes',
+          controller: minutesController,
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            final minutes = int.tryParse(value) ?? 0;
+            notifier.updateMinutesRead(minutes);
+          },
+        ),
         Row(
-          spacing: 8,
+          spacing: 15,
           children: [
-            // Minutes Read Field
+            // 30 min
             Expanded(
-              child: FormDynamicField(
-                hintText: 'Enter duration in minutes',
-                controller: minutesController,
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  final minutes = int.tryParse(value) ?? 0;
-                  notifier.updateMinutesRead(minutes);
-                },
+              child: ElevatedButton(
+                onPressed: () => notifier.updateMinutesRead(30),
+                child: const Text('30 min'),
               ),
             ),
 
-            // 30 min
-            ElevatedButton(
-              onPressed: () => notifier.updateMinutesRead(30),
-              child: const Text('30 min'),
-            ),
-
             // 1 h
-            ElevatedButton(
-              onPressed: () => notifier.updateMinutesRead(60),
-              child: const Text('1h'),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () => notifier.updateMinutesRead(60),
+                child: const Text('1h'),
+              ),
             ),
           ],
         ),

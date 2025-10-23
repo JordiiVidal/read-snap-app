@@ -27,29 +27,37 @@ class SessionFormDate extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 15,
       children: [
-        FormLabelField('Session Date'),
+        FormDynamicField(
+          label: 'Session Date',
+          hintText: 'Enter session date',
+          controller: TextEditingController(text: formattedDate),
+          keyboardType: TextInputType.datetime,
+          prefixIcon: Icons.calendar_today,
+          onPrefixPressed: () => _selectDate(context),
+          onChanged: (value) {
+            final date = DateTime.parse(value);
+            notifier.updateSessionDate(date);
+          },
+        ),
         Row(
-          spacing: 8,
-          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 15,
           children: [
-            IconButton(
-              icon: const Icon(Icons.today),
-              onPressed: () => _selectDate(context),
-            ),
-
-            if (formattedDate.isNotEmpty) Text(formattedDate),
-
             // Today Button
-            ElevatedButton(
-              onPressed: () => notifier.today(),
-              child: const Text('Today'),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () => notifier.today(),
+                child: const Text('Today'),
+              ),
             ),
 
             // Yesterday Button
-            ElevatedButton(
-              onPressed: () => notifier.yesterday(),
-              child: const Text('Yesterday'),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () => notifier.yesterday(),
+                child: const Text('Yesterday'),
+              ),
             ),
           ],
         ),

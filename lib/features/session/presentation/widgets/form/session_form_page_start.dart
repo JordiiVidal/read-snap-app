@@ -14,36 +14,40 @@ class SessionFormPageStart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      spacing: 20,
       children: [
-        // Start Page Field
-        Expanded(
-          child: FormDynamicField(
-            label: 'Start Page',
-            hintText: 'Enter start page',
-            disabled: true,
-            controller: startPageController,
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              final pages = int.tryParse(value) ?? 0;
-              notifier.updateStartPage(pages);
-            },
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Label
+            FormLabelField('Start Page'),
+
+            // Action Button
+            TextButton(
+              onPressed: () {
+                notifier.restart();
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                spacing: 10,
+                children: [Icon(Icons.refresh), Text('Restart Book')],
+              ),
+            ),
+          ],
         ),
 
-        // Action Button
-        ElevatedButton(
-          onPressed: () {
-            notifier.restart();
+        // Start Page Field
+        FormDynamicField(
+          hintText: 'Enter start page',
+          disabled: true,
+          controller: startPageController,
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            final pages = int.tryParse(value) ?? 0;
+            notifier.updateStartPage(pages);
           },
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            spacing: 10,
-            children: [Icon(Icons.refresh), Text('Restart Book')],
-          ),
         ),
       ],
     );

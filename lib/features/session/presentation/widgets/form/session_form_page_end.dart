@@ -16,36 +16,40 @@ class SessionFormPageEnd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      spacing: 20,
       children: [
-        // End Page Field
-        Expanded(
-          child: FormDynamicField(
-            label: 'End Page',
-            hintText: 'Enter end page',
-            suffixText: '/ $totalPages',
-            controller: endPageController,
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              final pages = int.tryParse(value) ?? 0;
-              notifier.updateEndPage(pages);
-            },
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Label
+            FormLabelField('End Page'),
+
+            // Action Button
+            TextButton(
+              onPressed: () {
+                notifier.markAsFinished();
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                spacing: 10,
+                children: [Icon(Icons.check), Text('Finish Book')],
+              ),
+            ),
+          ],
         ),
 
-        // Action Button
-        ElevatedButton(
-          onPressed: () {
-            notifier.markAsFinished();
+        // End Page Field
+        FormDynamicField(
+          hintText: 'Enter end page',
+          suffixText: '/ $totalPages',
+          controller: endPageController,
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            final pages = int.tryParse(value) ?? 0;
+            notifier.updateEndPage(pages);
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            spacing: 10,
-            children: [const Icon(Icons.check), const Text('Finish Book')],
-          ),
         ),
       ],
     );
