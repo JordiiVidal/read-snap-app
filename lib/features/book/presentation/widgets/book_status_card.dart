@@ -15,7 +15,17 @@ class BookStatusCard extends StatelessWidget {
     final formattedDate = dateFormatter.format(dateToFormat);
 
     return CustomCard(
-      header: const Text('Status'),
+      header: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text('Status'),
+          Icon(
+            Icons.calendar_today_outlined,
+            color: book.flutterColor,
+            size: 14,
+          ),
+        ],
+      ),
       footer: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

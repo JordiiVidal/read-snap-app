@@ -4,22 +4,28 @@ class TimeDisplay extends StatelessWidget {
   final Map<String, int> timeParts;
   final double gap;
   final double spaceBetween;
+  final double valueFontSize;
+  final double unitFontSize;
+  final bool shortText;
 
-  const TimeDisplay({
-    required this.timeParts,
+  const TimeDisplay(
+    this.timeParts, {
     this.gap = 9,
     this.spaceBetween = 6,
+    this.valueFontSize = 25,
+    this.unitFontSize = 14,
+    this.shortText = false,
     super.key,
   });
 
   List<Widget> _buildTimeWidget() {
     final List<Widget> timeWidgets = [];
-    final valueStyle = const TextStyle(
-      fontSize: 25,
+    final valueStyle = TextStyle(
+      fontSize: valueFontSize,
       fontWeight: FontWeight.bold,
     );
-    final unitStyle = const TextStyle(
-      fontSize: 14,
+    final unitStyle = TextStyle(
+      fontSize: unitFontSize,
       fontWeight: FontWeight.w300,
       color: Colors.black54,
     );
@@ -46,7 +52,9 @@ class TimeDisplay extends StatelessWidget {
     if (minutes > 0) {
       timeWidgets.add(Text('$minutes', style: valueStyle));
       timeWidgets.add(SizedBox(width: spaceBetween));
-      timeWidgets.add(Text(isMinutesOnly ? 'minutes' : 'm', style: unitStyle));
+      timeWidgets.add(
+        Text(isMinutesOnly && !shortText ? 'minutes' : 'min', style: unitStyle),
+      );
     }
 
     return timeWidgets;

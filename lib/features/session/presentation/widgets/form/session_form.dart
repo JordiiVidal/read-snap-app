@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/session/dominio/entities/session_entity.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 

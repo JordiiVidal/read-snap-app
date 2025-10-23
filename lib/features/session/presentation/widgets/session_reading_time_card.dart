@@ -6,8 +6,9 @@ import 'package:read_snap/features/session/presentation/notifiers/session_stats_
 
 class SessionReadingTimeCard extends ConsumerWidget {
   final String bookId;
+  final Color color;
 
-  const SessionReadingTimeCard(this.bookId, {super.key});
+  const SessionReadingTimeCard(this.bookId, this.color, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,13 +27,16 @@ class SessionReadingTimeCard extends ConsumerWidget {
         );
 
         return CustomCard(
-          header: const Text('Readings Time'),
+          header: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Readings Time'),
+              Icon(Icons.timelapse_outlined, color: color, size: 14),
+            ],
+          ),
           footer: Text('$sessionCount sessions.'),
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: TimeDisplay(timeParts: formattedTime),
-            ),
+            SizedBox(width: double.infinity, child: TimeDisplay(formattedTime)),
           ],
         );
       },

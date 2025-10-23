@@ -15,101 +15,87 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Color(int.parse(book.color.replaceFirst('#', '0xFF')));
+    final bookBaseColor = Color(
+      int.parse(book.color.replaceFirst('#', '0xFF')),
+    );
 
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-      color: Colors.white30,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Color(0xFFE0E0E0), width: 1),
+    return Container(
+      width: 200,
+      padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 16),
+      decoration: BoxDecoration(
+        color: bookBaseColor.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
+        ],
+        border: Border(left: BorderSide(color: bookBaseColor, width: 20)),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => onTap?.call(book.id),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image, Title and Author
-              Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: accentColor.withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    alignment: Alignment.center,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          book.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          book.author,
-                          style: const TextStyle(color: Colors.grey),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Status
+            Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                book.status.name.capitalize(),
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const SizedBox(height: 16),
+            ),
+            const SizedBox(height: 8),
 
-              // Progress
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Progress', style: TextStyle(color: Colors.grey)),
-                  Text(
-                    '${book.currentPage}/${book.totalPages}',
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            // Title
+            Text(
+              book.name,
+              style: const TextStyle(
+                fontSize: 21,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
-              const SizedBox(height: 8),
-              LinearProgressIndicator(
-                value: progressPercentage,
-                minHeight: 6,
-                borderRadius: BorderRadius.circular(5),
-                backgroundColor: Colors.grey.withValues(alpha: 0.2),
-                color: accentColor,
-              ),
-              const SizedBox(height: 8),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
 
-              // Status and Progress Percentage
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    book.status.name.capitalize(),
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text('${(progressPercentage * 100).round()}%'),
-                ],
-              ),
-            ],
-          ),
+            // Author
+            Text(
+              book.author,
+              style: const TextStyle(color: Colors.white70),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 18),
+
+            const Spacer(),
+
+            // Progress
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${(progressPercentage * 100).round()}%',
+                  style: const TextStyle(color: Colors.white70),
+                ),
+                Text(
+                  '${book.currentPage}/${book.totalPages}',
+                  style: const TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            // Progress Bar
+            LinearProgressIndicator(
+              value: progressPercentage,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(5),
+              backgroundColor: Colors.white24,
+              color: Colors.white,
+            ),
+          ],
         ),
       ),
     );

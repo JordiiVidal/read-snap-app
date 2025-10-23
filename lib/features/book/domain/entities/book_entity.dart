@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'book_entity.freezed.dart';
@@ -20,8 +21,22 @@ mixin BookProgressLogic {
   }
 }
 
+mixin BookColorLogic {
+  String get color;
+
+  Color get flutterColor {
+    final hexCode = color.replaceFirst('#', '0xFF');
+    final intColor = int.tryParse(hexCode);
+
+    if (intColor == null) {
+      return Colors.grey;
+    }
+    return Color(intColor);
+  }
+}
+
 @freezed
-abstract class BookEntity with _$BookEntity, BookProgressLogic {
+abstract class BookEntity with _$BookEntity, BookProgressLogic, BookColorLogic {
   const BookEntity._();
   const factory BookEntity({
     required String id,

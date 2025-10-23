@@ -21,7 +21,6 @@ class BookListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookListState = ref.watch(bookListNotifierProvider);
-    final bookListNotifier = ref.read(bookListNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,13 +34,11 @@ class BookListPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: bookListNotifier.refreshBooks,
+      body: SizedBox(
+        height: 350,
         child: bookListState.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-
           error: (err, stack) => Center(child: Text('An error occurred: $err')),
-
           data: (books) {
             if (books.isEmpty) {
               return Center(
@@ -59,12 +56,17 @@ class BookListPage extends ConsumerWidget {
               );
             }
             return ListView.builder(
+              scrollDirection: Axis.horizontal,
               itemCount: books.length,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (context, index) {
                 final book = books[index];
-                return BookCard(
-                  book,
-                  onTap: (bookId) => _navigateToDetails(bookId, context),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: BookCard(
+                    book,
+                    onTap: (bookId) => _navigateToDetails(bookId, context),
+                  ),
                 );
               },
             );

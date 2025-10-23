@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:read_snap/common/utils/utils.dart';
+import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/session/dominio/entities/session_entity.dart';
 
 class SessionListItem extends StatelessWidget {
@@ -23,16 +24,17 @@ class SessionListItem extends StatelessWidget {
           children: [
             TextSpan(
               text: dateDisplay,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            const TextSpan(text: ' '),
-            TextSpan(
-              text: timeDisplay,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontSize: 13,
+            const TextSpan(text: '  '),
+            if (timeDisplay != '00:00')
+              TextSpan(
+                text: timeDisplay,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize: 10,
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -43,20 +45,37 @@ class SessionListItem extends StatelessWidget {
           spacing: 12,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            // Pages
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.menu_book, size: 16, color: Colors.grey),
                 const SizedBox(width: 4),
-                Text(pagesDisplay, style: const TextStyle(fontSize: 13)),
+                const Text('Pages', style: TextStyle(fontSize: 10)),
+                const SizedBox(width: 4),
+                Text(
+                  pagesDisplay,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
+
+            // Timer
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.timer, size: 16, color: Colors.grey),
                 const SizedBox(width: 4),
-                //Text(durationDisplay, style: const TextStyle(fontSize: 13)),
+                TimeDisplay(
+                  durationDisplay,
+                  valueFontSize: 13,
+                  unitFontSize: 10,
+                  shortText: true,
+                  spaceBetween: 4,
+                ),
               ],
             ),
           ],
@@ -69,14 +88,10 @@ class SessionListItem extends StatelessWidget {
         children: [
           Text(
             session.pagesRead.toString(),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w900,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
           ),
           const Text(
-            'págs.',
+            'pages read',
             style: TextStyle(fontSize: 10, color: Colors.grey),
           ),
         ],

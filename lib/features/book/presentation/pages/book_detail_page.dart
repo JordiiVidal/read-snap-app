@@ -4,7 +4,6 @@ import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
-import 'package:read_snap/features/session/presentation/widgets/session_reading_time_card.dart';
 
 final _isDeletingProvider = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -131,19 +130,31 @@ class BookDetailPage extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 16.0),
                     child: BookProgressCard(book),
                   ),
-                  SessionReadingTimeCard(bookId),
+                  SessionReadingTimeCard(bookId, book.flutterColor),
                   BookStatusCard(book),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
 
             // Action Button
             if (book.status == BookStatus.reading)
-              ActionButton(
-                icon: Icons.access_time,
-                label: 'Record Session',
-                onPressed: () => _navigateToCreateSession(context),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: book.flutterColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () => _navigateToCreateSession(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.access_time),
+                      const SizedBox(width: 8),
+                      const Text('Record Session'),
+                    ],
+                  ),
+                ),
               ),
 
             // Sessions List

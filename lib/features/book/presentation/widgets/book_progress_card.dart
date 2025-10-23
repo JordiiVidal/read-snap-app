@@ -10,7 +10,13 @@ class BookProgressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      header: const Text('Progress'),
+      header: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text('Progress'),
+          Icon(Icons.timeline_sharp, color: book.flutterColor, size: 14),
+        ],
+      ),
       footer: Text('${book.currentPage} / ${book.totalPages} pages'),
       children: [
         Text(
