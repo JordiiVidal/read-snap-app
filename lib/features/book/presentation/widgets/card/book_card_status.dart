@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
-class BookStatusCard extends StatelessWidget {
+class BookCardStatus extends StatelessWidget {
   final BookEntity book;
 
-  const BookStatusCard(this.book, {super.key});
+  const BookCardStatus(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {

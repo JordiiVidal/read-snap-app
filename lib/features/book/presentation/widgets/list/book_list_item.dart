@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/utils/utils.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
 
-class BookCard extends StatelessWidget {
+class BookListItem extends StatelessWidget {
   final BookEntity book;
-  final void Function(String)? onTap;
 
-  const BookCard(this.book, {super.key, this.onTap});
+  const BookListItem(this.book, {super.key});
 
-  double get progressPercentage {
-    if (book.totalPages == 0) return 0.0;
-    return (book.currentPage / book.totalPages).clamp(0.0, 1.0);
+  void _navigateToDetails(String bookId, BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final bookBaseColor = Color(
-      int.parse(book.color.replaceFirst('#', '0xFF')),
-    );
-
-    return Container(
-      width: 200,
-      padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 16),
-      decoration: BoxDecoration(
-        color: bookBaseColor.withValues(alpha: 0.9),
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
-        ],
-        border: Border(left: BorderSide(color: bookBaseColor, width: 20)),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: () => onTap?.call(book.id),
+    return InkWell(
+      onTap: () => _navigateToDetails(book.id, context),
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        width: 200,
+        padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 16),
+        decoration: BoxDecoration(
+          color: book.flutterColor.withValues(alpha: 0.9),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
+          border: Border(left: BorderSide(color: book.flutterColor, width: 20)),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,7 +77,7 @@ class BookCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${(progressPercentage * 100).round()}%',
+                  '${book.progressPercentage}%',
                   style: const TextStyle(color: Colors.white70),
                 ),
                 Text(
@@ -89,7 +90,7 @@ class BookCard extends StatelessWidget {
 
             // Progress Bar
             LinearProgressIndicator(
-              value: progressPercentage,
+              value: book.progressValue,
               minHeight: 8,
               borderRadius: BorderRadius.circular(5),
               backgroundColor: Colors.white24,

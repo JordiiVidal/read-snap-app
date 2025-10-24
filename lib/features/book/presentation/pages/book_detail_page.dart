@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
@@ -128,16 +127,16 @@ class BookDetailPage extends ConsumerWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
-                    child: BookProgressCard(book),
+                    child: BookCardProgress(book),
                   ),
                   SessionReadingTimeCard(bookId, book.flutterColor),
-                  BookStatusCard(book),
+                  BookCardStatus(book),
                 ],
               ),
             ),
 
             // Action Button
-            if (book.status == BookStatus.reading)
+            if (book.status != BookStatus.completed)
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
@@ -146,12 +145,12 @@ class BookDetailPage extends ConsumerWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () => _navigateToCreateSession(context),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.access_time),
-                      const SizedBox(width: 8),
-                      const Text('Record Session'),
+                      Icon(Icons.access_time),
+                      SizedBox(width: 8),
+                      Text('Record Session'),
                     ],
                   ),
                 ),

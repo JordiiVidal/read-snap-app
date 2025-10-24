@@ -15,11 +15,9 @@ class SessionForm extends ConsumerStatefulWidget {
 }
 
 class _SessionFormState extends ConsumerState<SessionForm> {
-  late final int _totalPages;
   late final TextEditingController _endPageController;
   late final TextEditingController _startPageController;
   late final TextEditingController _minutesController;
-  late final TextEditingController _dateController;
 
   @override
   void initState() {

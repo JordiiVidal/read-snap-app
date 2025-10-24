@@ -18,14 +18,9 @@ class SessionList extends ConsumerWidget {
       error: (e, st) => Center(child: Text('Error loading sessions: $e')),
       data: (sessions) {
         if (sessions.isEmpty) {
-          return Center(
-            child: EmptyState(
-              title: 'No sessions yet',
-              message:
-                  'Start tracking your reading by adding your first session',
-              buttonText: 'Add Session',
-              onPressed: createAction,
-            ),
+          return EmptyState(
+            title: 'No sessions yet',
+            message: 'Start tracking your reading by adding your first session',
           );
         }
 
