@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/widgets/form/book_form_extra.dart';
 
 class BookFormPage extends ConsumerStatefulWidget {
   const BookFormPage({super.key});
@@ -47,8 +49,8 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
               ),
               const SizedBox(height: 20),
 
-              // Form Body
-              BookFormBody(_formKey),
+              // Form
+              BookForm(_formKey),
               const SizedBox(height: 16),
 
               // Submit Button
@@ -71,27 +73,68 @@ class _BookFormPageState extends ConsumerState<BookFormPage> {
     );
   }
 
-  void _handleSubmit(
+  Future<void> _handleSubmit(
     BookFormNotifier notifier,
     NavigatorState navigator,
     ScaffoldMessengerState scaffoldMessenger,
   ) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await notifier.saveBook();
-        await ref.read(bookListNotifierProvider.notifier).refreshBooks();
-        if (!mounted) return;
-        navigator.pop();
-      } catch (e) {
-        if (!mounted) return;
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(
-              'Error: ${e is ArgumentError ? e.message : 'Could not save book'}',
-            ),
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    try {
+      final result = await _handleExtraFieldsSheet(notifier, context);
+
+      if (!result) {
+        return;
+      }
+
+      await notifier.saveBook();
+      await ref.read(bookListNotifierProvider.notifier).refreshBooks();
+
+      if (!mounted) return;
+      navigator.pop();
+    } catch (e) {
+      if (!mounted) return;
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            'Error: ${e is ArgumentError ? e.message : 'Could not save book'}',
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<bool> _handleExtraFieldsSheet(
+    BookFormNotifier notifier,
+    BuildContext context,
+  ) async {
+    final currentBookDraft = notifier.currentBookDraft;
+
+    if (currentBookDraft.status == BookStatus.toRead) {
+      return true;
+    }
+
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+
+      builder: (context) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+            child: BookFormExtra(notifier),
           ),
         );
-      }
-    }
+      },
+    );
+
+    return result ?? false;
   }
 }

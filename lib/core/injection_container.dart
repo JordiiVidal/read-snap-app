@@ -36,9 +36,10 @@ final getBookByIdUseCaseProvider = Provider<GetBookByIdUseCase>((ref) {
   return GetBookByIdUseCase(ref.watch(bookRepositoryProvider));
 });
 
-final getBookByNameUseCaseProvider = Provider<GetBookByNameUseCase>((ref) {
-  return GetBookByNameUseCase(ref.watch(bookRepositoryProvider));
-});
+final getBookByNameAndAuthorUseCaseProvider =
+    Provider<GetBookByNameAndAuthorUseCase>((ref) {
+      return GetBookByNameAndAuthorUseCase(ref.watch(bookRepositoryProvider));
+    });
 
 final deleteBookUseCaseProvider = Provider<DeleteBookUseCase>((ref) {
   return DeleteBookUseCase(ref.watch(bookRepositoryProvider));
@@ -58,6 +59,7 @@ final saveSessionUseCaseProvider = Provider<SaveSessionUseCase>((ref) {
   return SaveSessionUseCase(
     ref.watch(sessionRepositoryProvider),
     ref.watch(bookRepositoryProvider),
+    ref,
   );
 });
 final getSessionsByBookUseCaseProvider = Provider<GetSessionsByBookUseCase>((

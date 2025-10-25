@@ -41,7 +41,9 @@ class FormDynamicField extends StatelessWidget {
           initialValue: initialValue,
           keyboardType: keyboardType,
           onChanged: onChanged,
+          style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
+            isDense: true,
             prefixIcon: prefixIcon != null
                 ? GestureDetector(
                     onTap: onPrefixPressed,
@@ -56,12 +58,12 @@ class FormDynamicField extends StatelessWidget {
               fontSize: 14,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(4.0),
               borderSide: const BorderSide(color: Colors.grey),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
+              horizontal: 12,
+              vertical: 10,
             ),
           ),
           validator: (value) {

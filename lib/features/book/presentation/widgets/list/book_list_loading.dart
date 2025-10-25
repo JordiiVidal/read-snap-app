@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
 
-class BookListSkeleton extends StatelessWidget {
-  const BookListSkeleton({super.key});
+class BookListLoading extends StatelessWidget {
+  const BookListLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,14 +11,14 @@ class BookListSkeleton extends StatelessWidget {
       itemCount: 3,
       itemBuilder: (ctx, i) => Padding(
         padding: EdgeInsets.only(right: 16.0, left: i == 0 ? 16.0 : 0),
-        child: const BookListSkeletonItem(),
+        child: const BookListLoadingItem(),
       ),
     );
   }
 }
 
-class BookListSkeletonItem extends StatelessWidget {
-  const BookListSkeletonItem({super.key});
+class BookListLoadingItem extends StatelessWidget {
+  const BookListLoadingItem({super.key});
 
   @override
   Widget build(BuildContext context) {

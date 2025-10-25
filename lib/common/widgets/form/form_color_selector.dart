@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_snap/common/widgets/form/form_label_field.dart';
 
 class FormColorSelector extends StatelessWidget {
   final List<String> availableColors = const [
@@ -31,11 +32,7 @@ class FormColorSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Cover Color',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
+        const FormLabelField('Cover Color'),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: availableColors.map((hexColor) {

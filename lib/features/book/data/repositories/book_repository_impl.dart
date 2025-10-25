@@ -58,11 +58,11 @@ class BookRepositoryImpl implements BookRepository {
   }
 
   @override
-  Future<BookEntity?> getBookByName(String name) async {
+  Future<BookEntity?> getBookByNameAndAuthor(String name, String author) async {
     final List<Map<String, dynamic>> maps = await _db.query(
       BookModel.table,
-      where: '${BookModel.name} = ?',
-      whereArgs: [name],
+      where: '${BookModel.name} = ? AND ${BookModel.author} = ?',
+      whereArgs: [name, author],
     );
     if (maps.isEmpty) {
       return null;

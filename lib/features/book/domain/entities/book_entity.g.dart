@@ -19,6 +19,9 @@ _BookEntity _$BookEntityFromJson(Map<String, dynamic> json) => _BookEntity(
   finishedAt: json['finishedAt'] == null
       ? null
       : DateTime.parse(json['finishedAt'] as String),
+  startedAt: json['startedAt'] == null
+      ? null
+      : DateTime.parse(json['startedAt'] as String),
 );
 
 Map<String, dynamic> _$BookEntityToJson(_BookEntity instance) =>
@@ -33,6 +36,7 @@ Map<String, dynamic> _$BookEntityToJson(_BookEntity instance) =>
       'updatedAt': instance.updatedAt.toIso8601String(),
       'currentPage': instance.currentPage,
       'finishedAt': instance.finishedAt?.toIso8601String(),
+      'startedAt': instance.startedAt?.toIso8601String(),
     };
 
 const _$BookStatusEnumMap = {

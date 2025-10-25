@@ -49,6 +49,7 @@ abstract class BookEntity with _$BookEntity, BookProgressLogic, BookColorLogic {
     required DateTime updatedAt,
     required int currentPage,
     DateTime? finishedAt,
+    DateTime? startedAt,
   }) = _BookEntity;
 
   factory BookEntity.fromJson(Map<String, dynamic> json) =>

@@ -18,20 +18,8 @@ class BookLibraryItem extends StatelessWidget {
     return InkWell(
       onTap: () => _navigateToDetails(context),
       child: Container(
-        height: 70,
-        padding: const EdgeInsets.only(left: 16),
-        decoration: BoxDecoration(
-          color: book.flutterColor.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 4),
-            ),
-          ],
-          border: Border(left: BorderSide(color: book.flutterColor, width: 20)),
-        ),
+        height: 60,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,20 +27,14 @@ class BookLibraryItem extends StatelessWidget {
             // Title
             Text(
               book.name,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 4),
-
+            const SizedBox(height: 2),
             // Author
             Text(
               book.author,
-              style: const TextStyle(color: Colors.white70),
-              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
             ),
           ],
         ),

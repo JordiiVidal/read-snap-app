@@ -36,14 +36,13 @@ class SelectButtonGroup extends StatelessWidget {
             return SizedBox(
               width: buttonWidth,
               height: height,
-              child: Material(
-                color: isSelected
-                    ? Color(int.parse(color.replaceFirst('#', '0xFF')))
-                    : theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(8.0),
-                elevation: isSelected ? 2 : 0,
-                shadowColor: theme.colorScheme.primary.withValues(alpha: 0.5),
-
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Color(int.parse(color.replaceFirst('#', '0xFF')))
+                      : Colors.black12,
+                  border: Border.all(color: Colors.black45),
+                ),
                 child: InkWell(
                   onTap: () {
                     List<String> newSelection;

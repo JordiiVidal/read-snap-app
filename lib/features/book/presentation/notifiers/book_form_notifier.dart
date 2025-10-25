@@ -30,39 +30,45 @@ class BookFormNotifier extends StateNotifier<AsyncValue<BookEntity>> {
         ),
       );
 
-  BookEntity get _currentBookEntity => state.value!;
+  BookEntity get currentBookDraft => state.value!;
 
   void updateName(String name) =>
-      state = AsyncValue.data(_currentBookEntity.copyWith(name: name));
+      state = AsyncValue.data(currentBookDraft.copyWith(name: name));
 
   void updateAuthor(String author) {
-    state = AsyncValue.data(_currentBookEntity.copyWith(author: author));
+    state = AsyncValue.data(currentBookDraft.copyWith(author: author));
   }
 
   void updateTotalPages(int totalPages) {
-    state = AsyncValue.data(
-      _currentBookEntity.copyWith(totalPages: totalPages),
-    );
+    state = AsyncValue.data(currentBookDraft.copyWith(totalPages: totalPages));
   }
 
   void updateCurrentPage(int currentPage) {
     state = AsyncValue.data(
-      _currentBookEntity.copyWith(currentPage: currentPage),
+      currentBookDraft.copyWith(currentPage: currentPage),
     );
   }
 
   void updateStatus(BookStatus status) {
-    state = AsyncValue.data(_currentBookEntity.copyWith(status: status));
+    state = AsyncValue.data(currentBookDraft.copyWith(status: status));
   }
 
   void updateColor(String color) =>
-      state = AsyncValue.data(_currentBookEntity.copyWith(color: color));
+      state = AsyncValue.data(currentBookDraft.copyWith(color: color));
+
+  void updateStartedAt(DateTime startDate) {
+    state = AsyncValue.data(currentBookDraft.copyWith(startedAt: startDate));
+  }
+
+  void updateFinishedAt(DateTime endDate) {
+    state = AsyncValue.data(currentBookDraft.copyWith(finishedAt: endDate));
+  }
 
   Future<void> saveBook() async {
     final previousState = state;
     state = AsyncValue<BookEntity>.loading().copyWithPrevious(previousState);
     try {
-      await _saveBookUseCase.call(_currentBookEntity);
+      await _saveBookUseCase.call(currentBookDraft);
     } on ArgumentError catch (_) {
       // Error to widget
       state = previousState;

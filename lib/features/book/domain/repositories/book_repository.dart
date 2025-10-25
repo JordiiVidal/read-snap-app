@@ -5,7 +5,7 @@ abstract class BookRepository {
 
   Future<BookEntity> getBookById(String id);
 
-  Future<BookEntity?> getBookByName(String name);
+  Future<BookEntity?> getBookByNameAndAuthor(String name, String author);
 
   Future<void> addBook(BookEntity book);
 

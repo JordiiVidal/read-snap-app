@@ -13,7 +13,7 @@ class BookLibrary extends ConsumerWidget {
     final bookLibraryState = ref.watch(statusProvider);
 
     return bookLibraryState.when(
-      loading: () => BookLibrarySkeleton(),
+      loading: () => BookLibraryLoading(),
       error: (err, stack) => Center(child: Text('An error occurred: $err')),
       data: (books) {
         // Empty
@@ -22,6 +22,8 @@ class BookLibrary extends ConsumerWidget {
         }
 
         return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: books.length + 1,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (ctx, i) {
@@ -30,7 +32,7 @@ class BookLibrary extends ConsumerWidget {
             }
 
             return Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(bottom: 2.0),
               child: BookLibraryItem(books[i]),
             );
           },

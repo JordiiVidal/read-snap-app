@@ -18,21 +18,29 @@ class BookListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _navigateToDetails(book.id, context),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(16),
       child: Container(
-        width: 200,
-        padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 16),
+        width: 220,
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: book.flutterColor.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: const [
+          borderRadius: BorderRadius.circular(16),
+          border: Border(left: BorderSide(color: book.flutterColor, width: 10)),
+          gradient: LinearGradient(
+            colors: [
+              book.flutterColor.withValues(alpha: .8),
+              book.flutterColor.withValues(alpha: .6),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 4),
+              color: book.flutterColor.withValues(alpha: .2),
+              blurRadius: 10,
+              offset: Offset(0, 6),
             ),
           ],
-          border: Border(left: BorderSide(color: book.flutterColor, width: 20)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,15 +48,23 @@ class BookListItem extends StatelessWidget {
             // Status
             Align(
               alignment: Alignment.topRight,
-              child: Text(
-                book.status.name.capitalize(),
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.bold,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  book.status.name.capitalize(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 25),
 
             // Title
             Text(
@@ -58,15 +74,16 @@ class BookListItem extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
 
             // Author
             Text(
               book.author,
-              style: const TextStyle(color: Colors.white70),
-              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontStyle: FontStyle.italic,
+              ),
             ),
             const SizedBox(height: 18),
 
@@ -82,7 +99,7 @@ class BookListItem extends StatelessWidget {
                 ),
                 Text(
                   '${book.currentPage}/${book.totalPages}',
-                  style: const TextStyle(color: Colors.white70),
+                  style: const TextStyle(color: Colors.white70, fontSize: 11),
                 ),
               ],
             ),

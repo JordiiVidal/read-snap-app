@@ -14,6 +14,7 @@ class BookModel {
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
   static const String finishedAt = 'finisehd_at';
+  static const String startedAt = 'started_at';
 
   Map<String, dynamic> toMap(BookEntity entity) {
     return {
@@ -26,6 +27,8 @@ class BookModel {
       color: entity.color,
       createdAt: entity.createdAt.millisecondsSinceEpoch,
       updatedAt: entity.updatedAt.millisecondsSinceEpoch,
+      finishedAt: entity.finishedAt?.millisecondsSinceEpoch,
+      startedAt: entity.startedAt?.millisecondsSinceEpoch,
     };
   }
 
@@ -45,6 +48,12 @@ class BookModel {
       color: map[color] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAt] as int),
+      finishedAt: map[finishedAt] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map[finishedAt] as int)
+          : null,
+      startedAt: map[startedAt] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map[startedAt] as int)
+          : null,
     );
   }
 }

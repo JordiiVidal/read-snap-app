@@ -13,10 +13,13 @@ class SaveBookUseCase {
 
     // 2.Validations
     _validateBook(bookToSave);
-    final existingBook = await _repository.getBookByName(book.name);
-    if (existingBook != null && existingBook.id != book.id) {
+    final existingBook = await _repository.getBookByNameAndAuthor(
+      book.name,
+      book.author,
+    );
+    if (existingBook != null) {
       throw ArgumentError(
-        'A book with the name "${book.name}" already exists.',
+        'A book with the name "${book.name}" and author "${book.author}" already exists.',
       );
     }
 
@@ -62,9 +65,9 @@ class SaveBookUseCase {
         }
         break;
       case BookStatus.reading:
-        if (book.currentPage <= 0 || book.currentPage >= book.totalPages) {
+        if (book.currentPage < 0 || book.currentPage >= book.totalPages) {
           throw ArgumentError(
-            'For status "Reading", current page must be between 1 and ${book.totalPages - 1}.',
+            'For status "Reading", current page must be between 0 and ${book.totalPages}.',
           );
         }
         break;

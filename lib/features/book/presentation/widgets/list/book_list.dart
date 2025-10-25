@@ -13,7 +13,7 @@ class BookList extends ConsumerWidget {
     final bookListState = ref.watch(statusProvider);
 
     return bookListState.when(
-      loading: () => BookListSkeleton(),
+      loading: () => BookListLoading(),
       error: (err, stack) => Center(child: Text('An error occurred: $err')),
       data: (books) {
         // Empty

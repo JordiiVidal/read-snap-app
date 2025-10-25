@@ -114,6 +114,7 @@ class BookDetailPage extends ConsumerWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Header
             BookHeader(book),
             const SizedBox(height: 16),
 
@@ -125,12 +126,11 @@ class BookDetailPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 8,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: BookCardProgress(book),
-                  ),
+                  SizedBox(width: 16),
+                  BookCardProgress(book),
                   SessionReadingTimeCard(bookId, book.flutterColor),
                   BookCardStatus(book),
+                  SizedBox(width: 16),
                 ],
               ),
             ),

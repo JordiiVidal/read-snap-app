@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionList extends ConsumerWidget {
@@ -14,14 +13,11 @@ class SessionList extends ConsumerWidget {
     final sessionsAsync = ref.watch(sessionListNotifierProvider(bookId));
 
     return sessionsAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => SessionListLoading(),
       error: (e, st) => Center(child: Text('Error loading sessions: $e')),
       data: (sessions) {
         if (sessions.isEmpty) {
-          return EmptyState(
-            title: 'No sessions yet',
-            message: 'Start tracking your reading by adding your first session',
-          );
+          return SessionListEmpty();
         }
 
         return Padding(

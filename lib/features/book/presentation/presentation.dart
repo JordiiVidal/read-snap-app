@@ -9,7 +9,7 @@ export 'pages/book_list_page.dart';
 // Providers
 export 'providers/book_list_selectors.dart';
 // Widgets
-export 'widgets/book_form_body.dart';
+export 'widgets/form/book_form.dart';
 export 'widgets/book_header.dart';
 // Cards
 export 'widgets/card/book_card_progress.dart';
@@ -17,10 +17,10 @@ export 'widgets/card/book_card_status.dart';
 // Library
 export 'widgets/library/book_library.dart';
 export 'widgets/library/book_library_item.dart';
-export 'widgets/library/book_library_skeleton.dart';
+export 'widgets/library/book_library_loading.dart';
 export 'widgets/library/book_library_empty.dart';
 // List
 export 'widgets/list/book_list.dart';
 export 'widgets/list/book_list_empty.dart';
 export 'widgets/list/book_list_item.dart';
-export 'widgets/list/book_list_skeleton.dart';
+export 'widgets/list/book_list_loading.dart';

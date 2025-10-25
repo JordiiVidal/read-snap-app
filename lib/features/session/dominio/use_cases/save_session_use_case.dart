@@ -1,12 +1,15 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
 import 'package:uuid/uuid.dart';
 
 class SaveSessionUseCase {
   final SessionRepository _sessionRepository;
   final BookRepository _bookRepository;
+  final Ref _ref;
 
-  SaveSessionUseCase(this._sessionRepository, this._bookRepository);
+  SaveSessionUseCase(this._sessionRepository, this._bookRepository, this._ref);
 
   Future<void> call(SessionEntity session) async {
     // Validations
@@ -32,6 +35,7 @@ class SaveSessionUseCase {
 
     await _bookRepository.updateBook(bookToUpdate);
     await _sessionRepository.saveSession(sessionToSave);
+    _ref.invalidate(bookListNotifierProvider);
   }
 
   SessionEntity _applyBusinessLogic(SessionEntity session) {

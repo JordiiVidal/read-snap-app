@@ -15,33 +15,46 @@ class BookListPage extends StatelessWidget {
             // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: const Text(
-                'Reading Books',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Currently Reading',
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    'Keep up your progress',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20),
 
             // Reading List
-            SizedBox(height: 350, child: BookList(readingBooksProvider)),
+            SizedBox(height: 300, child: BookList(readingBooksProvider)),
             SizedBox(height: 20),
 
             // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: const Text(
-                'Library',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              child: Column(
+                children: [
+                  const Text(
+                    'Your library',
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    'All your saved books',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20),
 
             // Library
-            SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: Expanded(child: BookLibrary(notReadingProvider)),
-            ),
+            BookLibrary(notReadingProvider),
           ],
         ),
       ),
