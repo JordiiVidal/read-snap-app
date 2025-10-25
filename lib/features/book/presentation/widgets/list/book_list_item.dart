@@ -8,16 +8,10 @@ class BookListItem extends StatelessWidget {
 
   const BookListItem(this.book, {super.key});
 
-  void _navigateToDetails(String bookId, BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _navigateToDetails(book.id, context),
+      onTap: () => _navigateToDetail(book.id, context),
       borderRadius: BorderRadius.circular(16),
       child: Container(
         width: 220,
@@ -117,5 +111,11 @@ class BookListItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToDetail(String bookId, BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => BookDetailPage(bookId)));
   }
 }

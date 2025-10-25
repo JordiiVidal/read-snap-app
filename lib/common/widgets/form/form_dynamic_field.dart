@@ -35,43 +35,68 @@ class FormDynamicField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) FormLabelField(label!),
-        TextFormField(
-          enabled: !disabled,
-          controller: controller,
-          initialValue: initialValue,
-          keyboardType: keyboardType,
-          onChanged: onChanged,
-          style: const TextStyle(fontSize: 14),
-          decoration: InputDecoration(
-            isDense: true,
-            prefixIcon: prefixIcon != null
-                ? GestureDetector(
-                    onTap: onPrefixPressed,
-                    child: Icon(prefixIcon),
-                  )
-                : null,
-            hintText: hintText,
-            suffixText: suffixText,
-            suffixStyle: const TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4.0),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 10,
-            ),
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x11000000),
+                blurRadius: 6,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-          validator: (value) {
-            if (required && (value == null || value.isEmpty)) {
-              return '$label is required.';
-            }
-            return null;
-          },
+          child: TextFormField(
+            enabled: !disabled,
+            controller: controller,
+            initialValue: initialValue,
+            keyboardType: keyboardType,
+            onChanged: onChanged,
+            style: const TextStyle(fontSize: 14),
+
+            decoration: InputDecoration(
+              hintText: hintText,
+              isDense: true,
+              filled: true,
+              fillColor: Colors.white,
+              prefixIcon: prefixIcon != null
+                  ? GestureDetector(
+                      onTap: onPrefixPressed,
+                      child: Icon(prefixIcon),
+                    )
+                  : null,
+              suffixText: suffixText,
+              suffixStyle: const TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Color(0xFFDDDDDD),
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.blue, width: 1.2),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFFEEEEEE)),
+              ),
+            ),
+
+            validator: (value) {
+              if (required && (value == null || value.isEmpty)) {
+                return '$label is required.';
+              }
+              return null;
+            },
+          ),
         ),
       ],
     );

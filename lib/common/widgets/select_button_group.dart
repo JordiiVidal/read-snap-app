@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_snap/common/widgets/form/form_label_field.dart';
 
 class SelectButtonGroup extends StatelessWidget {
   final Map<String, String> options;
@@ -7,6 +8,7 @@ class SelectButtonGroup extends StatelessWidget {
   final ValueChanged<List<String>> onSelectionChanged;
   final double height;
   final String color;
+  final String label;
 
   const SelectButtonGroup({
     required this.options,
@@ -15,6 +17,7 @@ class SelectButtonGroup extends StatelessWidget {
     this.isMultiSelect = false,
     this.height = 38.0,
     this.color = '#673AB7',
+    required this.label,
     super.key,
   });
 
@@ -23,63 +26,69 @@ class SelectButtonGroup extends StatelessWidget {
     final theme = Theme.of(context);
     final buttonKeys = options.keys.toList();
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final buttonWidth = constraints.maxWidth / options.length;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FormLabelField(label),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final buttonWidth = constraints.maxWidth / options.length;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: buttonKeys.map((value) {
-            final isSelected = selectedValues.contains(value);
-            final label = options[value]!;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: buttonKeys.map((value) {
+                final isSelected = selectedValues.contains(value);
+                final label = options[value]!;
 
-            return SizedBox(
-              width: buttonWidth,
-              height: height,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? Color(int.parse(color.replaceFirst('#', '0xFF')))
-                      : Colors.black12,
-                  border: Border.all(color: Colors.black45),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    List<String> newSelection;
+                return SizedBox(
+                  width: buttonWidth,
+                  height: height,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? Color(int.parse(color.replaceFirst('#', '0xFF')))
+                          : Colors.black12,
+                      border: Border.all(color: Colors.black45),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        List<String> newSelection;
 
-                    if (isMultiSelect) {
-                      newSelection = List.from(selectedValues);
-                      if (isSelected) {
-                        newSelection.remove(value);
-                      } else {
-                        newSelection.add(value);
-                      }
-                    } else {
-                      newSelection = [value];
-                    }
+                        if (isMultiSelect) {
+                          newSelection = List.from(selectedValues);
+                          if (isSelected) {
+                            newSelection.remove(value);
+                          } else {
+                            newSelection.add(value);
+                          }
+                        } else {
+                          newSelection = [value];
+                        }
 
-                    onSelectionChanged(newSelection);
-                  },
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Center(
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        fontWeight: isSelected
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        color: isSelected
-                            ? theme.colorScheme.onPrimary
-                            : theme.colorScheme.onSurface,
+                        onSelectionChanged(newSelection);
+                      },
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Center(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: isSelected
+                                ? theme.colorScheme.onPrimary
+                                : theme.colorScheme.onSurface,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }).toList(),
             );
-          }).toList(),
-        );
-      },
+          },
+        ),
+      ],
     );
   }
 }

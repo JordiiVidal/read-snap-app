@@ -6,13 +6,12 @@ class BookListLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: 3,
-      itemBuilder: (ctx, i) => Padding(
-        padding: EdgeInsets.only(right: 16.0, left: i == 0 ? 16.0 : 0),
-        child: const BookListLoadingItem(),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      separatorBuilder: (context, index) => const SizedBox(width: 16.0),
+      itemBuilder: (ctx, i) => const BookListLoadingItem(),
     );
   }
 }
@@ -29,25 +28,25 @@ class BookListLoadingItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Status
-          const Align(
+          Align(
             alignment: Alignment.topRight,
             child: SizedBox(width: 40, child: SkeletonLine()),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
 
           // Title
-          SizedBox(width: 150, child: const SkeletonLine()),
-          const SizedBox(height: 4),
+          SizedBox(width: 150, child: SkeletonLine()),
+          SizedBox(height: 4),
 
           // Author
           SizedBox(width: 100, child: SkeletonLine()),
-          const SizedBox(height: 18),
+          SizedBox(height: 18),
 
-          const Spacer(),
+          Spacer(),
 
           // Progress
           SkeletonLine(),

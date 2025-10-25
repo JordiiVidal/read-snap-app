@@ -7,13 +7,9 @@ class BookListEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 1,
-      itemBuilder: (ctx, i) => Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: BookListEmptyItem(),
-      ),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: BookListEmptyItem(),
     );
   }
 }
@@ -21,17 +17,11 @@ class BookListEmpty extends StatelessWidget {
 class BookListEmptyItem extends StatelessWidget {
   const BookListEmptyItem({super.key});
 
-  void _navigateToCreate(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 140,
-      margin: EdgeInsets.all(4),
+      margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.black.withValues(alpha: 0.06),
@@ -48,5 +38,11 @@ class BookListEmptyItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToCreate(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const BookCreatePage()));
   }
 }

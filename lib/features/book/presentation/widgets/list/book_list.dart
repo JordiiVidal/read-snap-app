@@ -4,15 +4,15 @@ import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookList extends ConsumerWidget {
-  final ProviderBase<AsyncValue<List<BookEntity>>> statusProvider;
+  final ProviderBase<AsyncValue<List<BookEntity>>> bookListProvider;
 
-  const BookList(this.statusProvider, {super.key});
+  const BookList(this.bookListProvider, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookListState = ref.watch(statusProvider);
+    final bookListAsync = ref.watch(bookListProvider);
 
-    return bookListState.when(
+    return bookListAsync.when(
       loading: () => BookListLoading(),
       error: (err, stack) => Center(child: Text('An error occurred: $err')),
       data: (books) {
@@ -22,21 +22,16 @@ class BookList extends ConsumerWidget {
         }
 
         // Data
-        return ListView.builder(
+        return ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: books.length + 1,
           padding: const EdgeInsets.symmetric(horizontal: 16),
+          separatorBuilder: (context, index) => const SizedBox(width: 16.0),
           itemBuilder: (context, index) {
-            // Empty
             if (index == books.length) {
               return BookListEmptyItem();
             }
-
-            // Book Card
-            return Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: BookListItem(books[index]),
-            );
+            return BookListItem(books[index]);
           },
         );
       },

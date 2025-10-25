@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/dashed_border_container.dart';
-import 'package:read_snap/features/book/presentation/pages/book_form_page.dart';
+import 'package:read_snap/features/book/presentation/pages/book_create_page.dart';
 
 class BookLibraryEmpty extends StatelessWidget {
   const BookLibraryEmpty({super.key});
@@ -25,7 +25,7 @@ class BookLibraryEmptyItem extends StatelessWidget {
   void _navigateToCreate(BuildContext context) {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (context) => const BookFormPage()));
+    ).push(MaterialPageRoute(builder: (context) => const BookCreatePage()));
   }
 
   @override

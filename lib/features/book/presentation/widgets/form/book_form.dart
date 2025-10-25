@@ -11,20 +11,19 @@ class BookForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formAsync = ref.watch(bookFormNotifierProvider);
-    final notifier = ref.read(bookFormNotifierProvider.notifier);
-    // Ahora mismo solo sirve para la creación de nuevos books
-    final BookEntity bookState = formAsync.value!;
+    final bookFormAsync = ref.watch(bookFormNotifierProvider);
+    final bookFormNotifier = ref.read(bookFormNotifierProvider.notifier);
+    final BookEntity bookState = bookFormAsync.value!;
 
     return Form(
       key: formKey,
       child: Column(
+        spacing: 15,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Status Select Button Group
-          FormLabelField('Status'),
-          const SizedBox(height: 8),
           SelectButtonGroup(
+            label: 'Status',
             color: bookState.color,
             options: {
               BookStatus.reading.name: 'Reading',
@@ -33,31 +32,27 @@ class BookForm extends ConsumerWidget {
             },
             selectedValues: [bookState.status.name],
             onSelectionChanged: (values) {
-              final status = BookStatus.values.firstWhere(
-                (status) => status.name == values.first,
-              );
-              notifier.updateStatus(status);
+              final statusName = values.first;
+              final status = BookStatus.values.byName(statusName);
+              bookFormNotifier.updateStatus(status);
             },
           ),
-          const SizedBox(height: 20),
 
           // Title Field
           FormDynamicField(
             label: 'Title',
             hintText: 'Enter book title',
             initialValue: bookState.name,
-            onChanged: notifier.updateName,
+            onChanged: bookFormNotifier.updateName,
           ),
-          const SizedBox(height: 20),
 
           // Author Field
           FormDynamicField(
             label: 'Author',
             hintText: 'Enter author name',
             initialValue: bookState.author,
-            onChanged: notifier.updateAuthor,
+            onChanged: bookFormNotifier.updateAuthor,
           ),
-          const SizedBox(height: 20),
 
           // Total Pages Field
           FormDynamicField(
@@ -66,17 +61,15 @@ class BookForm extends ConsumerWidget {
             keyboardType: TextInputType.number,
             onChanged: (value) {
               final pages = int.tryParse(value) ?? 0;
-              notifier.updateTotalPages(pages);
+              bookFormNotifier.updateTotalPages(pages);
             },
           ),
-          const SizedBox(height: 20),
 
           // Color Selector Widget
           FormColorSelector(
             selectedColor: bookState.color,
-            onColorSelected: notifier.updateColor,
+            onColorSelected: bookFormNotifier.updateColor,
           ),
-          const SizedBox(height: 20),
         ],
       ),
     );
