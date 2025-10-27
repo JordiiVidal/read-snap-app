@@ -16,11 +16,9 @@ class FormSubmit extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveOnPressed = isLoading ? null : onPressed;
 
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
+    return FilledButton(
+      style: FilledButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
       ),
       onPressed: effectiveOnPressed,

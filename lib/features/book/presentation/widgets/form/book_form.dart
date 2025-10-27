@@ -24,7 +24,7 @@ class BookForm extends ConsumerWidget {
           // Status Select Button Group
           SelectButtonGroup(
             label: 'Status',
-            color: bookState.color,
+            required: true,
             options: {
               BookStatus.reading.name: 'Reading',
               BookStatus.completed.name: 'Completed',
@@ -42,6 +42,7 @@ class BookForm extends ConsumerWidget {
           FormDynamicField(
             label: 'Title',
             hintText: 'Enter book title',
+            required: true,
             initialValue: bookState.name,
             onChanged: bookFormNotifier.updateName,
           ),
@@ -50,6 +51,7 @@ class BookForm extends ConsumerWidget {
           FormDynamicField(
             label: 'Author',
             hintText: 'Enter author name',
+            required: true,
             initialValue: bookState.author,
             onChanged: bookFormNotifier.updateAuthor,
           ),
@@ -58,17 +60,12 @@ class BookForm extends ConsumerWidget {
           FormDynamicField(
             label: 'Total Pages',
             hintText: 'Enter total pages',
+            required: true,
             keyboardType: TextInputType.number,
             onChanged: (value) {
               final pages = int.tryParse(value) ?? 0;
               bookFormNotifier.updateTotalPages(pages);
             },
-          ),
-
-          // Color Selector Widget
-          FormColorSelector(
-            selectedColor: bookState.color,
-            onColorSelected: bookFormNotifier.updateColor,
           ),
         ],
       ),

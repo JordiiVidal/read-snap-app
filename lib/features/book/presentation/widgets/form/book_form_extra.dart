@@ -60,6 +60,7 @@ class BookFormExtra extends StatelessWidget {
                 },
               },
             ),
+            // TODO: Add estimated time dedicated
           ],
 
           // Start Date Field
@@ -88,7 +89,7 @@ class BookFormExtra extends StatelessWidget {
           ),
 
           // End Date Field
-          if (isCompleted) ...[
+          if (isCompleted)
             FormActionRow(
               inputField: FormDynamicField(
                 label: 'End Date',
@@ -112,7 +113,6 @@ class BookFormExtra extends StatelessWidget {
                 },
               },
             ),
-          ],
 
           // Submit Button
           Container(

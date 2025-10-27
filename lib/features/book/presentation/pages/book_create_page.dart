@@ -50,7 +50,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
 
               // Form
               BookForm(_formKey),
-              const SizedBox(height: 16),
+              const SizedBox(height: 30),
 
               // Submit Button
               SizedBox(

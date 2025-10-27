@@ -13,6 +13,7 @@ class FormDynamicField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function()? onPrefixPressed;
   final String? suffixText;
+  final double borderRadius;
 
   const FormDynamicField({
     this.label,
@@ -26,6 +27,7 @@ class FormDynamicField extends StatelessWidget {
     this.controller,
     this.prefixIcon,
     this.suffixText,
+    this.borderRadius = 8,
     super.key,
   });
 
@@ -35,68 +37,42 @@ class FormDynamicField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) FormLabelField(label!),
-        Container(
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x11000000),
-                blurRadius: 6,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            enabled: !disabled,
-            controller: controller,
-            initialValue: initialValue,
-            keyboardType: keyboardType,
-            onChanged: onChanged,
-            style: const TextStyle(fontSize: 14),
+        TextFormField(
+          enabled: !disabled,
+          controller: controller,
+          initialValue: initialValue,
+          keyboardType: keyboardType,
+          onChanged: onChanged,
+          style: const TextStyle(fontSize: 14),
 
-            decoration: InputDecoration(
-              hintText: hintText,
-              isDense: true,
-              filled: true,
-              fillColor: Colors.white,
-              prefixIcon: prefixIcon != null
-                  ? GestureDetector(
-                      onTap: onPrefixPressed,
-                      child: Icon(prefixIcon),
-                    )
-                  : null,
-              suffixText: suffixText,
-              suffixStyle: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFFDDDDDD),
-                  width: 1,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.blue, width: 1.2),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFEEEEEE)),
-              ),
+          decoration: InputDecoration(
+            hintText: hintText,
+            isDense: true,
+            filled: true,
+            fillColor: Colors.white,
+            prefixIcon: prefixIcon != null
+                ? GestureDetector(
+                    onTap: onPrefixPressed,
+                    child: Icon(prefixIcon),
+                  )
+                : null,
+            suffixText: suffixText,
+            suffixStyle: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
             ),
-
-            validator: (value) {
-              if (required && (value == null || value.isEmpty)) {
-                return '$label is required.';
-              }
-              return null;
-            },
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
           ),
+
+          validator: (value) {
+            if (required && (value == null || value.isEmpty)) {
+              return '$label is required.';
+            }
+            return null;
+          },
         ),
       ],
     );

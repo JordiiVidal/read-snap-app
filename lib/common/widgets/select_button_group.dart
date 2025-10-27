@@ -6,87 +6,69 @@ class SelectButtonGroup extends StatelessWidget {
   final List<String> selectedValues;
   final bool isMultiSelect;
   final ValueChanged<List<String>> onSelectionChanged;
-  final double height;
-  final String color;
   final String label;
+  final bool showCheckmark;
+  final bool required;
 
   const SelectButtonGroup({
     required this.options,
     required this.selectedValues,
     required this.onSelectionChanged,
-    this.isMultiSelect = false,
-    this.height = 38.0,
-    this.color = '#673AB7',
     required this.label,
+    this.isMultiSelect = false,
+    this.showCheckmark = true,
+    this.required = true,
     super.key,
   });
 
+  void _handleSelection(String value) {
+    List<String> newSelection = List.from(selectedValues);
+    final isSelected = selectedValues.contains(value);
+
+    if (isMultiSelect) {
+      if (isSelected) {
+        newSelection.remove(value);
+      } else {
+        newSelection.add(value);
+      }
+    } else {
+      if (isSelected && !required) {
+        newSelection = [];
+      } else {
+        newSelection = [value];
+      }
+    }
+
+    onSelectionChanged(newSelection);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final buttonKeys = options.keys.toList();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FormLabelField(label),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final buttonWidth = constraints.maxWidth / options.length;
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          children: options.entries.map((entry) {
+            final value = entry.key;
+            final label = entry.value;
+            final isSelected = selectedValues.contains(value);
 
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: buttonKeys.map((value) {
-                final isSelected = selectedValues.contains(value);
-                final label = options[value]!;
-
-                return SizedBox(
-                  width: buttonWidth,
-                  height: height,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? Color(int.parse(color.replaceFirst('#', '0xFF')))
-                          : Colors.black12,
-                      border: Border.all(color: Colors.black45),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        List<String> newSelection;
-
-                        if (isMultiSelect) {
-                          newSelection = List.from(selectedValues);
-                          if (isSelected) {
-                            newSelection.remove(value);
-                          } else {
-                            newSelection.add(value);
-                          }
-                        } else {
-                          newSelection = [value];
-                        }
-
-                        onSelectionChanged(newSelection);
-                      },
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Center(
-                        child: Text(
-                          label,
-                          style: TextStyle(
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                            color: isSelected
-                                ? theme.colorScheme.onPrimary
-                                : theme.colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+            return FilterChip(
+              selected: isSelected,
+              showCheckmark: showCheckmark,
+              label: Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.black87,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              onSelected: (selected) => _handleSelection(value),
             );
-          },
+          }).toList(),
         ),
       ],
     );

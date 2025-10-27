@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/config/app_theme.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/presentation/pages/book_list_page.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +16,7 @@ class ReadSnapApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'ReadSnap',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black12),
-      ),
+      theme: AppTheme.lightTheme,
       home: ref
           .watch(databaseProvider)
           .when(
