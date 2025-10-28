@@ -2,18 +2,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
-final bookFormNotifierProvider =
-    StateNotifierProvider.autoDispose<BookFormNotifier, AsyncValue<BookEntity>>(
-      (ref) {
-        final saveBookUseCase = ref.watch(saveBookUseCaseProvider);
-        return BookFormNotifier(saveBookUseCase);
-      },
-    );
+final bookCreateNotifierProvider =
+    StateNotifierProvider.autoDispose<
+      BookCreateNotifier,
+      AsyncValue<BookEntity>
+    >((ref) {
+      final crateBookUseCase = ref.watch(createBookUseCaseProvider);
+      return BookCreateNotifier(crateBookUseCase);
+    });
 
-class BookFormNotifier extends StateNotifier<AsyncValue<BookEntity>> {
-  final SaveBookUseCase _saveBookUseCase;
+class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
+  final CreateBookUseCase _createBookUseCase;
 
-  BookFormNotifier(this._saveBookUseCase)
+  BookCreateNotifier(this._createBookUseCase)
     : super(
         AsyncValue.data(
           BookEntity(
@@ -43,32 +44,17 @@ class BookFormNotifier extends StateNotifier<AsyncValue<BookEntity>> {
     state = AsyncValue.data(currentBookDraft.copyWith(totalPages: totalPages));
   }
 
-  void updateCurrentPage(int currentPage) {
-    state = AsyncValue.data(
-      currentBookDraft.copyWith(currentPage: currentPage),
-    );
-  }
-
   void updateStatus(BookStatus status) {
     state = AsyncValue.data(currentBookDraft.copyWith(status: status));
   }
 
-  void updateColor(String color) =>
-      state = AsyncValue.data(currentBookDraft.copyWith(color: color));
-
-  void updateStartedAt(DateTime startDate) {
-    state = AsyncValue.data(currentBookDraft.copyWith(startedAt: startDate));
-  }
-
-  void updateFinishedAt(DateTime endDate) {
-    state = AsyncValue.data(currentBookDraft.copyWith(finishedAt: endDate));
-  }
-
-  Future<void> saveBook() async {
+  Future<BookEntity> createBook() async {
     final previousState = state;
     state = AsyncValue<BookEntity>.loading().copyWithPrevious(previousState);
     try {
-      await _saveBookUseCase.call(currentBookDraft);
+      final createdBook = await _createBookUseCase.call(currentBookDraft);
+      state = AsyncValue.data(createdBook);
+      return createdBook;
     } on ArgumentError catch (_) {
       // Error to widget
       state = previousState;

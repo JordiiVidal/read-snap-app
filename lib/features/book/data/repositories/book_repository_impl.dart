@@ -1,6 +1,6 @@
 import 'package:read_snap/features/book/data/models/book_model.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/domain/exceptions.dart';
+import 'package:read_snap/features/book/domain/services/exceptions.dart';
 import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
 

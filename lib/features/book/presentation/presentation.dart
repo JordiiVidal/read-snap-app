@@ -1,9 +1,10 @@
 // Notifiers
+export 'notifiers/book_create_notifier.dart';
 export 'notifiers/book_detail_notifier.dart';
-export 'notifiers/book_form_notifier.dart';
 export 'notifiers/book_list_notifier.dart';
-export 'pages/book_create_page.dart';
+export 'notifiers/book_update_notifier.dart';
 // Pages
+export 'pages/book_create_page.dart';
 export 'pages/book_detail_page.dart';
 export 'pages/book_list_page.dart';
 // Providers
@@ -14,8 +15,8 @@ export 'widgets/book_header.dart';
 export 'widgets/card/book_card_progress.dart';
 export 'widgets/card/book_card_status.dart';
 // Form
-export 'widgets/form/book_form.dart';
-export 'widgets/form/book_form_extra.dart';
+export 'widgets/form/book_create_form.dart';
+export 'widgets/form/book_update_form_extra.dart';
 // Library
 export 'widgets/library/book_library.dart';
 export 'widgets/library/book_library_empty.dart';

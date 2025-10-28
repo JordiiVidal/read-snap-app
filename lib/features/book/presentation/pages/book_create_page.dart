@@ -16,9 +16,9 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bookFormAsync = ref.watch(bookFormNotifierProvider);
-    final bookFormNotifier = ref.read(bookFormNotifierProvider.notifier);
-    final isLoading = bookFormAsync.maybeWhen(
+    final bookCreateAsync = ref.watch(bookCreateNotifierProvider);
+    final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
+    final isLoading = bookCreateAsync.maybeWhen(
       loading: () => true,
       orElse: () => false,
     );
@@ -49,7 +49,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
               const SizedBox(height: 20),
 
               // Form
-              BookForm(_formKey),
+              BookCreateForm(_formKey),
               const SizedBox(height: 30),
 
               // Submit Button
@@ -59,7 +59,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
                   isLoading: isLoading,
                   'Add Book',
                   () => _handleSubmit(
-                    bookFormNotifier,
+                    bookCreateNotifier,
                     ScaffoldMessenger.of(context),
                   ),
                 ),
@@ -71,13 +71,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
     );
   }
 
-  Future<bool> _handleExtraFieldsSheet(BookFormNotifier notifier) async {
-    final currentBookDraft = notifier.currentBookDraft;
-
-    if (currentBookDraft.status == BookStatus.toRead) {
-      return true;
-    }
-
+  Future<bool> _handleExtraFieldsSheet(BookEntity book) async {
     final result = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -91,7 +85,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: BookFormExtra(notifier),
+          child: BookUpdateFormExtra(book),
         );
       },
     );
@@ -100,7 +94,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
   }
 
   Future<void> _handleSubmit(
-    BookFormNotifier notifier,
+    BookCreateNotifier notifier,
     ScaffoldMessengerState scaffoldMessenger,
   ) async {
     if (!_formKey.currentState!.validate()) {
@@ -108,13 +102,12 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
     }
 
     try {
-      final result = await _handleExtraFieldsSheet(notifier);
+      final createdBook = await notifier.createBook();
 
-      if (!result) {
-        return;
+      if (createdBook.status != BookStatus.toRead) {
+        await _handleExtraFieldsSheet(createdBook);
       }
 
-      await notifier.saveBook();
       await ref.read(bookListNotifierProvider.notifier).refreshBooks();
 
       if (!mounted) return;

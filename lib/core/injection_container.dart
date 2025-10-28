@@ -24,8 +24,18 @@ final bookRepositoryProvider = Provider<BookRepository>((ref) {
   return BookRepositoryImpl(database);
 });
 /* Use Cases */
-final saveBookUseCaseProvider = Provider<SaveBookUseCase>((ref) {
-  return SaveBookUseCase(ref.watch(bookRepositoryProvider));
+final createBookUseCaseProvider = Provider<CreateBookUseCase>((ref) {
+  return CreateBookUseCase(
+    ref.watch(bookRepositoryProvider),
+    BookValidatorService(),
+  );
+});
+
+final updateBookUseCaseProvider = Provider<UpdateBookUseCase>((ref) {
+  return UpdateBookUseCase(
+    ref.watch(bookRepositoryProvider),
+    BookValidatorService(),
+  );
 });
 
 final getBooksUseCaseProvider = Provider<GetBooksUseCase>((ref) {

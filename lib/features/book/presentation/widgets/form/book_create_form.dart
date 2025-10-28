@@ -4,19 +4,20 @@ import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
-class BookForm extends ConsumerWidget {
+class BookCreateForm extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
 
-  const BookForm(this.formKey, {super.key});
+  const BookCreateForm(this.formKey, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookFormAsync = ref.watch(bookFormNotifierProvider);
-    final bookFormNotifier = ref.read(bookFormNotifierProvider.notifier);
-    final BookEntity bookState = bookFormAsync.value!;
+    final bookCreateAsync = ref.watch(bookCreateNotifierProvider);
+    final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
+    final BookEntity bookState = bookCreateAsync.value!;
 
     return Form(
       key: formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         spacing: 15,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +35,7 @@ class BookForm extends ConsumerWidget {
             onSelectionChanged: (values) {
               final statusName = values.first;
               final status = BookStatus.values.byName(statusName);
-              bookFormNotifier.updateStatus(status);
+              bookCreateNotifier.updateStatus(status);
             },
           ),
 
@@ -44,7 +45,7 @@ class BookForm extends ConsumerWidget {
             hintText: 'Enter book title',
             required: true,
             initialValue: bookState.name,
-            onChanged: bookFormNotifier.updateName,
+            onChanged: bookCreateNotifier.updateName,
           ),
 
           // Author Field
@@ -53,7 +54,7 @@ class BookForm extends ConsumerWidget {
             hintText: 'Enter author name',
             required: true,
             initialValue: bookState.author,
-            onChanged: bookFormNotifier.updateAuthor,
+            onChanged: bookCreateNotifier.updateAuthor,
           ),
 
           // Total Pages Field
@@ -64,7 +65,7 @@ class BookForm extends ConsumerWidget {
             keyboardType: TextInputType.number,
             onChanged: (value) {
               final pages = int.tryParse(value) ?? 0;
-              bookFormNotifier.updateTotalPages(pages);
+              bookCreateNotifier.updateTotalPages(pages);
             },
           ),
         ],
