@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/features/session/dominio/entities/session_entity.dart';
+import 'package:read_snap/features/session/dominio/domain.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionForm extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
-  final SessionEntity session;
-  final SessionFormNotifier notifier;
+  final String bookId;
 
-  const SessionForm(this.formKey, this.session, this.notifier, {super.key});
+  const SessionForm(this.formKey, this.bookId, {super.key});
 
   @override
   ConsumerState<SessionForm> createState() => _SessionFormState();
@@ -18,57 +17,85 @@ class _SessionFormState extends ConsumerState<SessionForm> {
   late final TextEditingController _endPageController;
   late final TextEditingController _startPageController;
   late final TextEditingController _minutesController;
+  late final TextEditingController _dateController;
 
   @override
   void initState() {
     super.initState();
-    _startPageController = TextEditingController(
-      text: widget.session.startPage.toString(),
-    );
-    _endPageController = TextEditingController(
-      text: widget.session.endPage.toString(),
-    );
-    _minutesController = TextEditingController(
-      text: widget.session.minutesRead.toString(),
-    );
+    _startPageController = TextEditingController();
+    _endPageController = TextEditingController();
+    _minutesController = TextEditingController();
+    _dateController = TextEditingController();
   }
 
   @override
-  void didUpdateWidget(SessionForm oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.session.endPage != oldWidget.session.endPage) {
-      _endPageController.text = widget.session.endPage.toString();
-    }
-    if (widget.session.startPage != oldWidget.session.startPage) {
-      _startPageController.text = widget.session.startPage.toString();
-    }
-    if (widget.session.minutesRead != oldWidget.session.minutesRead) {
-      _minutesController.text = widget.session.minutesRead.toString();
-    }
+  void dispose() {
+    _endPageController.dispose();
+    _startPageController.dispose();
+    _minutesController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final sessionAsync = ref.watch(
+      sessionCreateNotifierProvider(widget.bookId),
+    );
+    final sessionCreateNotifier = ref.read(
+      sessionCreateNotifierProvider(widget.bookId).notifier,
+    );
+
+    sessionAsync.whenOrNull(
+      data: (session) {
+        _syncControllers(session);
+      },
+    );
+
     return Form(
       key: widget.formKey,
       child: ListView(
         children: [
-          SessionFormPageStart(widget.notifier, _startPageController),
+          SessionFormPageStart(_startPageController, (value) {
+            final parsed = int.tryParse(value) ?? 0;
+            sessionCreateNotifier.updateStartPage(parsed);
+          }),
           const SizedBox(height: 20),
 
           SessionFormPageEnd(
-            widget.notifier,
             _endPageController,
-            widget.notifier.totalPages,
+            sessionCreateNotifier.totalPages,
+            (value) {
+              final parsed = int.tryParse(value) ?? 0;
+              sessionCreateNotifier.updateEndPage(parsed);
+            },
           ),
           const SizedBox(height: 20),
 
-          SessionFormMinutes(widget.notifier, _minutesController),
+          SessionFormMinutes(_minutesController, (value) {
+            sessionCreateNotifier.updateMinutesRead(value);
+          }),
           const SizedBox(height: 20),
 
-          SessionFormDate(widget.notifier, widget.session.sessionDate),
+          SessionFormDate(_dateController, (value) {
+            sessionCreateNotifier.updateSessionDate(value);
+          }),
         ],
       ),
     );
+  }
+
+  void _syncControllers(SessionEntity session) {
+    if (_startPageController.text != session.startPage.toString()) {
+      _startPageController.text = session.startPage.toString();
+    }
+    if (_endPageController.text != session.endPage.toString()) {
+      _endPageController.text = session.endPage.toString();
+    }
+    if (_minutesController.text != session.minutesRead.toString()) {
+      _minutesController.text = session.minutesRead.toString();
+    }
+    if (_dateController.text != session.sessionDate.toString()) {
+      _dateController.text = session.sessionDate.toString();
+    }
   }
 }

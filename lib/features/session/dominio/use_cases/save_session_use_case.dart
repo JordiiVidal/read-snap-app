@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/presentation/presentation.dart';
 import 'package:uuid/uuid.dart';
 
 class SaveSessionUseCase {
@@ -33,9 +34,13 @@ class SaveSessionUseCase {
       );
     }
 
-    await _bookRepository.updateBook(bookToUpdate);
     await _sessionRepository.saveSession(sessionToSave);
+    await _bookRepository.updateBook(bookToUpdate);
+
     _ref.invalidate(bookListNotifierProvider);
+    _ref.invalidate(totalTimeProvider(session.bookId));
+    _ref.invalidate(sessionCountProvider(session.bookId));
+    _ref.invalidate(bookDetailNotifierProvider(session.bookId));
   }
 
   SessionEntity _applyBusinessLogic(SessionEntity session) {

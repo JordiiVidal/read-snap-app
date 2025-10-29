@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormMinutes extends StatelessWidget {
-  final SessionFormNotifier notifier;
   final TextEditingController minutesController;
+  final Function(int) onMinutesChanged;
 
-  const SessionFormMinutes(this.notifier, this.minutesController, {super.key});
+  const SessionFormMinutes(
+    this.minutesController,
+    this.onMinutesChanged, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class SessionFormMinutes extends StatelessWidget {
           keyboardType: TextInputType.number,
           onChanged: (value) {
             final minutes = int.tryParse(value) ?? 0;
-            notifier.updateMinutesRead(minutes);
+            onMinutesChanged(minutes);
           },
         ),
         Row(
@@ -30,7 +33,7 @@ class SessionFormMinutes extends StatelessWidget {
             // 30 min
             Expanded(
               child: ElevatedButton(
-                onPressed: () => notifier.updateMinutesRead(30),
+                onPressed: () => onMinutesChanged(30),
                 child: const Text('30 min'),
               ),
             ),
@@ -38,7 +41,7 @@ class SessionFormMinutes extends StatelessWidget {
             // 1 h
             Expanded(
               child: ElevatedButton(
-                onPressed: () => notifier.updateMinutesRead(60),
+                onPressed: () => onMinutesChanged(60),
                 child: const Text('1h'),
               ),
             ),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormPageStart extends StatelessWidget {
-  final SessionFormNotifier notifier;
   final TextEditingController startPageController;
+  final Function(String) onPageChanged;
 
   const SessionFormPageStart(
-    this.notifier,
-    this.startPageController, {
+    this.startPageController,
+    this.onPageChanged, {
     super.key,
   });
 
@@ -27,7 +26,7 @@ class SessionFormPageStart extends StatelessWidget {
             // Action Button
             TextButton(
               onPressed: () {
-                notifier.restart();
+                onPageChanged('0');
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,10 +43,7 @@ class SessionFormPageStart extends StatelessWidget {
           disabled: true,
           controller: startPageController,
           keyboardType: TextInputType.number,
-          onChanged: (value) {
-            final pages = int.tryParse(value) ?? 0;
-            notifier.updateStartPage(pages);
-          },
+          onChanged: onPageChanged,
         ),
       ],
     );

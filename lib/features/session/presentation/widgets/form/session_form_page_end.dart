@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormPageEnd extends StatelessWidget {
-  final SessionFormNotifier notifier;
   final TextEditingController endPageController;
+  final Function(String) onPageChanged;
   final int totalPages;
 
   const SessionFormPageEnd(
-    this.notifier,
     this.endPageController,
-    this.totalPages, {
+    this.totalPages,
+    this.onPageChanged, {
     super.key,
   });
 
@@ -29,7 +28,7 @@ class SessionFormPageEnd extends StatelessWidget {
             // Action Button
             TextButton(
               onPressed: () {
-                notifier.markAsFinished();
+                onPageChanged(totalPages.toString());
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,10 +45,7 @@ class SessionFormPageEnd extends StatelessWidget {
           suffixText: '/ $totalPages',
           controller: endPageController,
           keyboardType: TextInputType.number,
-          onChanged: (value) {
-            final pages = int.tryParse(value) ?? 0;
-            notifier.updateEndPage(pages);
-          },
+          onChanged: onPageChanged,
         ),
       ],
     );

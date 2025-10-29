@@ -1,9 +1,9 @@
 //Notifiers
-export 'notifiers/session_form_notifier.dart';
+export 'notifiers/session_create_notifier.dart';
 export 'notifiers/session_list_notifier.dart';
 export 'notifiers/session_stats_notifier.dart';
 //Pages
-export 'pages/session_form_page.dart';
+export 'pages/session_create_page.dart';
 // Form
 export 'widgets/form/session_form.dart';
 export 'widgets/form/session_form_date.dart';

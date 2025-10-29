@@ -14,7 +14,7 @@ class BookDetailPage extends ConsumerWidget {
   void _navigateToCreateSession(BuildContext context) {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (ctx) => SessionFormPage(bookId)));
+    ).push(MaterialPageRoute(builder: (ctx) => SessionCreatePage(bookId)));
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {

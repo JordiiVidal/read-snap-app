@@ -4,21 +4,21 @@ import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/dominio/domain.dart';
 
-final sessionFormNotifierProvider = StateNotifierProvider.family
-    .autoDispose<SessionFormNotifier, AsyncValue<SessionEntity>, String>((
+final sessionCreateNotifierProvider = StateNotifierProvider.family
+    .autoDispose<SessionCreateNotifier, AsyncValue<SessionEntity>, String>((
       ref,
       bookId,
     ) {
       final bookAsync = ref.watch(bookDetailNotifierProvider(bookId));
       final saveSessionUseCase = ref.watch(saveSessionUseCaseProvider);
-      return SessionFormNotifier(saveSessionUseCase, bookId, bookAsync);
+      return SessionCreateNotifier(saveSessionUseCase, bookId, bookAsync);
     });
 
-class SessionFormNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
+class SessionCreateNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
   final SaveSessionUseCase _saveSessionUseCase;
   int _bookTotalPages = 0;
 
-  SessionFormNotifier(
+  SessionCreateNotifier(
     this._saveSessionUseCase,
     String bookId,
     AsyncValue<BookEntity> bookAsync,

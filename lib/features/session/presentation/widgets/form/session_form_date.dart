@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionFormDate extends StatelessWidget {
-  final SessionFormNotifier notifier;
-  final DateTime sessionDate;
+  final TextEditingController dateController;
+  final Function(DateTime) onDateChanged;
 
-  const SessionFormDate(this.notifier, this.sessionDate, {super.key});
+  const SessionFormDate(this.dateController, this.onDateChanged, {super.key});
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: sessionDate,
+      initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
     if (picked != null) {
-      notifier.updateSessionDate(picked);
+      onDateChanged(picked);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate =
-        '${sessionDate.day}/${sessionDate.month}/${sessionDate.year}';
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 15,
@@ -32,13 +28,13 @@ class SessionFormDate extends StatelessWidget {
         FormDynamicField(
           label: 'Session Date',
           hintText: 'Enter session date',
-          controller: TextEditingController(text: formattedDate),
+          controller: dateController,
           keyboardType: TextInputType.datetime,
           prefixIcon: Icons.calendar_today,
           onPrefixPressed: () => _selectDate(context),
           onChanged: (value) {
             final date = DateTime.parse(value);
-            notifier.updateSessionDate(date);
+            onDateChanged(date);
           },
         ),
         Row(
@@ -47,7 +43,7 @@ class SessionFormDate extends StatelessWidget {
             // Today Button
             Expanded(
               child: ElevatedButton(
-                onPressed: () => notifier.today(),
+                onPressed: () => onDateChanged(DateTime.now()),
                 child: const Text('Today'),
               ),
             ),
@@ -55,7 +51,9 @@ class SessionFormDate extends StatelessWidget {
             // Yesterday Button
             Expanded(
               child: ElevatedButton(
-                onPressed: () => notifier.yesterday(),
+                onPressed: () => onDateChanged(
+                  DateTime.now().subtract(const Duration(days: 1)),
+                ),
                 child: const Text('Yesterday'),
               ),
             ),
