@@ -37,22 +37,28 @@ class AppTheme {
       style: FilledButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
         padding: const EdgeInsets.symmetric(vertical: 16),
       ),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: AppColors.border, width: 1.0),
       ),
       enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: AppColors.border, width: 1.0),
       ),
       focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: AppColors.borderFocus, width: 1.3),
       ),
       errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: AppColors.error, width: 1.0),
       ),
       hintStyle: TextStyle(color: AppColors.textSecondary),
@@ -62,7 +68,7 @@ class AppTheme {
 
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,
-      titleTextStyle: GoogleFonts.inter(
+      titleTextStyle: GoogleFonts.sora(
         textStyle: TextStyle(
           color: AppColors.textPrimary,
           fontSize: 20,

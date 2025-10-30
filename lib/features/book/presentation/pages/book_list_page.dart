@@ -12,22 +12,34 @@ class BookListPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 20,
           children: [
             // Header
             const SectionHeader(
               title: 'Currently Reading',
-              subtitle: 'Keep up your progress',
+              subtitle: 'Pick up where you left off',
             ),
+            const SizedBox(height: 20),
 
             // Reading List
-            SizedBox(height: 300, child: BookList(readingBooksProvider)),
+            SizedBox(height: 300, child: BookList()),
+            const SizedBox(height: 40),
 
             // Header
-            const SectionHeader(
+            SectionHeader(
               title: 'Your library',
               subtitle: 'All your saved books',
+              actionWidget: FilledButton(
+                style: FilledButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(4),
+                ),
+                child: Icon(Icons.add, size: 18),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => BookCreatePage()),
+                ),
+              ),
             ),
+            const SizedBox(height: 10),
 
             // Library
             BookLibrary(notReadingProvider),

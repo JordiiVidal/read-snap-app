@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookList extends ConsumerWidget {
-  final ProviderBase<AsyncValue<List<BookEntity>>> bookListProvider;
-
-  const BookList(this.bookListProvider, {super.key});
+  const BookList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookListAsync = ref.watch(bookListProvider);
+    final bookListAsync = ref.watch(readingBooksProvider);
 
     return bookListAsync.when(
       loading: () => BookListLoading(),

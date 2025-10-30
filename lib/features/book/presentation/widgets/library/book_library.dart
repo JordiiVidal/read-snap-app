@@ -24,13 +24,8 @@ class BookLibrary extends ConsumerWidget {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: books.length + 1,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: books.length,
           itemBuilder: (ctx, i) {
-            if (i == books.length) {
-              return BookLibraryEmptyItem();
-            }
-
             return Padding(
               padding: const EdgeInsets.only(bottom: 2.0),
               child: BookLibraryItem(books[i]),

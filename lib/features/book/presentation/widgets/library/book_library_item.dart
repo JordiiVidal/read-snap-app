@@ -15,30 +15,19 @@ class BookLibraryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return ListTile(
       onTap: () => _navigateToDetails(context),
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Title
-            Text(
-              book.name,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 2),
-            // Author
-            Text(
-              book.author,
-              style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
-            ),
-          ],
-        ),
+      leading: Icon(Icons.book, size: 24),
+      title: Text(
+        book.name,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        overflow: TextOverflow.ellipsis,
       ),
+      subtitle: Text(
+        book.author,
+        style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+      ),
+      trailing: Icon(Icons.arrow_forward_ios, size: 14),
     );
   }
 }

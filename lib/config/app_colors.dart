@@ -5,12 +5,12 @@ Color _hexToColor(String hexCode) {
 }
 
 class AppColors {
-  static final Color primary = _hexToColor('#3A7AFE');
-  static final Color primaryVariant = _hexToColor('#2357D9');
-  static final Color secondary = _hexToColor('#6C6F93');
-  static final Color success = _hexToColor('#22C55E');
-  static final Color warning = _hexToColor('#FACC15');
-  static final Color error = _hexToColor('#EF4444');
+  static final Color primary = _hexToColor('#556CF6');
+  static final Color primaryVariant = _hexToColor('#4452D6');
+  static final Color secondary = _hexToColor('#8E94A7');
+  static final Color success = _hexToColor('#27AE60');
+  static final Color warning = _hexToColor('#F4B740');
+  static final Color error = _hexToColor('#E74C3C');
 
   static final Color background = _hexToColor('#F8FAFC');
   static final Color surface = _hexToColor('#FFFFFF');
@@ -18,6 +18,6 @@ class AppColors {
   static final Color textPrimary = _hexToColor('#1E293B');
   static final Color textSecondary = _hexToColor('#64748B');
 
-  static final Color border = _hexToColor('#E2E8F0');
-  static final Color borderFocus = Color(0xFF94B3FD);
+  static final Color border = _hexToColor('#E5E7EB');
+  static final Color borderFocus = _hexToColor('#A5B4FC');
 }

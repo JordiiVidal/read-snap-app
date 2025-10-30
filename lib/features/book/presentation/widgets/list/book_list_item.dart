@@ -12,21 +12,16 @@ class BookListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _navigateToDetail(book.id, context),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(4),
       child: Container(
         width: 220,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: book.flutterColor.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(4),
           border: Border(left: BorderSide(color: book.flutterColor, width: 10)),
           gradient: LinearGradient(
-            colors: [
-              book.flutterColor.withValues(alpha: .8),
-              book.flutterColor.withValues(alpha: .6),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            colors: [Color(0xFF9A8CFF), Color(0xFF7B6DFF)],
           ),
           boxShadow: [
             BoxShadow(
