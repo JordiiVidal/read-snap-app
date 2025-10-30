@@ -19,11 +19,7 @@ class BookCardStatus extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text('Status'),
-          Icon(
-            Icons.calendar_today_outlined,
-            color: book.flutterColor,
-            size: 14,
-          ),
+          Icon(Icons.calendar_today_outlined, size: 14),
         ],
       ),
       footer: Column(

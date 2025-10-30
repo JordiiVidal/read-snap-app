@@ -115,7 +115,10 @@ class BookDetailPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header
-            BookHeader(book),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: BookHeader(book),
+            ),
             const SizedBox(height: 16),
 
             // Cards
@@ -126,24 +129,21 @@ class BookDetailPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 8,
                 children: [
-                  SizedBox(width: 16),
+                  SizedBox(width: 10),
                   BookCardProgress(book),
-                  SessionReadingTimeCard(bookId, book.flutterColor),
+                  SessionReadingTimeCard(bookId),
                   BookCardStatus(book),
                   SizedBox(width: 16),
                 ],
               ),
             ),
+            const SizedBox(height: 10),
 
             // Action Button
-            if (book.status != BookStatus.completed)
+            if (book.status != BookStatus.completed) ...[
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: book.flutterColor,
-                    foregroundColor: Colors.white,
-                  ),
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: FilledButton(
                   onPressed: () => _navigateToCreateSession(context),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -155,12 +155,17 @@ class BookDetailPage extends ConsumerWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 16),
+            ],
 
             // Sessions List
             Expanded(
-              child: SessionList(
-                bookId,
-                createAction: () => _navigateToCreateSession(context),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: SessionList(
+                  bookId,
+                  createAction: () => _navigateToCreateSession(context),
+                ),
               ),
             ),
           ],

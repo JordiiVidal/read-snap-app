@@ -17,10 +17,6 @@ class FormSubmit extends StatelessWidget {
     final effectiveOnPressed = isLoading ? null : onPressed;
 
     return FilledButton(
-      style: FilledButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-      ),
       onPressed: effectiveOnPressed,
       child: isLoading
           ? const SizedBox(

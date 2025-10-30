@@ -14,7 +14,7 @@ class BookCardProgress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text('Progress'),
-          Icon(Icons.timeline_sharp, color: book.flutterColor, size: 14),
+          Icon(Icons.timeline_sharp, size: 14),
         ],
       ),
       footer: Text('${book.currentPage} / ${book.totalPages} pages'),
@@ -29,7 +29,6 @@ class BookCardProgress extends StatelessWidget {
           minHeight: 10,
           borderRadius: BorderRadius.circular(5),
           backgroundColor: Colors.grey.withValues(alpha: 0.2),
-          valueColor: AlwaysStoppedAnimation<Color>(book.flutterColor),
         ),
       ],
     );

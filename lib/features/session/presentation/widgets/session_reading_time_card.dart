@@ -6,9 +6,8 @@ import 'package:read_snap/features/session/presentation/notifiers/session_stats_
 
 class SessionReadingTimeCard extends ConsumerWidget {
   final String bookId;
-  final Color color;
 
-  const SessionReadingTimeCard(this.bookId, this.color, {super.key});
+  const SessionReadingTimeCard(this.bookId, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +30,7 @@ class SessionReadingTimeCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Readings Time'),
-              Icon(Icons.timelapse_outlined, color: color, size: 14),
+              Icon(Icons.timelapse_outlined, size: 14),
             ],
           ),
           footer: Text('$sessionCount sessions.'),

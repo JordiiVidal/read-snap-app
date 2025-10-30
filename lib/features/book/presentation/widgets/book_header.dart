@@ -8,40 +8,37 @@ class BookHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          //Image
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Color(int.parse(book.color.replaceFirst('#', '0xFF'))),
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        //Image
+        Container(
+          width: 50,
+          height: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Color(int.parse(book.color.replaceFirst('#', '0xFF'))),
           ),
-          const SizedBox(width: 12),
+        ),
+        const SizedBox(width: 12),
 
-          //Title and Author
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  book.name,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+        //Title and Author
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                book.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(book.author, style: const TextStyle(fontSize: 14)),
-              ],
-            ),
+              ),
+              Text(book.author, style: const TextStyle(fontSize: 14)),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

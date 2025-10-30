@@ -33,6 +33,15 @@ class AppTheme {
       side: BorderSide(color: AppColors.border),
     ),
 
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+      ),
+    ),
+
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.border, width: 1.0),
@@ -48,6 +57,8 @@ class AppTheme {
       ),
       hintStyle: TextStyle(color: AppColors.textSecondary),
     ),
+
+    iconTheme: IconThemeData(color: AppColors.textPrimary),
 
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,

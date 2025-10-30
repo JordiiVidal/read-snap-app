@@ -20,34 +20,29 @@ class SessionList extends ConsumerWidget {
           return SessionListEmpty();
         }
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: sessions.length,
-            itemBuilder: (context, index) {
-              final session = sessions[index];
-              final isFirstItem = index == 0;
-              final isLastItem = index == sessions.length - 1;
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: sessions.length,
+          itemBuilder: (context, index) {
+            final session = sessions[index];
+            final isFirstItem = index == 0;
+            final isLastItem = index == sessions.length - 1;
 
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: const Color(0xFFE0E0E0), width: 1),
-                  borderRadius: BorderRadius.vertical(
-                    top: isFirstItem
-                        ? const Radius.circular(16.0)
-                        : Radius.zero,
-                    bottom: isLastItem
-                        ? const Radius.circular(16.0)
-                        : Radius.zero,
-                  ),
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: const Color(0xFFE0E0E0), width: 1),
+                borderRadius: BorderRadius.vertical(
+                  top: isFirstItem ? const Radius.circular(16.0) : Radius.zero,
+                  bottom: isLastItem
+                      ? const Radius.circular(16.0)
+                      : Radius.zero,
                 ),
-                child: SessionListItem(session),
-              );
-            },
-          ),
+              ),
+              child: SessionListItem(session),
+            );
+          },
         );
       },
     );
