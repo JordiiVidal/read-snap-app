@@ -33,9 +33,8 @@ class _SessionCreatePageState extends ConsumerState<SessionCreatePage> {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
+            child: ListView(
               children: [
                 // Title
                 Text(

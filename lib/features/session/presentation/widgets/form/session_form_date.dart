@@ -23,7 +23,7 @@ class SessionFormDate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 15,
+      spacing: 5,
       children: [
         FormDynamicField(
           label: 'Session Date',
@@ -38,24 +38,21 @@ class SessionFormDate extends StatelessWidget {
           },
         ),
         Row(
-          spacing: 15,
+          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Today Button
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => onDateChanged(DateTime.now()),
-                child: const Text('Today'),
-              ),
+            // Today Action
+            ActionChip(
+              onPressed: () => onDateChanged(DateTime.now()),
+              label: const Text('Today'),
             ),
 
-            // Yesterday Button
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => onDateChanged(
-                  DateTime.now().subtract(const Duration(days: 1)),
-                ),
-                child: const Text('Yesterday'),
+            // Yesterday Action
+            ActionChip(
+              onPressed: () => onDateChanged(
+                DateTime.now().subtract(const Duration(days: 1)),
               ),
+              label: const Text('Yesterday'),
             ),
           ],
         ),

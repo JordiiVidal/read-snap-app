@@ -25,47 +25,45 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: [
-              // Title
-              Text(
-                'Add New Book',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
+        child: ListView(
+          children: [
+            // Title
+            Text(
+              'Add New Book',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Descripiton
+            const Text(
+              'Add a book to your reading tracker. Fill in the details below.',
+              style: TextStyle(color: Colors.grey, fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+
+            // Form
+            BookCreateForm(_formKey),
+            const SizedBox(height: 30),
+
+            // Submit Button
+            SizedBox(
+              width: double.infinity,
+              child: FormSubmit(
+                isLoading: isLoading,
+                'Add Book',
+                () => _handleSubmit(
+                  bookCreateNotifier,
+                  ScaffoldMessenger.of(context),
                 ),
               ),
-              const SizedBox(height: 10),
-
-              // Descripiton
-              const Text(
-                'Add a book to your reading tracker. Fill in the details below.',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              ),
-              const SizedBox(height: 20),
-
-              // Form
-              BookCreateForm(_formKey),
-              const SizedBox(height: 30),
-
-              // Submit Button
-              SizedBox(
-                width: double.infinity,
-                child: FormSubmit(
-                  isLoading: isLoading,
-                  'Add Book',
-                  () => _handleSubmit(
-                    bookCreateNotifier,
-                    ScaffoldMessenger.of(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

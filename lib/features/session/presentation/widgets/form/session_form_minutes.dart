@@ -15,7 +15,7 @@ class SessionFormMinutes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 15,
+      spacing: 5,
       children: [
         FormDynamicField(
           label: 'Minutes Read',
@@ -28,22 +28,31 @@ class SessionFormMinutes extends StatelessWidget {
           },
         ),
         Row(
-          spacing: 15,
+          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            // 15 min
+            ActionChip(
+              onPressed: () => onMinutesChanged(15),
+              label: const Text('15 min'),
+            ),
+
             // 30 min
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => onMinutesChanged(30),
-                child: const Text('30 min'),
-              ),
+            ActionChip(
+              onPressed: () => onMinutesChanged(30),
+              label: const Text('30 min'),
+            ),
+
+            // 45 min
+            ActionChip(
+              onPressed: () => onMinutesChanged(45),
+              label: const Text('45 min'),
             ),
 
             // 1 h
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => onMinutesChanged(60),
-                child: const Text('1h'),
-              ),
+            ActionChip(
+              onPressed: () => onMinutesChanged(60),
+              label: const Text('1h'),
             ),
           ],
         ),

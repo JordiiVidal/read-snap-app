@@ -91,7 +91,6 @@ class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          spacing: 20,
           children: [
             // Header
             Column(
@@ -108,115 +107,155 @@ class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
                 ),
               ],
             ),
+            SizedBox(height: 20),
 
             // Current Page Field
             if (!isCompleted) ...[
-              FormActionRow(
-                inputField: FormDynamicField(
-                  label: 'Current Page',
-                  hintText: 'Enter current page',
-                  controller: _currentPageController,
-                  keyboardType: TextInputType.number,
-                  suffixText: '/${widget.book.totalPages}',
-                  onChanged: (value) {
-                    final pages = int.tryParse(value) ?? 0;
-                    updateNotifier.updateCurrentPage(pages);
-                  },
-                ),
-                quickActions: {
-                  'First': () {
-                    final newValue = '1';
-                    _handleQuickAction(
-                      _currentPageController,
-                      newValue,
-                      () => updateNotifier.updateCurrentPage(1),
-                    );
-                  },
-                  'Middle': () {
-                    final pages = widget.book.totalPages ~/ 2;
-                    final newValue = pages.toString();
-                    _handleQuickAction(
-                      _currentPageController,
-                      newValue,
-                      () => updateNotifier.updateCurrentPage(pages),
-                    );
-                  },
+              FormDynamicField(
+                label: 'Current Page',
+                hintText: 'Enter current page',
+                controller: _currentPageController,
+                keyboardType: TextInputType.number,
+                suffixText: '/${widget.book.totalPages}',
+                onChanged: (value) {
+                  final pages = int.tryParse(value) ?? 0;
+                  updateNotifier.updateCurrentPage(pages);
                 },
+              ),
+              SizedBox(height: 5),
+
+              // Actions
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                spacing: 10,
+                children: [
+                  ActionChip(
+                    label: Text('First'),
+                    onPressed: () {
+                      final newValue = '1';
+                      _handleQuickAction(
+                        _currentPageController,
+                        newValue,
+                        () => updateNotifier.updateCurrentPage(1),
+                      );
+                    },
+                  ),
+                  ActionChip(
+                    label: Text('Middle'),
+                    onPressed: () {
+                      final pages = widget.book.totalPages ~/ 2;
+                      final newValue = pages.toString();
+                      _handleQuickAction(
+                        _currentPageController,
+                        newValue,
+                        () => updateNotifier.updateCurrentPage(pages),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
 
             // Start Date Field
-            FormActionRow(
-              inputField: FormDynamicField(
-                label: 'Start Date',
-                hintText: 'Enter start date',
-                keyboardType: TextInputType.datetime,
-                controller: _startDateController,
-                onChanged: (value) {
-                  final date = DateTime.parse(value);
-                  updateNotifier.updateStartedAt(date);
-                },
-              ),
-              quickActions: {
-                'Now': () {
-                  final now = DateTime.now();
-                  final newValue = _dateFormat.format(now);
-                  _handleQuickAction(
-                    _startDateController,
-                    newValue,
-                    () => updateNotifier.updateStartedAt(now),
-                  );
-                },
-                'Yesterday': () {
-                  final yesterday = DateTime.now().subtract(
-                    const Duration(days: 1),
-                  );
-                  final newValue = _dateFormat.format(yesterday);
-                  _handleQuickAction(
-                    _startDateController,
-                    newValue,
-                    () => updateNotifier.updateStartedAt(yesterday),
-                  );
-                },
+            FormDynamicField(
+              label: 'Start Date',
+              hintText: 'Enter start date',
+              keyboardType: TextInputType.datetime,
+              controller: _startDateController,
+              prefixIcon: Icons.calendar_today,
+              onPrefixPressed: () =>
+                  _selectDate(context, updateNotifier.updateStartedAt),
+              onChanged: (value) {
+                final date = DateTime.parse(value);
+                updateNotifier.updateStartedAt(date);
               },
             ),
+            SizedBox(height: 5),
 
-            // End Date Field
-            if (isCompleted)
-              FormActionRow(
-                inputField: FormDynamicField(
-                  label: 'End Date',
-                  hintText: 'Enter end date',
-                  keyboardType: TextInputType.datetime,
-                  controller: _endDateController,
-                  onChanged: (value) {
-                    final date = DateTime.parse(value);
-                    updateNotifier.updateFinishedAt(date);
-                  },
-                ),
-                quickActions: {
-                  'Now': () {
+            // Actions
+            Row(
+              spacing: 10,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ActionChip(
+                  label: Text('Today'),
+                  onPressed: () {
                     final now = DateTime.now();
                     final newValue = _dateFormat.format(now);
                     _handleQuickAction(
-                      _endDateController,
+                      _startDateController,
                       newValue,
-                      () => updateNotifier.updateFinishedAt(now),
+                      () => updateNotifier.updateStartedAt(now),
                     );
                   },
-                  'Yesterday': () {
+                ),
+                ActionChip(
+                  label: Text('Yesterday'),
+                  onPressed: () {
                     final yesterday = DateTime.now().subtract(
                       const Duration(days: 1),
                     );
                     final newValue = _dateFormat.format(yesterday);
                     _handleQuickAction(
-                      _endDateController,
+                      _startDateController,
                       newValue,
-                      () => updateNotifier.updateFinishedAt(yesterday),
+                      () => updateNotifier.updateStartedAt(yesterday),
                     );
                   },
+                ),
+              ],
+            ),
+
+            // End Date Field
+            if (isCompleted) ...[
+              FormDynamicField(
+                label: 'End Date',
+                hintText: 'Enter end date',
+                keyboardType: TextInputType.datetime,
+                controller: _endDateController,
+                prefixIcon: Icons.calendar_today,
+                onPrefixPressed: () =>
+                    _selectDate(context, updateNotifier.updateFinishedAt),
+                onChanged: (value) {
+                  final date = DateTime.parse(value);
+                  updateNotifier.updateFinishedAt(date);
                 },
               ),
+              SizedBox(height: 5),
+
+              // Actions
+              Row(
+                spacing: 10,
+                children: [
+                  ActionChip(
+                    label: Text('Now'),
+                    onPressed: () {
+                      final now = DateTime.now();
+                      final newValue = _dateFormat.format(now);
+                      _handleQuickAction(
+                        _endDateController,
+                        newValue,
+                        () => updateNotifier.updateFinishedAt(now),
+                      );
+                    },
+                  ),
+                  ActionChip(
+                    label: Text('Yesterday'),
+                    onPressed: () {
+                      final yesterday = DateTime.now().subtract(
+                        const Duration(days: 1),
+                      );
+                      final newValue = _dateFormat.format(yesterday);
+                      _handleQuickAction(
+                        _endDateController,
+                        newValue,
+                        () => updateNotifier.updateFinishedAt(yesterday),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
 
             // Submit Button
             Container(
@@ -252,6 +291,21 @@ class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
           ),
         ),
       );
+    }
+  }
+
+  Future<void> _selectDate(
+    BuildContext context,
+    Function(DateTime) onDateChanged,
+  ) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      onDateChanged(picked);
     }
   }
 }

@@ -53,7 +53,7 @@ class _SessionFormState extends ConsumerState<SessionForm> {
 
     return Form(
       key: widget.formKey,
-      child: ListView(
+      child: Column(
         children: [
           SessionFormPageStart(_startPageController, (value) {
             final parsed = int.tryParse(value) ?? 0;
