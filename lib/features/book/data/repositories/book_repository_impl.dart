@@ -69,4 +69,14 @@ class BookRepositoryImpl implements BookRepository {
     }
     return _model.fromMap(maps.first);
   }
+
+  @override
+  Future<int> countBooksByStatus(BookStatus status) async {
+    final List<Map<String, dynamic>> maps = await _db.query(
+      BookModel.table,
+      where: '${BookModel.status} = ?',
+      whereArgs: [status.name],
+    );
+    return maps.length;
+  }
 }

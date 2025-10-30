@@ -8,7 +8,8 @@ export 'pages/book_create_page.dart';
 export 'pages/book_detail_page.dart';
 export 'pages/book_list_page.dart';
 // Providers
-export 'providers/book_list_selectors.dart';
+export 'providers/book_list_selectors_provider.dart';
+export 'providers/reading_limit_status_provider.dart';
 // Widgets
 export 'widgets/book_header.dart';
 // Cards
@@ -27,3 +28,4 @@ export 'widgets/list/book_list.dart';
 export 'widgets/list/book_list_empty.dart';
 export 'widgets/list/book_list_item.dart';
 export 'widgets/list/book_list_loading.dart';
+export 'widgets/reading_limit_counter.dart';

@@ -7,6 +7,8 @@ abstract class BookRepository {
 
   Future<BookEntity?> getBookByNameAndAuthor(String name, String author);
 
+  Future<int> countBooksByStatus(BookStatus status);
+
   Future<void> addBook(BookEntity book);
 
   Future<void> updateBook(BookEntity book);

@@ -17,6 +17,7 @@ class BookListPage extends StatelessWidget {
             const SectionHeader(
               title: 'Currently Reading',
               subtitle: 'Pick up where you left off',
+              actionWidget: ReadingLimitCounter(),
             ),
             const SizedBox(height: 20),
 

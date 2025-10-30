@@ -4,24 +4,26 @@ import 'package:uuid/uuid.dart';
 class CreateBookUseCase {
   final BookRepository _repository;
   final BookValidatorService _validator;
+  final CheckReadingLimitUseCase _checkLimitUseCase;
+  final CheckBookUniquenessUseCase _checkUniquenessUseCase;
 
-  CreateBookUseCase(this._repository, this._validator);
+  CreateBookUseCase(
+    this._repository,
+    this._validator,
+    this._checkLimitUseCase,
+    this._checkUniquenessUseCase,
+  );
 
   Future<BookEntity> call(BookEntity book) async {
     // 1.Business logic
     BookEntity bookToSave = _applyBusinessLogic(book);
 
     // 2.Validations
-    _validator.validateCreationFields(bookToSave);
-    final existingBook = await _repository.getBookByNameAndAuthor(
-      book.name,
-      book.author,
-    );
-    if (existingBook != null) {
-      throw ArgumentError(
-        'A book with the name "${book.name}" and author "${book.author}" already exists.',
-      );
+    if (book.status == BookStatus.reading) {
+      await _checkLimitUseCase.call();
     }
+    _validator.validateCreationFields(bookToSave);
+    await _checkUniquenessUseCase.call(book.name, book.author);
 
     // 3.Persistence
     final now = DateTime.now();

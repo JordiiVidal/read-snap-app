@@ -8,11 +8,15 @@ class BookList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookListAsync = ref.watch(readingBooksProvider);
+    final limitStatusAsync = ref.watch(readingLimitStatusProvider);
 
     return bookListAsync.when(
       loading: () => BookListLoading(),
       error: (err, stack) => Center(child: Text('An error occurred: $err')),
       data: (books) {
+        final isMaxedOut = limitStatusAsync.value?.isMaxedOut ?? false;
+        final itemCount = books.length + (isMaxedOut ? 0 : 1);
+
         // Empty
         if (books.isEmpty) {
           return BookListEmpty();
@@ -21,11 +25,11 @@ class BookList extends ConsumerWidget {
         // Data
         return ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: books.length + 1,
+          itemCount: itemCount,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           separatorBuilder: (context, index) => const SizedBox(width: 16.0),
           itemBuilder: (context, index) {
-            if (index == books.length) {
+            if (index == books.length && !isMaxedOut) {
               return BookListEmptyItem();
             }
             return BookListItem(books[index]);

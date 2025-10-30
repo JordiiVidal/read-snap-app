@@ -28,6 +28,8 @@ final createBookUseCaseProvider = Provider<CreateBookUseCase>((ref) {
   return CreateBookUseCase(
     ref.watch(bookRepositoryProvider),
     BookValidatorService(),
+    ref.watch(checkReadingLimitUseCaseProvider),
+    ref.watch(checkBookUniquenessUseCaseProvider),
   );
 });
 
@@ -46,13 +48,20 @@ final getBookByIdUseCaseProvider = Provider<GetBookByIdUseCase>((ref) {
   return GetBookByIdUseCase(ref.watch(bookRepositoryProvider));
 });
 
-final getBookByNameAndAuthorUseCaseProvider =
-    Provider<GetBookByNameAndAuthorUseCase>((ref) {
-      return GetBookByNameAndAuthorUseCase(ref.watch(bookRepositoryProvider));
-    });
+final checkBookUniquenessUseCaseProvider = Provider<CheckBookUniquenessUseCase>(
+  (ref) {
+    return CheckBookUniquenessUseCase(ref.watch(bookRepositoryProvider));
+  },
+);
 
 final deleteBookUseCaseProvider = Provider<DeleteBookUseCase>((ref) {
   return DeleteBookUseCase(ref.watch(bookRepositoryProvider));
+});
+
+final checkReadingLimitUseCaseProvider = Provider<CheckReadingLimitUseCase>((
+  ref,
+) {
+  return CheckReadingLimitUseCase(ref.watch(bookRepositoryProvider));
 });
 
 /* Session */
