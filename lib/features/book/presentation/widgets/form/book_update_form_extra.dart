@@ -162,9 +162,11 @@ class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
               hintText: 'Enter start date',
               keyboardType: TextInputType.datetime,
               controller: _startDateController,
-              prefixIcon: Icons.calendar_today,
-              onPrefixPressed: () =>
-                  _selectDate(context, updateNotifier.updateStartedAt),
+              prefixIcon: IconButton(
+                icon: Icon(Icons.calendar_today),
+                onPressed: () =>
+                    _selectDate(context, updateNotifier.updateStartedAt),
+              ),
               onChanged: (value) {
                 final date = DateTime.parse(value);
                 updateNotifier.updateStartedAt(date);
@@ -213,9 +215,11 @@ class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
                 hintText: 'Enter end date',
                 keyboardType: TextInputType.datetime,
                 controller: _endDateController,
-                prefixIcon: Icons.calendar_today,
-                onPrefixPressed: () =>
-                    _selectDate(context, updateNotifier.updateFinishedAt),
+                prefixIcon: IconButton(
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () =>
+                      _selectDate(context, updateNotifier.updateFinishedAt),
+                ),
                 onChanged: (value) {
                   final date = DateTime.parse(value);
                   updateNotifier.updateFinishedAt(date);

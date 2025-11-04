@@ -3,20 +3,87 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/widgets/book_search_delegate.dart';
 
-class BookCreateForm extends ConsumerWidget {
+class BookCreateForm extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
 
   const BookCreateForm(this.formKey, {super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BookCreateForm> createState() => _BookCreateFormState();
+}
+
+class _BookCreateFormState extends ConsumerState<BookCreateForm> {
+  late TextEditingController _titleController;
+  late TextEditingController _authorController;
+  late TextEditingController _pagesController;
+  late final BookCreateNotifier _initialNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialNotifier = ref.read(bookCreateNotifierProvider.notifier);
+    final initialDraft = _initialNotifier.currentBookDraft;
+
+    _titleController = TextEditingController(text: initialDraft.title);
+    _authorController = TextEditingController(text: initialDraft.author);
+    _pagesController = TextEditingController(
+      text: initialDraft.totalPages.toString(),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant BookCreateForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final newBookState = ref.read(bookCreateNotifierProvider).value!;
+
+    if (_titleController.text != newBookState.title) {
+      _titleController.text = newBookState.title;
+    }
+    if (_authorController.text != newBookState.author) {
+      _authorController.text = newBookState.author;
+    }
+
+    final newPagesString = newBookState.totalPages > 0
+        ? newBookState.totalPages.toString()
+        : '';
+    if (_pagesController.text != newPagesString) {
+      _pagesController.text = newPagesString;
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _authorController.dispose();
+    _pagesController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSearch(BuildContext context, WidgetRef ref) async {
+    final BookEntity? selectedBook = await showSearch<BookEntity?>(
+      context: context,
+      delegate: BookSearchDelegate(),
+    );
+
+    if (selectedBook != null) {
+      ref
+          .read(bookCreateNotifierProvider.notifier)
+          .updateFromSearch(selectedBook);
+      widget.formKey.currentState?.validate();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final bookCreateAsync = ref.watch(bookCreateNotifierProvider);
     final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
     final BookEntity bookState = bookCreateAsync.value!;
 
     return Form(
-      key: formKey,
+      key: widget.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         spacing: 15,
@@ -43,17 +110,21 @@ class BookCreateForm extends ConsumerWidget {
           FormDynamicField(
             label: 'Title',
             hintText: 'Enter book title',
+            controller: _titleController,
             required: true,
-            initialValue: bookState.name,
-            onChanged: bookCreateNotifier.updateName,
+            onChanged: bookCreateNotifier.updateTitle,
+            prefixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () => _handleSearch(context, ref),
+            ),
           ),
 
           // Author Field
           FormDynamicField(
             label: 'Author',
             hintText: 'Enter author name',
+            controller: _authorController,
             required: true,
-            initialValue: bookState.author,
             onChanged: bookCreateNotifier.updateAuthor,
           ),
 
@@ -61,6 +132,7 @@ class BookCreateForm extends ConsumerWidget {
           FormDynamicField(
             label: 'Total Pages',
             hintText: 'Enter total pages',
+            controller: _pagesController,
             required: true,
             keyboardType: TextInputType.number,
             onChanged: (value) {

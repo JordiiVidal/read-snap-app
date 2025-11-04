@@ -30,8 +30,10 @@ class SessionFormDate extends StatelessWidget {
           hintText: 'Enter session date',
           controller: dateController,
           keyboardType: TextInputType.datetime,
-          prefixIcon: Icons.calendar_today,
-          onPrefixPressed: () => _selectDate(context),
+          prefixIcon: IconButton(
+            icon: Icon(Icons.calendar_today),
+            onPressed: () => _selectDate(context),
+          ),
           onChanged: (value) {
             final date = DateTime.parse(value);
             onDateChanged(date);

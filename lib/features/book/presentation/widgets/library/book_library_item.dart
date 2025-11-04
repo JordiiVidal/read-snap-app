@@ -19,7 +19,7 @@ class BookLibraryItem extends StatelessWidget {
       onTap: () => _navigateToDetails(context),
       leading: Icon(Icons.book, size: 24),
       title: Text(
-        book.name,
+        book.title,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         overflow: TextOverflow.ellipsis,
       ),

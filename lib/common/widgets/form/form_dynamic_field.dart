@@ -6,13 +6,13 @@ class FormDynamicField extends StatelessWidget {
   final bool required;
   final String hintText;
   final String? initialValue;
-  final IconData? prefixIcon;
+  final Widget? prefixIcon;
   final TextEditingController? controller;
   final bool disabled;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
-  final void Function()? onPrefixPressed;
   final String? suffixText;
+  final Widget? suffixIcon;
   final double borderRadius;
 
   const FormDynamicField({
@@ -22,11 +22,11 @@ class FormDynamicField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.disabled = false,
     this.onChanged,
-    this.onPrefixPressed,
     this.initialValue,
     this.controller,
     this.prefixIcon,
     this.suffixText,
+    this.suffixIcon,
     this.borderRadius = 8,
     super.key,
   });
@@ -50,13 +50,9 @@ class FormDynamicField extends StatelessWidget {
             isDense: true,
             filled: true,
             fillColor: Colors.white,
-            prefixIcon: prefixIcon != null
-                ? GestureDetector(
-                    onTap: onPrefixPressed,
-                    child: Icon(prefixIcon),
-                  )
-                : null,
+            prefixIcon: prefixIcon,
             suffixText: suffixText,
+            suffixIcon: suffixIcon,
             suffixStyle: const TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.w500,

@@ -23,7 +23,7 @@ class CreateBookUseCase {
       await _checkLimitUseCase.call();
     }
     _validator.validateCreationFields(bookToSave);
-    await _checkUniquenessUseCase.call(book.name, book.author);
+    await _checkUniquenessUseCase.call(book.title, book.author);
 
     // 3.Persistence
     final now = DateTime.now();

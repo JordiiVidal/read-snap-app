@@ -19,7 +19,7 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
         AsyncValue.data(
           BookEntity(
             id: '',
-            name: '',
+            title: '',
             author: '',
             totalPages: 0,
             currentPage: 0,
@@ -33,8 +33,13 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
 
   BookEntity get currentBookDraft => state.value!;
 
-  void updateName(String name) =>
-      state = AsyncValue.data(currentBookDraft.copyWith(name: name));
+  void updateFromSearch(BookEntity book) {
+    final updatedBook = book.copyWith(status: currentBookDraft.status);
+    state = AsyncValue.data(updatedBook);
+  }
+
+  void updateTitle(String title) =>
+      state = AsyncValue.data(currentBookDraft.copyWith(title: title));
 
   void updateAuthor(String author) {
     state = AsyncValue.data(currentBookDraft.copyWith(author: author));

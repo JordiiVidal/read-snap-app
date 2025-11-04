@@ -57,7 +57,7 @@ class BookListItem extends StatelessWidget {
 
             // Title
             Text(
-              book.name,
+              book.title,
               style: const TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.bold,

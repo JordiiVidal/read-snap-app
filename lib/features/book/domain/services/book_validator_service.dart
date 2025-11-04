@@ -4,7 +4,7 @@ class BookValidatorService {
   const BookValidatorService();
 
   void validateCreationFields(BookEntity book) {
-    if (book.name.trim().isEmpty || book.author.trim().isEmpty) {
+    if (book.title.trim().isEmpty || book.author.trim().isEmpty) {
       throw ArgumentError('Book name and author cannot be empty.');
     }
     if (book.totalPages <= 0) {

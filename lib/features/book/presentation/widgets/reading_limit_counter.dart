@@ -14,7 +14,7 @@ class ReadingLimitCounter extends ConsumerWidget {
     return statusAsync.when(
       loading: () => const Text('/', style: TextStyle(fontSize: 14)),
       error: (e, st) =>
-          const Text('Error', style: TextStyle(color: Colors.red)),
+          const Text('Error', style: TextStyle(color: Colors.red)), 
       data: (status) {
         return Text(
           status.displayString,
