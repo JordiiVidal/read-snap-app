@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/features/book/presentation/providers/google_books_api_provider.dart';
+import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
 
 class BookSearchDelegate extends SearchDelegate<BookEntity?> {
@@ -43,9 +43,9 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
 
     return Consumer(
       builder: (context, ref, child) {
-        final api = ref.watch(googleBooksApiProvider);
+        final searchRepository = ref.read(bookSearchRepositoryProvider);
         return FutureBuilder<List<BookEntity>>(
-          future: api.searchBooks(query),
+          future: searchRepository.searchBooks(query),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

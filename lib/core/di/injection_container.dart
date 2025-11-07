@@ -26,6 +26,14 @@ final bookValidatorServiceProvider = Provider<BookValidatorService>((ref) {
 });
 
 /* ============================================================ */
+/*                    DATA SOURCES                              */
+/* ============================================================ */
+
+final googleBooksDatasourceProvider = Provider<GoogleBooksDatasource>((ref) {
+  return GoogleBooksDatasource();
+});
+
+/* ============================================================ */
 /*                      REPOSITORIES                            */
 /* ============================================================ */
 
@@ -38,7 +46,7 @@ final bookRepositoryProvider = Provider<BookRepository>((ref) {
 });
 
 final bookSearchRepositoryProvider = Provider<BookSearchRepository>((ref) {
-  return BookSearchRepositoryImpl();
+  return BookSearchRepositoryImpl(ref.watch(googleBooksDatasourceProvider));
 });
 
 final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
