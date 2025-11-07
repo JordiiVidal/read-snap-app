@@ -1,5 +1,5 @@
 import 'package:read_snap/features/session/data/models/session_model.dart';
-import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SessionRepositoryImpl implements SessionRepository {

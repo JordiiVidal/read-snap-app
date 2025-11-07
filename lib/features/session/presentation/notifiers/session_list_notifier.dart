@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/injection_container.dart';
-import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/domain/domain.dart';
 
 final sessionListNotifierProvider = StateNotifierProvider.family
     .autoDispose<SessionListNotifier, AsyncValue<List<SessionEntity>>, String>((

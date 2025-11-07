@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
-import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 import 'package:uuid/uuid.dart';
 

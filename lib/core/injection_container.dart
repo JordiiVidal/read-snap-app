@@ -3,7 +3,7 @@ import 'package:read_snap/core/database_helper.dart';
 import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/session/data/data.dart';
-import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:sqflite/sqflite.dart';
 
 /* Database */

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:read_snap/common/utils/utils.dart';
 import 'package:read_snap/common/widgets/widgets.dart';
-import 'package:read_snap/features/session/dominio/entities/session_entity.dart';
+import 'package:read_snap/features/session/domain/entities/session_entity.dart';
 
 class SessionListItem extends StatelessWidget {
   final SessionEntity session;

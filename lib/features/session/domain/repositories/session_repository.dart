@@ -1,4 +1,4 @@
-import 'package:read_snap/features/session/dominio/domain.dart';
+import 'package:read_snap/features/session/domain/domain.dart';
 
 abstract class SessionRepository {
   Future<List<SessionEntity>> getSessions();
