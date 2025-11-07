@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
-import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
+import 'package:read_snap/shared/widgets/forms/form_page_scaffold.dart';
 
 class SessionCreatePage extends ConsumerStatefulWidget {
   final String bookId;

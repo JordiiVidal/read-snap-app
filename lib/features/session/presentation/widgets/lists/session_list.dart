@@ -42,7 +42,7 @@ class SessionList extends ConsumerWidget {
         icon: Icons.access_time,
         title: 'No sessions yet',
         message: 'Start tracking your reading by adding your first session',
-        onPressed: onEmptyActionTap,
+        onActionPressed: onEmptyActionTap,
       ),
     );
   }

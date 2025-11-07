@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
-import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
+import 'package:read_snap/shared/widgets/forms/form_page_scaffold.dart';
 
 class BookCreatePage extends ConsumerStatefulWidget {
   const BookCreatePage({super.key});

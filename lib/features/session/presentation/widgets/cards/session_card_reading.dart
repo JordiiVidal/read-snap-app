@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/shared/utils/utils.dart';
 import 'package:read_snap/shared/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
+import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionCardReading extends ConsumerWidget {
   final String bookId;
@@ -25,7 +25,7 @@ class SessionCardReading extends ConsumerWidget {
           error: (e, st) => 0,
         );
 
-        return CustomCard(
+        return StatCard(
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

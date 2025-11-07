@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
+class StatCard extends StatelessWidget {
   final Widget header;
   final List<Widget> children;
   final Widget footer;
@@ -9,7 +9,7 @@ class CustomCard extends StatelessWidget {
   final double height;
   final double width;
 
-  const CustomCard({
+  const StatCard({
     required this.header,
     required this.children,
     required this.footer,

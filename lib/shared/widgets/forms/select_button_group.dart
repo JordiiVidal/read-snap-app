@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/form/form_label_field.dart';
+import 'package:read_snap/shared/widgets/forms/form_label_field.dart';
 
 class SelectButtonGroup extends StatelessWidget {
   final Map<String, String> options;
