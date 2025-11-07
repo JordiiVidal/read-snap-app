@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/shared/widgets/custom_card.dart';
 
-class BookProgressCard extends StatelessWidget {
+class BookCardProgress extends StatelessWidget {
   final BookEntity book;
 
-  const BookProgressCard(this.book, {super.key});
+  const BookCardProgress(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {

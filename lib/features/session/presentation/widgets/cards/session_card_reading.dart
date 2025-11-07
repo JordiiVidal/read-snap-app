@@ -4,10 +4,10 @@ import 'package:read_snap/shared/utils/utils.dart';
 import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
 
-class SessionReadingTimeCard extends ConsumerWidget {
+class SessionCardReading extends ConsumerWidget {
   final String bookId;
 
-  const SessionReadingTimeCard(this.bookId, {super.key});
+  const SessionCardReading(this.bookId, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

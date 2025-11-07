@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 
-class BookUpdateFormExtra extends ConsumerStatefulWidget {
+class BookFormUpdateExtra extends ConsumerStatefulWidget {
   final BookEntity book;
 
-  const BookUpdateFormExtra(this.book, {super.key});
+  const BookFormUpdateExtra(this.book, {super.key});
 
   @override
-  ConsumerState<BookUpdateFormExtra> createState() =>
-      _BookUpdateFormExtraState();
+  ConsumerState<BookFormUpdateExtra> createState() =>
+      _BookFormUpdateExtraState();
 }
 
-class _BookUpdateFormExtraState extends ConsumerState<BookUpdateFormExtra> {
+class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
   final _formKey = GlobalKey<FormState>();
   final _dateFormat = DateFormat('yyyy-MM-dd');
   late final TextEditingController _currentPageController;

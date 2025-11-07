@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
 
 class BookCreatePage extends ConsumerStatefulWidget {
   const BookCreatePage({super.key});
@@ -26,7 +26,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
           'Add a book to your reading tracker. Fill in the details below.',
       isLoading: isLoading,
       submitButtonText: 'Add Book',
-      form: BookCreateForm(_formKey),
+      form: BookFormCreate(_formKey),
       onSubmit: () => _handleSubmit(bookCreateNotifier),
     );
   }
@@ -71,7 +71,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: BookUpdateFormExtra(book),
+        child: BookFormUpdateExtra(book),
       ),
     );
 

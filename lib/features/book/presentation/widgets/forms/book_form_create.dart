@@ -3,18 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
-import 'package:read_snap/features/book/presentation/widgets/book_search_delegate.dart';
 
-class BookCreateForm extends ConsumerStatefulWidget {
+class BookFormCreate extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
 
-  const BookCreateForm(this.formKey, {super.key});
+  const BookFormCreate(this.formKey, {super.key});
 
   @override
-  ConsumerState<BookCreateForm> createState() => _BookCreateFormState();
+  ConsumerState<BookFormCreate> createState() => _BookFormCreateState();
 }
 
-class _BookCreateFormState extends ConsumerState<BookCreateForm> {
+class _BookFormCreateState extends ConsumerState<BookFormCreate> {
   late TextEditingController _titleController;
   late TextEditingController _authorController;
   late TextEditingController _pagesController;
@@ -34,7 +33,7 @@ class _BookCreateFormState extends ConsumerState<BookCreateForm> {
   }
 
   @override
-  void didUpdateWidget(covariant BookCreateForm oldWidget) {
+  void didUpdateWidget(covariant BookFormCreate oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     final newBookState = ref.read(bookCreateNotifierProvider).value!;

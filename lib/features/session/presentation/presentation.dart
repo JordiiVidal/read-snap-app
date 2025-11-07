@@ -5,15 +5,13 @@ export 'notifiers/session_stats_notifier.dart';
 //Pages
 export 'pages/session_create_page.dart';
 // Form
-export 'widgets/form/session_form.dart';
-export 'widgets/form/session_form_date.dart';
-export 'widgets/form/session_form_minutes.dart';
-export 'widgets/form/session_form_page_end.dart';
-export 'widgets/form/session_form_page_start.dart';
+export 'widgets/forms/session_form.dart';
+export 'widgets/forms/session_form_date.dart';
+export 'widgets/forms/session_form_minutes.dart';
+export 'widgets/forms/session_form_page_end.dart';
+export 'widgets/forms/session_form_page_start.dart';
 // List
-export 'widgets/list/session_list.dart';
-export 'widgets/list/session_list_empty.dart';
-export 'widgets/list/session_list_item.dart';
-export 'widgets/list/session_list_loading.dart';
+export 'widgets/lists/session_list.dart';
+export 'widgets/lists/session_list_item.dart';
 //Widgets
-export 'widgets/session_reading_time_card.dart';
+export 'widgets/cards/session_card_reading.dart';

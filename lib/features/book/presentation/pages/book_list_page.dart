@@ -22,7 +22,7 @@ class BookListPage extends StatelessWidget {
             const SizedBox(height: 20),
             SizedBox(
               height: 300,
-              child: BookListView(
+              child: BookList(
                 booksProvider: readingBooksProvider,
                 scrollDirection: Axis.horizontal,
                 itemVariant: BookListItemVariant.card,
@@ -43,7 +43,7 @@ class BookListPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            BookListView(
+            BookList(
               booksProvider: notReadingProvider,
               scrollDirection: Axis.vertical,
               itemVariant: BookListItemVariant.listTile,

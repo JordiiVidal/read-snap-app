@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/shared/widgets/common/async_value_widget.dart';
-import 'package:read_snap/shared/widgets/dialogs/delete_confirmation_dialog.dart';
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/shared/widgets/common/async_value_widget.dart';
+import 'package:read_snap/shared/widgets/dialogs/delete_confirmation_dialog.dart';
 
 class BookDetailPage extends ConsumerWidget {
   final String bookId;
@@ -70,9 +70,9 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
             child: Row(
               spacing: 12,
               children: [
-                BookProgressCard(widget.book),
-                SessionReadingTimeCard(widget.bookId),
-                BookStatusCard(widget.book),
+                BookCardProgress(widget.book),
+                SessionCardReading(widget.bookId),
+                BookCardStatus(widget.book),
               ],
             ),
           ),
@@ -95,8 +95,8 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: SessionList(
-                widget.bookId,
-                createAction: _navigateToCreateSession,
+                bookId: widget.bookId,
+                onEmptyActionTap: _navigateToCreateSession,
               ),
             ),
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/presentation/widgets/lists/book_item.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
 
-class BookListView extends ConsumerWidget {
+class BookList extends ConsumerWidget {
   final ProviderListenable<AsyncValue<List<BookEntity>>> booksProvider;
   final Axis scrollDirection;
   final BookListItemVariant itemVariant;
@@ -11,7 +11,7 @@ class BookListView extends ConsumerWidget {
   final VoidCallback? onAddTap;
   final bool showAddButton;
 
-  const BookListView({
+  const BookList({
     super.key,
     required this.booksProvider,
     this.scrollDirection = Axis.vertical,
