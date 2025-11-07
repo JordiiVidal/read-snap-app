@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
 
 class SessionCreatePage extends ConsumerStatefulWidget {
   final String bookId;
@@ -17,91 +17,43 @@ class _SessionCreatePageState extends ConsumerState<SessionCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final sessionCreateAsync = ref.watch(
+    final sessionAsync = ref.watch(
       sessionCreateNotifierProvider(widget.bookId),
     );
-    final sessionCreateNotifier = ref.read(
+    final sessionNotifier = ref.read(
       sessionCreateNotifierProvider(widget.bookId).notifier,
     );
-    final isLoading = sessionCreateAsync.maybeWhen(
-      loading: () => true,
-      orElse: () => false,
-    );
+    final isLoading = sessionAsync.isLoading;
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
-            child: ListView(
-              children: [
-                // Title
-                Text(
-                  'Record Reading Session',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Descripiton
-                const Text(
-                  'Track your reading time and pages read.',
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-
-                // Form Body
-                Expanded(child: SessionForm(_formKey, widget.bookId)),
-
-                // Submit Button
-                const SizedBox(height: 20),
-                SafeArea(
-                  top: false,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: FormSubmit(
-                      isLoading: isLoading,
-                      'Record Session',
-                      () => _handleSubmit(sessionCreateNotifier),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (isLoading) ...[
-            const ModalBarrier(color: Colors.black12, dismissible: false),
-            const Center(child: CircularProgressIndicator()),
-          ],
-        ],
-      ),
+    return FormPageScaffold(
+      title: 'Record Reading Session',
+      subtitle: 'Track your reading time and pages read.',
+      isLoading: isLoading,
+      submitButtonText: 'Record Session',
+      showLoadingOverlay: true, // Session usa overlay
+      form: SessionForm(_formKey, widget.bookId),
+      onSubmit: () => _handleSubmit(sessionNotifier),
     );
   }
 
-  void _handleSubmit(SessionCreateNotifier notifier) async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+  Future<void> _handleSubmit(SessionCreateNotifier notifier) async {
+    if (!_formKey.currentState!.validate()) return;
 
     try {
       await notifier.saveSession();
-
+      if (mounted) Navigator.of(context).pop();
+    } on ArgumentError catch (e) {
       if (mounted) {
-        Navigator.of(context).pop();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: ${e.message}')));
       }
     } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error: ${e is ArgumentError ? e.message : 'Could not save session'}',
-          ),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error: Could not save session')),
+        );
+      }
     }
   }
 }

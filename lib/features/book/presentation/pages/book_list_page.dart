@@ -13,40 +13,59 @@ class BookListPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Currently Reading Section
             const SectionHeader(
               title: 'Currently Reading',
               subtitle: 'Pick up where you left off',
               actionWidget: ReadingLimitCounter(),
             ),
             const SizedBox(height: 20),
-
-            // Reading List
-            SizedBox(height: 300, child: BookList()),
+            SizedBox(
+              height: 300,
+              child: BookListView(
+                booksProvider: readingBooksProvider,
+                scrollDirection: Axis.horizontal,
+                itemVariant: BookListItemVariant.card,
+                showAddButton: true,
+                onBookTap: (book) => _navigateToDetail(context, book.id),
+                onAddTap: () => _navigateToCreate(context),
+              ),
+            ),
             const SizedBox(height: 40),
 
-            // Header
+            // Library Section
             SectionHeader(
               title: 'Your library',
               subtitle: 'All your saved books',
-              actionWidget: FilledButton(
-                style: FilledButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(4),
-                ),
-                child: Icon(Icons.add, size: 18),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => BookCreatePage()),
-                ),
+              actionWidget: IconButton.filled(
+                icon: const Icon(Icons.add, size: 18),
+                onPressed: () => _navigateToCreate(context),
               ),
             ),
             const SizedBox(height: 10),
-
-            // Library
-            BookLibrary(notReadingProvider),
+            BookListView(
+              booksProvider: notReadingProvider,
+              scrollDirection: Axis.vertical,
+              itemVariant: BookListItemVariant.listTile,
+              onBookTap: (book) => _navigateToDetail(context, book.id),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateToDetail(BuildContext context, String bookId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => BookDetailPage(bookId)),
+    );
+  }
+
+  void _navigateToCreate(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const BookCreatePage()),
     );
   }
 }

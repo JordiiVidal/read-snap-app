@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
+import 'package:read_snap/shared/widgets/common/form_page_scaffold.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
@@ -18,58 +18,47 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
   Widget build(BuildContext context) {
     final bookCreateAsync = ref.watch(bookCreateNotifierProvider);
     final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
-    final isLoading = bookCreateAsync.maybeWhen(
-      loading: () => true,
-      orElse: () => false,
-    );
+    final isLoading = bookCreateAsync.isLoading;
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
-        child: ListView(
-          children: [
-            // Title
-            Text(
-              'Add New Book',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Descripiton
-            const Text(
-              'Add a book to your reading tracker. Fill in the details below.',
-              style: TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-
-            // Form
-            BookCreateForm(_formKey),
-            const SizedBox(height: 30),
-
-            // Submit Button
-            SizedBox(
-              width: double.infinity,
-              child: FormSubmit(
-                isLoading: isLoading,
-                'Add Book',
-                () => _handleSubmit(
-                  bookCreateNotifier,
-                  ScaffoldMessenger.of(context),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return FormPageScaffold(
+      title: 'Add New Book',
+      subtitle:
+          'Add a book to your reading tracker. Fill in the details below.',
+      isLoading: isLoading,
+      submitButtonText: 'Add Book',
+      form: BookCreateForm(_formKey),
+      onSubmit: () => _handleSubmit(bookCreateNotifier),
     );
   }
 
-  Future<bool> _handleExtraFieldsSheet(BookEntity book) async {
+  Future<void> _handleSubmit(BookCreateNotifier notifier) async {
+    if (!_formKey.currentState!.validate()) return;
+
+    try {
+      final createdBook = await notifier.createBook();
+
+      if (createdBook.status != BookStatus.toRead && mounted) {
+        await _showExtraFieldsSheet(createdBook);
+      }
+
+      await ref.read(bookListNotifierProvider.notifier).refreshBooks();
+      if (mounted) Navigator.of(context).pop();
+    } on ArgumentError catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: ${e.message}')));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error: Could not save book')),
+        );
+      }
+    }
+  }
+
+  Future<bool> _showExtraFieldsSheet(BookEntity book) async {
     final result = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -78,47 +67,14 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: BookUpdateFormExtra(book),
-        );
-      },
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: BookUpdateFormExtra(book),
+      ),
     );
 
     return result ?? false;
-  }
-
-  Future<void> _handleSubmit(
-    BookCreateNotifier notifier,
-    ScaffoldMessengerState scaffoldMessenger,
-  ) async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    try {
-      final createdBook = await notifier.createBook();
-
-      if (createdBook.status != BookStatus.toRead) {
-        await _handleExtraFieldsSheet(createdBook);
-      }
-
-      await ref.read(bookListNotifierProvider.notifier).refreshBooks();
-
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    } catch (e) {
-      if (!mounted) return;
-      scaffoldMessenger.showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error: ${e is ArgumentError ? e.message : 'Could not save book'}',
-          ),
-        ),
-      );
-    }
   }
 }

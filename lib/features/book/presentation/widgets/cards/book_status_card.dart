@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 
-class BookCardStatus extends StatelessWidget {
+class BookStatusCard extends StatelessWidget {
   final BookEntity book;
 
-  const BookCardStatus(this.book, {super.key});
+  const BookStatusCard(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {
