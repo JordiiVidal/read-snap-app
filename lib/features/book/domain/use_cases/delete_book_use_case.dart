@@ -1,4 +1,4 @@
-import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 class DeleteBookUseCase {
   final BookRepository _repository;

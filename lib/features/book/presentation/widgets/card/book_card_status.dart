@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
 class BookCardStatus extends StatelessWidget {

@@ -1,26 +1,23 @@
-import 'package:read_snap/features/book/data/models/book_model.dart';
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/domain/services/exceptions.dart';
-import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:read_snap/features/book/data/data.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 class BookRepositoryImpl implements BookRepository {
   final Database _db;
-  final BookModel _model = BookModel();
 
   BookRepositoryImpl(this._db);
 
   @override
   Future<List<BookEntity>> getBooks() async {
-    final List<Map<String, dynamic>> maps = await _db.query(BookModel.table);
-    return List.generate(maps.length, (i) => _model.fromMap(maps[i]));
+    final List<Map<String, dynamic>> maps = await _db.query(BookMapper.table);
+    return maps.map(BookMapper.fromMap).toList();
   }
 
   @override
   Future<void> addBook(BookEntity book) async {
     await _db.insert(
-      BookModel.table,
-      _model.toMap(book),
+      BookMapper.table,
+      BookMapper.toMap(book),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -28,9 +25,9 @@ class BookRepositoryImpl implements BookRepository {
   @override
   Future<void> updateBook(BookEntity book) async {
     await _db.update(
-      BookModel.table,
-      _model.toMap(book),
-      where: '${BookModel.id} = ?',
+      BookMapper.table,
+      BookMapper.toMap(book),
+      where: '${BookMapper.id} = ?',
       whereArgs: [book.id],
     );
   }
@@ -38,8 +35,8 @@ class BookRepositoryImpl implements BookRepository {
   @override
   Future<void> deleteBook(String id) async {
     await _db.delete(
-      BookModel.table,
-      where: '${BookModel.id} = ?',
+      BookMapper.table,
+      where: '${BookMapper.id} = ?',
       whereArgs: [id],
     );
   }
@@ -47,14 +44,14 @@ class BookRepositoryImpl implements BookRepository {
   @override
   Future<BookEntity> getBookById(String id) async {
     final List<Map<String, dynamic>> maps = await _db.query(
-      BookModel.table,
-      where: '${BookModel.id} = ?',
+      BookMapper.table,
+      where: '${BookMapper.id} = ?',
       whereArgs: [id],
     );
     if (maps.isEmpty) {
       throw BookNotFoundException();
     }
-    return _model.fromMap(maps.first);
+    return BookMapper.fromMap(maps.first);
   }
 
   @override
@@ -63,21 +60,21 @@ class BookRepositoryImpl implements BookRepository {
     String author,
   ) async {
     final List<Map<String, dynamic>> maps = await _db.query(
-      BookModel.table,
-      where: '${BookModel.title} = ? AND ${BookModel.author} = ?',
+      BookMapper.table,
+      where: '${BookMapper.title} = ? AND ${BookMapper.author} = ?',
       whereArgs: [title, author],
     );
     if (maps.isEmpty) {
       return null;
     }
-    return _model.fromMap(maps.first);
+    return BookMapper.fromMap(maps.first);
   }
 
   @override
   Future<int> countBooksByStatus(BookStatus status) async {
     final List<Map<String, dynamic>> maps = await _db.query(
-      BookModel.table,
-      where: '${BookModel.status} = ?',
+      BookMapper.table,
+      where: '${BookMapper.status} = ?',
       whereArgs: [status.name],
     );
     return maps.length;

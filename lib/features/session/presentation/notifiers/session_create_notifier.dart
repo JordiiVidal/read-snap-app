@@ -1,65 +1,39 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/core/injection_container.dart';
-import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 
-final sessionCreateNotifierProvider = StateNotifierProvider.family
-    .autoDispose<SessionCreateNotifier, AsyncValue<SessionEntity>, String>((
-      ref,
-      bookId,
-    ) {
-      final bookAsync = ref.watch(bookDetailNotifierProvider(bookId));
-      final saveSessionUseCase = ref.watch(saveSessionUseCaseProvider);
-      return SessionCreateNotifier(saveSessionUseCase, bookId, bookAsync);
-    });
+final sessionCreateNotifierProvider = AsyncNotifierProvider.family
+    .autoDispose<SessionCreateNotifier, SessionEntity, String>(
+      SessionCreateNotifier.new,
+    );
 
-class SessionCreateNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
-  final SaveSessionUseCase _saveSessionUseCase;
-  int _bookTotalPages = 0;
+class SessionCreateNotifier
+    extends AutoDisposeFamilyAsyncNotifier<SessionEntity, String> {
+  late SaveSessionUseCase _saveSessionUseCase;
+  late int _bookTotalPages;
 
-  SessionCreateNotifier(
-    this._saveSessionUseCase,
-    String bookId,
-    AsyncValue<BookEntity> bookAsync,
-  ) : super(const AsyncValue.loading()) {
-    _initializeForm(bookId, bookAsync);
-  }
+  @override
+  Future<SessionEntity> build(String bookId) async {
+    _saveSessionUseCase = ref.read(saveSessionUseCaseProvider);
 
-  SessionEntity get _currentSessionEntity => state.value!;
+    final book = await ref.read(getBookByIdUseCaseProvider).call(bookId);
+    _bookTotalPages = book.totalPages;
 
-  void _initializeForm(String bookId, AsyncValue<BookEntity> bookAsync) {
-    final baseSession = SessionEntity(
+    return SessionEntity(
       id: '',
       bookId: bookId,
-      startPage: 0,
-      endPage: 0,
+      startPage: book.currentPage,
+      endPage: book.currentPage,
       minutesRead: 1,
       pagesRead: 0,
       sessionDate: DateTime.now(),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
-
-    bookAsync.when(
-      loading: () {},
-      error: (e, st) {
-        state = AsyncValue.error(e, st);
-      },
-      data: (book) {
-        final initialStartPage = book.currentPage;
-        final initialEndPage = initialStartPage;
-        _bookTotalPages = book.totalPages;
-
-        state = AsyncValue.data(
-          baseSession.copyWith(
-            startPage: initialStartPage,
-            endPage: initialEndPage,
-          ),
-        );
-      },
-    );
   }
+
+  SessionEntity get _currentSessionEntity => state.value!;
 
   int get totalPages => _bookTotalPages;
 
@@ -116,8 +90,11 @@ class SessionCreateNotifier extends StateNotifier<AsyncValue<SessionEntity>> {
   Future<void> saveSession() async {
     final previousState = state;
     state = AsyncValue<SessionEntity>.loading().copyWithPrevious(previousState);
+
     try {
       await _saveSessionUseCase.call(_currentSessionEntity);
+      ref.invalidate(bookListNotifierProvider);
+      ref.invalidate(bookDetailNotifierProvider(_currentSessionEntity.bookId));
     } on ArgumentError catch (_) {
       // Error to widget
       state = previousState;

@@ -1,9 +1,8 @@
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
-class BookModel {
+class BookMapper {
   static const String table = 'books';
-  static const BookStatus defaultStatus = BookStatus.toRead;
-  // Columns
+
   static const String id = 'id';
   static const String externalId = 'external_id';
   static const String title = 'title';
@@ -24,7 +23,9 @@ class BookModel {
   static const String finishedAt = 'finished_at';
   static const String startedAt = 'started_at';
 
-  Map<String, dynamic> toMap(BookEntity entity) {
+  static const BookStatus defaultStatus = BookStatus.toRead;
+
+  static Map<String, dynamic> toMap(BookEntity entity) {
     return {
       id: entity.id,
       externalId: entity.externalId,
@@ -48,9 +49,9 @@ class BookModel {
     };
   }
 
-  BookEntity fromMap(Map<String, dynamic> map) {
-    final status = BookStatus.values.firstWhere(
-      (e) => e.name == map[BookModel.status],
+  static BookEntity fromMap(Map<String, dynamic> map) {
+    final statusValue = BookStatus.values.firstWhere(
+      (e) => e.name == map[status],
       orElse: () => defaultStatus,
     );
     final List<String>? categoriesList = (map[categories] as String?)?.split(
@@ -63,7 +64,7 @@ class BookModel {
       author: map[author] as String,
       totalPages: map[totalPages] as int,
       currentPage: map[currentPage] as int,
-      status: status,
+      status: statusValue,
       color: map[color] as String,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAt] as int),

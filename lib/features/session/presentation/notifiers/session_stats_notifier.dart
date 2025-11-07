@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/core/injection_container.dart';
+import 'package:read_snap/core/di/injection_container.dart';
 
 final totalTimeProvider = FutureProvider.family<int, String>((
   ref,

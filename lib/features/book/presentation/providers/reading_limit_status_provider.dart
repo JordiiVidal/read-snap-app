@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
+import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class ReadingLimitStatus {
   final int count;

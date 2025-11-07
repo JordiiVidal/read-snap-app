@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/common/utils/utils.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/shared/utils/utils.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
 
 class SessionReadingTimeCard extends ConsumerWidget {

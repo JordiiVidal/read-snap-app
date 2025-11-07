@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
 
 class SessionCreatePage extends ConsumerStatefulWidget {

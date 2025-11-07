@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/features/book/data/providers/google_books_api_provider.dart';
+import 'package:read_snap/features/book/presentation/providers/google_books_api_provider.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
 
 class BookSearchDelegate extends SearchDelegate<BookEntity?> {

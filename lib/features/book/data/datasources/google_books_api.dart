@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/data/data.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 class GoogleBooksApi {
   static const String _authority = 'www.googleapis.com';
@@ -24,7 +25,7 @@ class GoogleBooksApi {
         final List items = data['items'] ?? [];
 
         return items.map((item) {
-          return BookEntity.fromGoogleBooksJson(item);
+          return GoogleBooksMapper.fromGoogleBooksJson(item);
         }).toList();
       } else {
         throw Exception(

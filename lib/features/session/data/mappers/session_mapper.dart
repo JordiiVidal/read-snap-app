@@ -1,8 +1,8 @@
 import 'package:read_snap/features/session/domain/domain.dart';
 
-class SessionModel {
+class SessionMapper {
   static const String table = 'sessions';
-  // Columns
+
   static const String id = 'id';
   static const String bookId = 'book_id';
   static const String startPage = 'start_page';
@@ -13,7 +13,7 @@ class SessionModel {
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
 
-  Map<String, dynamic> toMap(SessionEntity entity) {
+  static Map<String, dynamic> toMap(SessionEntity entity) {
     return {
       id: entity.id,
       bookId: entity.bookId,
@@ -27,7 +27,7 @@ class SessionModel {
     };
   }
 
-  SessionEntity fromMap(Map<String, dynamic> map) {
+  static SessionEntity fromMap(Map<String, dynamic> map) {
     return SessionEntity(
       id: map[id],
       bookId: map[bookId],

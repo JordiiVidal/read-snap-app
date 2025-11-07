@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/core/database_helper.dart';
+import 'package:read_snap/core/database/database_helper.dart';
 import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/session/data/data.dart';
@@ -78,7 +78,6 @@ final saveSessionUseCaseProvider = Provider<SaveSessionUseCase>((ref) {
   return SaveSessionUseCase(
     ref.watch(sessionRepositoryProvider),
     ref.watch(bookRepositoryProvider),
-    ref,
   );
 });
 final getSessionsByBookUseCaseProvider = Provider<GetSessionsByBookUseCase>((

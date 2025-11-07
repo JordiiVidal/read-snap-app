@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/common/utils/utils.dart';
+import 'package:read_snap/shared/utils/utils.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/extensions/book_ui_extensions.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
 class BookListItem extends StatelessWidget {

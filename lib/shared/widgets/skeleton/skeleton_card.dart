@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/common/widgets/widgets.dart';
+import 'package:read_snap/shared/widgets/widgets.dart';
 
 class SkeletonCard extends StatelessWidget {
   const SkeletonCard({super.key});

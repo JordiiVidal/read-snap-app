@@ -1,5 +1,4 @@
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/domain/repositories/book_repository.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 class GetBooksUseCase {
   final BookRepository _repository;

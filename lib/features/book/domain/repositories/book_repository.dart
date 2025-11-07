@@ -1,4 +1,4 @@
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 abstract class BookRepository {
   Future<List<BookEntity>> getBooks();
