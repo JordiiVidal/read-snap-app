@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/config/routes/app_routes.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_detail_notifier.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
+import 'package:read_snap/features/book/presentation/widgets/book_header.dart';
+import 'package:read_snap/features/book/presentation/widgets/cards/book_card_progress.dart';
+import 'package:read_snap/features/book/presentation/widgets/cards/book_card_status.dart';
+import 'package:read_snap/features/session/presentation/widgets/cards/session_card_reading.dart';
+import 'package:read_snap/features/session/presentation/widgets/lists/session_list.dart';
 import 'package:read_snap/shared/widgets/common/async_value_widget.dart';
-import 'package:read_snap/shared/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:read_snap/shared/widgets/dialogs/dialogs.dart';
 
 class BookDetailPage extends ConsumerWidget {
   final String bookId;

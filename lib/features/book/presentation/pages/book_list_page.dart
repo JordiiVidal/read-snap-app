@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/config/routes/app_routes.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
+import 'package:read_snap/features/book/presentation/widgets/lists/book_list.dart';
+import 'package:read_snap/features/book/presentation/widgets/lists/book_list_item.dart';
+import 'package:read_snap/features/book/presentation/widgets/reading_limit_counter.dart';
+import 'package:read_snap/shared/widgets/common/common.dart';
 
 class BookListPage extends StatelessWidget {
   const BookListPage({super.key});

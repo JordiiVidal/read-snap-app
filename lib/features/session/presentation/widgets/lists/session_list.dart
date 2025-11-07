@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/session/domain/entities/session_entity.dart';
 import 'package:read_snap/features/session/presentation/notifiers/session_list_notifier.dart';
 import 'package:read_snap/features/session/presentation/widgets/lists/session_list_item.dart';
+import 'package:read_snap/shared/widgets/common/common.dart';
 
 class SessionList extends ConsumerWidget {
   final String bookId;

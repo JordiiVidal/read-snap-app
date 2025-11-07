@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/widgets/lists/book_list_item.dart';
 
 class BookList extends ConsumerWidget {
   final ProviderListenable<AsyncValue<List<BookEntity>>> booksProvider;

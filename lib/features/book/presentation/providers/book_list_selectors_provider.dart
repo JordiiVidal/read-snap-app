@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
 
 final readingBooksProvider = Provider<AsyncValue<List<BookEntity>>>((ref) {
   return ref

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
+import 'package:read_snap/shared/widgets/forms/forms.dart';
 
 class SessionFormMinutes extends StatelessWidget {
   final TextEditingController minutesController;

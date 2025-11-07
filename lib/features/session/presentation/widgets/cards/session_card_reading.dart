@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
 import 'package:read_snap/shared/utils/utils.dart';
-import 'package:read_snap/shared/widgets/widgets.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/shared/widgets/cards/stat_card.dart';
+import 'package:read_snap/shared/widgets/display/dispaly.dart';
+import 'package:read_snap/shared/widgets/loading/loading.dart';
 
 class SessionCardReading extends ConsumerWidget {
   final String bookId;
