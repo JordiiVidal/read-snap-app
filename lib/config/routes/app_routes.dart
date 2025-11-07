@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
-import 'package:read_snap/features/session/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/pages/book_create_page.dart';
+import 'package:read_snap/features/book/presentation/pages/book_detail_page.dart';
+import 'package:read_snap/features/book/presentation/pages/book_list_page.dart';
+import 'package:read_snap/features/session/presentation/pages/session_create_page.dart';
 
 class AppRoutes {
   AppRoutes._();
