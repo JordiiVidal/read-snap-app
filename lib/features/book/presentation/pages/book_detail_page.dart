@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/config/routes/app_routes.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 import 'package:read_snap/features/session/presentation/presentation.dart';
@@ -105,14 +106,10 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
     );
   }
 
-  void _navigateToCreateSession() {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => SessionCreatePage(widget.bookId)));
-  }
+  void _navigateToCreateSession() =>
+      AppRoutes.toSessionCreate(context, widget.bookId);
 
   Future<void> _handleDelete() async {
-    // Mostrar diálogo de confirmación
     final confirmed = await showDeleteConfirmationDialog(
       context: context,
       title: 'Confirm Deletion',
@@ -122,7 +119,6 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
 
     if (!confirmed || !mounted) return;
 
-    // Ejecutar eliminación
     setState(() => _isDeleting = true);
 
     try {

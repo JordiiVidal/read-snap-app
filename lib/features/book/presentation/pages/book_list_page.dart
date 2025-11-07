@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:read_snap/config/routes/app_routes.dart';
 import 'package:read_snap/shared/widgets/widgets.dart';
 import 'package:read_snap/features/book/presentation/presentation.dart';
 
@@ -55,17 +56,9 @@ class BookListPage extends StatelessWidget {
     );
   }
 
-  void _navigateToDetail(BuildContext context, String bookId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => BookDetailPage(bookId)),
-    );
-  }
+  void _navigateToDetail(BuildContext context, String bookId) =>
+      AppRoutes.toBookDetail(context, bookId);
 
-  void _navigateToCreate(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const BookCreatePage()),
-    );
-  }
+  void _navigateToCreate(BuildContext context) =>
+      AppRoutes.toBookCreate(context);
 }
