@@ -3,10 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
-class GoogleBooksApi {
+class BookSearchRepositoryImpl implements BookSearchRepository {
   static const String _authority = 'www.googleapis.com';
   static const String _path = '/books/v1/volumes';
 
+  @override
   Future<List<BookEntity>> searchBooks(String query) async {
     final Map<String, dynamic> queryParameters = {
       'q': query,

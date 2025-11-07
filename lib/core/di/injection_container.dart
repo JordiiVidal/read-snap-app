@@ -6,7 +6,10 @@ import 'package:read_snap/features/session/data/data.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:sqflite/sqflite.dart';
 
-/* Database */
+/* ============================================================ */
+/*                        DATABASE                              */
+/* ============================================================ */
+
 final databaseProvider = FutureProvider<Database>((ref) async {
   DatabaseHelper.registerTableCreation(createBookTable);
   DatabaseHelper.registerTableCreation(createSessionTable);
@@ -14,8 +17,18 @@ final databaseProvider = FutureProvider<Database>((ref) async {
   return await dbHelper.database;
 });
 
-/* Book */
-/* Repositories */
+/* ============================================================ */
+/*                    DOMAIN SERVICES                           */
+/* ============================================================ */
+
+final bookValidatorServiceProvider = Provider<BookValidatorService>((ref) {
+  return const BookValidatorService();
+});
+
+/* ============================================================ */
+/*                      REPOSITORIES                            */
+/* ============================================================ */
+
 final bookRepositoryProvider = Provider<BookRepository>((ref) {
   final database = ref.watch(databaseProvider).value;
   if (database == null) {
@@ -23,11 +36,27 @@ final bookRepositoryProvider = Provider<BookRepository>((ref) {
   }
   return BookRepositoryImpl(database);
 });
-/* Use Cases */
+
+final bookSearchRepositoryProvider = Provider<BookSearchRepository>((ref) {
+  return BookSearchRepositoryImpl();
+});
+
+final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
+  final database = ref.watch(databaseProvider).value;
+  if (database == null) {
+    throw Exception('Database not initialized for SessionRepository');
+  }
+  return SessionRepositoryImpl(database);
+});
+
+/* ============================================================ */
+/*                     BOOK USE CASES                           */
+/* ============================================================ */
+
 final createBookUseCaseProvider = Provider<CreateBookUseCase>((ref) {
   return CreateBookUseCase(
     ref.watch(bookRepositoryProvider),
-    BookValidatorService(),
+    ref.watch(bookValidatorServiceProvider),
     ref.watch(checkReadingLimitUseCaseProvider),
     ref.watch(checkBookUniquenessUseCaseProvider),
   );
@@ -36,7 +65,7 @@ final createBookUseCaseProvider = Provider<CreateBookUseCase>((ref) {
 final updateBookUseCaseProvider = Provider<UpdateBookUseCase>((ref) {
   return UpdateBookUseCase(
     ref.watch(bookRepositoryProvider),
-    BookValidatorService(),
+    ref.watch(bookValidatorServiceProvider),
   );
 });
 
@@ -64,16 +93,10 @@ final checkReadingLimitUseCaseProvider = Provider<CheckReadingLimitUseCase>((
   return CheckReadingLimitUseCase(ref.watch(bookRepositoryProvider));
 });
 
-/* Session */
-/* Repositories */
-final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
-  final database = ref.watch(databaseProvider).value;
-  if (database == null) {
-    throw Exception('Database not initialized for SessionRepository');
-  }
-  return SessionRepositoryImpl(database);
-});
-/* Use Cases */
+/* ============================================================ */
+/*                     SESSION USE CASES                        */
+/* ============================================================ */
+
 final saveSessionUseCaseProvider = Provider<SaveSessionUseCase>((ref) {
   return SaveSessionUseCase(
     ref.watch(sessionRepositoryProvider),

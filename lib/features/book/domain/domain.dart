@@ -4,6 +4,7 @@ export 'entities/book_entity.dart';
 export 'exceptions/book_exceptions.dart';
 // Repositories
 export 'repositories/book_repository.dart';
+export 'repositories/book_search_repository.dart';
 // Services
 export 'services/book_validator_service.dart';
 // Use cases
