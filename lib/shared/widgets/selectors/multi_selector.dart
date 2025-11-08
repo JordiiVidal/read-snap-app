@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 
-class MultiSelectChipGroup extends StatelessWidget {
+class MultiSelector extends StatelessWidget {
   final String label;
   final List<String> items;
   final List<String> selectedItems;
@@ -9,7 +9,7 @@ class MultiSelectChipGroup extends StatelessWidget {
   final VoidCallback? onAddCustom;
   final bool allowCustom;
 
-  const MultiSelectChipGroup({
+  const MultiSelector({
     required this.label,
     required this.items,
     required this.selectedItems,

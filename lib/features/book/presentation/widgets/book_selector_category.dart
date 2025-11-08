@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/chips/chips.dart';
+import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
 class BookSelectorCategory extends StatelessWidget {
   final List<String>? selectedCategories;
@@ -63,7 +63,7 @@ class BookSelectorCategory extends StatelessWidget {
       ...(selectedCategories ?? []),
     }.toList();
 
-    return MultiSelectChipGroup(
+    return MultiSelector(
       label: 'Categories',
       items: allCategories,
       selectedItems: selectedCategories ?? [],
