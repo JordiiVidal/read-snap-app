@@ -117,43 +117,13 @@ class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
                 controller: _currentPageController,
                 keyboardType: TextInputType.number,
                 suffixText: '/${widget.book.totalPages}',
-                onChanged: (value) {
-                  final pages = int.tryParse(value) ?? 0;
-                  updateNotifier.updateCurrentPage(pages);
-                },
+                suffixIcon: NumberControlsFormField(
+                  controller: _currentPageController,
+                  onValueChanged: updateNotifier.updateCurrentPage,
+                ),
+                readOnly: true,
               ),
-              SizedBox(height: 5),
-
-              // Actions
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 10,
-                children: [
-                  ActionChip(
-                    label: Text('First'),
-                    onPressed: () {
-                      final newValue = '1';
-                      _handleQuickAction(
-                        _currentPageController,
-                        newValue,
-                        () => updateNotifier.updateCurrentPage(1),
-                      );
-                    },
-                  ),
-                  ActionChip(
-                    label: Text('Middle'),
-                    onPressed: () {
-                      final pages = widget.book.totalPages ~/ 2;
-                      final newValue = pages.toString();
-                      _handleQuickAction(
-                        _currentPageController,
-                        newValue,
-                        () => updateNotifier.updateCurrentPage(pages),
-                      );
-                    },
-                  ),
-                ],
-              ),
+              SizedBox(height: 20),
             ],
 
             // Start Date Field

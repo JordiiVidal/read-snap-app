@@ -38,7 +38,7 @@ class MultiSelector extends StatelessWidget {
         ),
         Wrap(
           spacing: 8,
-          runSpacing: 8,
+          runSpacing: 0,
           children: items.map((item) {
             final isSelected = selectedItems.contains(item);
             return FilterChip(

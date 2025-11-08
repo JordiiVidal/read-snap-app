@@ -22,6 +22,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
   late TextEditingController _authorController;
   late TextEditingController _pagesController;
   late final BookCreateNotifier _initialNotifier;
+  late FocusNode _pagesFocusNode;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
     _pagesController = TextEditingController(
       text: initialDraft.totalPages.toString(),
     );
+    _pagesFocusNode = FocusNode();
   }
 
   @override
@@ -62,6 +64,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
     _titleController.dispose();
     _authorController.dispose();
     _pagesController.dispose();
+    _pagesFocusNode.dispose();
     super.dispose();
   }
 
@@ -89,32 +92,6 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
         FocusScope.of(context).unfocus();
       }
     }
-  }
-
-  Widget _buildIncrementButton({
-    required IconData icon,
-    required bool isIncrement,
-    required VoidCallback onPressed,
-  }) {
-    return InkWell(
-      onTap: onPressed,
-      onLongPress: () {
-        if (context.mounted) {
-          FocusScope.of(context).unfocus();
-        }
-        final currentValue = int.tryParse(_pagesController.text) ?? 0;
-        final increment = isIncrement ? 10 : -10;
-        final newValue = (currentValue + increment).clamp(0, 9999);
-        _pagesController.text = newValue.toString();
-        ref
-            .read(bookCreateNotifierProvider.notifier)
-            .updateTotalPages(newValue);
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(icon, size: 20),
-      ),
-    );
   }
 
   @override
@@ -174,49 +151,25 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
             label: 'Total Pages',
             hintText: 'Enter total pages',
             controller: _pagesController,
+            focusNode: _pagesFocusNode,
             required: true,
             keyboardType: TextInputType.number,
             onChanged: (value) {
               final pages = int.tryParse(value) ?? 0;
               bookCreateNotifier.updateTotalPages(pages);
             },
-            suffixIcon: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildIncrementButton(
-                  icon: Icons.remove,
-                  isIncrement: false,
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    final currentValue =
-                        int.tryParse(_pagesController.text) ?? 0;
-                    if (currentValue > 0) {
-                      final newValue = currentValue - 1;
-                      _pagesController.text = newValue.toString();
-                      bookCreateNotifier.updateTotalPages(newValue);
-                    }
-                  },
-                ),
-                const SizedBox(width: 4),
-                _buildIncrementButton(
-                  icon: Icons.add,
-                  isIncrement: true,
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    final currentValue =
-                        int.tryParse(_pagesController.text) ?? 0;
-                    final newValue = currentValue + 1;
-                    _pagesController.text = newValue.toString();
-                    bookCreateNotifier.updateTotalPages(newValue);
-                  },
-                ),
-              ],
+            suffixIcon: NumberControlsFormField(
+              controller: _pagesController,
+              onValueChanged: bookCreateNotifier.updateTotalPages,
+              focusNode: _pagesFocusNode,
             ),
+            readOnly: true,
           ),
 
           // Language Selector
           LabelFormField('Language', marginBottom: 0),
           LangauageSelector((language) {
+            FocusScope.of(context).unfocus();
             bookCreateNotifier.updateLanguage(language);
           }, selectedLanguage: bookState.language),
 
@@ -224,6 +177,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           BookSelectorCategory(
             selectedCategories: bookState.categories,
             onCategoriesChanged: (categories) {
+              FocusScope.of(context).unfocus();
               bookCreateNotifier.updateCategories(categories);
             },
           ),

@@ -14,6 +14,8 @@ class DynamicFormField extends StatelessWidget {
   final String? suffixText;
   final Widget? suffixIcon;
   final double borderRadius;
+  final bool readOnly;
+  final FocusNode? focusNode;
 
   const DynamicFormField({
     this.label,
@@ -28,6 +30,8 @@ class DynamicFormField extends StatelessWidget {
     this.suffixText,
     this.suffixIcon,
     this.borderRadius = 8,
+    this.readOnly = false,
+    this.focusNode,
     super.key,
   });
 
@@ -43,6 +47,8 @@ class DynamicFormField extends StatelessWidget {
           initialValue: initialValue,
           keyboardType: keyboardType,
           onChanged: onChanged,
+          readOnly: readOnly,
+          focusNode: focusNode,
           style: const TextStyle(fontSize: 14),
 
           decoration: InputDecoration(
@@ -53,6 +59,9 @@ class DynamicFormField extends StatelessWidget {
             prefixIcon: prefixIcon,
             suffixText: suffixText,
             suffixIcon: suffixIcon,
+            suffixIconConstraints: suffixIcon != null
+                ? const BoxConstraints(minWidth: 80, minHeight: 48)
+                : null,
             suffixStyle: const TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.w500,
