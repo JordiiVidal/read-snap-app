@@ -26,7 +26,7 @@ class _SessionCreatePageState extends ConsumerState<SessionCreatePage> {
     );
     final isLoading = sessionAsync.isLoading;
 
-    return FormPageScaffold(
+    return PageFormScaffold(
       title: 'Record Reading Session',
       subtitle: 'Track your reading time and pages read.',
       isLoading: isLoading,

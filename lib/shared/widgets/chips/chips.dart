@@ -1,1 +1,1 @@
-export 'chip_multi_select_group.dart';
+export 'multi_select_chip_group.dart';

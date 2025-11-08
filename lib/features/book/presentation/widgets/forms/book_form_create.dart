@@ -147,7 +147,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           ),
 
           // Title Field
-          FormDynamicField(
+          DynamicFormField(
             label: 'Title',
             hintText: 'Enter book title',
             controller: _titleController,
@@ -161,7 +161,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           ),
 
           // Author Field
-          FormDynamicField(
+          DynamicFormField(
             label: 'Author',
             hintText: 'Enter author name',
             controller: _authorController,
@@ -170,7 +170,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           ),
 
           // Total Pages Field
-          FormDynamicField(
+          DynamicFormField(
             label: 'Total Pages',
             hintText: 'Enter total pages',
             controller: _pagesController,
@@ -215,8 +215,8 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           ),
 
           // Language Selector
-          FormLabelField('Language', marginBottom: 0),
-          SelectorLangauge((language) {
+          LabelFormField('Language', marginBottom: 0),
+          LangauageSelector((language) {
             bookCreateNotifier.updateLanguage(language);
           }, selectedLanguage: bookState.language),
 

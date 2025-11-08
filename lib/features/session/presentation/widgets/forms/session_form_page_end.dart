@@ -23,7 +23,7 @@ class SessionFormPageEnd extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Label
-            FormLabelField('End Page'),
+            LabelFormField('End Page'),
 
             // Action Button
             TextButton(
@@ -40,7 +40,7 @@ class SessionFormPageEnd extends StatelessWidget {
         ),
 
         // End Page Field
-        FormDynamicField(
+        DynamicFormField(
           hintText: 'Enter end page',
           suffixText: '/ $totalPages',
           controller: endPageController,

@@ -12,7 +12,7 @@ class LanguageOption {
   });
 }
 
-class SelectorLangauge extends StatelessWidget {
+class LangauageSelector extends StatelessWidget {
   final String? selectedLanguage;
   final ValueChanged<String> onLanguageChanged;
 
@@ -35,7 +35,7 @@ class SelectorLangauge extends StatelessWidget {
     LanguageOption(code: 'zh', label: 'Chinese', flag: '🇨🇳'),
   ];
 
-  const SelectorLangauge(
+  const LangauageSelector(
     this.onLanguageChanged, {
     this.selectedLanguage,
     super.key,

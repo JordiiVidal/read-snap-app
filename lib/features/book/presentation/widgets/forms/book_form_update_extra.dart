@@ -111,7 +111,7 @@ class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
 
             // Current Page Field
             if (!isCompleted) ...[
-              FormDynamicField(
+              DynamicFormField(
                 label: 'Current Page',
                 hintText: 'Enter current page',
                 controller: _currentPageController,
@@ -157,7 +157,7 @@ class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
             ],
 
             // Start Date Field
-            FormDynamicField(
+            DynamicFormField(
               label: 'Start Date',
               hintText: 'Enter start date',
               keyboardType: TextInputType.datetime,
@@ -210,7 +210,7 @@ class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
 
             // End Date Field
             if (isCompleted) ...[
-              FormDynamicField(
+              DynamicFormField(
                 label: 'End Date',
                 hintText: 'Enter end date',
                 keyboardType: TextInputType.datetime,
@@ -265,7 +265,7 @@ class _BookFormUpdateExtraState extends ConsumerState<BookFormUpdateExtra> {
             Container(
               width: double.infinity,
               margin: const EdgeInsets.only(top: 20),
-              child: FormSubmit(
+              child: SubmitForm(
                 'Confirm',
                 () => _handleConfirm(updateNotifier),
               ),

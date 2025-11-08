@@ -23,7 +23,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
     final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
     final isLoading = bookCreateAsync.isLoading;
 
-    return FormPageScaffold(
+    return PageFormScaffold(
       title: 'Add New Book',
       subtitle:
           'Add a book to your reading tracker. Fill in the details below.',

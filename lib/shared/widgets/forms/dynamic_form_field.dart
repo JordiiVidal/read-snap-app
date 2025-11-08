@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/forms/form_label_field.dart';
+import 'package:read_snap/shared/widgets/forms/forms.dart';
 
-class FormDynamicField extends StatelessWidget {
+class DynamicFormField extends StatelessWidget {
   final String? label;
   final bool required;
   final String hintText;
@@ -15,7 +15,7 @@ class FormDynamicField extends StatelessWidget {
   final Widget? suffixIcon;
   final double borderRadius;
 
-  const FormDynamicField({
+  const DynamicFormField({
     this.label,
     required this.hintText,
     this.required = false,
@@ -36,7 +36,7 @@ class FormDynamicField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) FormLabelField(label!),
+        if (label != null) LabelFormField(label!),
         TextFormField(
           enabled: !disabled,
           controller: controller,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/session/presentation/notifiers/session_stats_notifier.dart';
 import 'package:read_snap/shared/utils/utils.dart';
-import 'package:read_snap/shared/widgets/cards/card_stat.dart';
+import 'package:read_snap/shared/widgets/cards/stat_card.dart';
 import 'package:read_snap/shared/widgets/display/display.dart';
 import 'package:read_snap/shared/widgets/loading/loading.dart';
 
@@ -27,7 +27,7 @@ class SessionCardReading extends ConsumerWidget {
           error: (e, st) => 0,
         );
 
-        return CardStat(
+        return StatCard(
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -37,7 +37,7 @@ class SessionCardReading extends ConsumerWidget {
           ),
           footer: Text('$sessionCount sessions.'),
           children: [
-            SizedBox(width: double.infinity, child: DisplayTime(formattedTime)),
+            SizedBox(width: double.infinity, child: TimeDisplay(formattedTime)),
           ],
         );
       },

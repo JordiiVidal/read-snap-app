@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/forms/form_label_field.dart';
+import 'package:read_snap/shared/widgets/forms/forms.dart';
 
 class SelectButtonGroup extends StatelessWidget {
   final Map<String, String> options;
@@ -47,7 +47,7 @@ class SelectButtonGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FormLabelField(label),
+        LabelFormField(label),
         Wrap(
           spacing: 8.0,
           runSpacing: 4.0,

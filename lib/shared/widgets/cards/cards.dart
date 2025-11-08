@@ -1,1 +1,1 @@
-export 'card_stat.dart';
+export 'stat_card.dart';

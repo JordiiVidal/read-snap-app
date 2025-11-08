@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FormPageScaffold extends StatelessWidget {
+class PageFormScaffold extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget form;
@@ -9,7 +9,7 @@ class FormPageScaffold extends StatelessWidget {
   final bool isLoading;
   final bool showLoadingOverlay;
 
-  const FormPageScaffold({
+  const PageFormScaffold({
     super.key,
     required this.title,
     required this.subtitle,

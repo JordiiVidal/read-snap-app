@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class FormSubmit extends StatelessWidget {
+class SubmitForm extends StatelessWidget {
   final String label;
   final bool isLoading;
   final VoidCallback onPressed;
 
-  const FormSubmit(
+  const SubmitForm(
     this.label,
     this.onPressed, {
     this.isLoading = false,

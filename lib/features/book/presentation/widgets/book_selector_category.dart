@@ -63,7 +63,7 @@ class BookSelectorCategory extends StatelessWidget {
       ...(selectedCategories ?? []),
     }.toList();
 
-    return ChipMultiSelectGroup(
+    return MultiSelectChipGroup(
       label: 'Categories',
       items: allCategories,
       selectedItems: selectedCategories ?? [],

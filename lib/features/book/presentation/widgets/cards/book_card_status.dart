@@ -14,7 +14,7 @@ class BookCardStatus extends StatelessWidget {
     final dateFormatter = DateFormat('dd/MM/yyyy');
     final formattedDate = dateFormatter.format(dateToFormat);
 
-    return CardStat(
+    return StatCard(
       header: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

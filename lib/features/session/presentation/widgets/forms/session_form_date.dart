@@ -25,7 +25,7 @@ class SessionFormDate extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 5,
       children: [
-        FormDynamicField(
+        DynamicFormField(
           label: 'Session Date',
           hintText: 'Enter session date',
           controller: dateController,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FormLabelField extends StatelessWidget {
+class LabelFormField extends StatelessWidget {
   final String label;
   final double marginBottom;
 
-  const FormLabelField(this.label, {this.marginBottom = 8, super.key});
+  const LabelFormField(this.label, {this.marginBottom = 8, super.key});
 
   @override
   Widget build(BuildContext context) {

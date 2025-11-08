@@ -9,7 +9,7 @@ import 'package:read_snap/features/book/presentation/widgets/cards/book_card_pro
 import 'package:read_snap/features/book/presentation/widgets/cards/book_card_status.dart';
 import 'package:read_snap/features/session/presentation/widgets/cards/session_card_reading.dart';
 import 'package:read_snap/features/session/presentation/widgets/lists/session_list.dart';
-import 'package:read_snap/shared/widgets/common/async_value_widget.dart';
+import 'package:read_snap/shared/widgets/common/common.dart';
 import 'package:read_snap/shared/widgets/dialogs/dialogs.dart';
 
 class BookDetailPage extends ConsumerWidget {
@@ -115,7 +115,7 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
       AppRoutes.toSessionCreate(context, widget.bookId);
 
   Future<void> _handleDelete() async {
-    final confirmed = await showDialogDeleteConfirmation(
+    final confirmed = await showDeleteConfirmationDialog(
       context: context,
       title: 'Confirm Deletion',
       message:

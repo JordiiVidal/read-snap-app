@@ -7,7 +7,7 @@ class LoadingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardStat(
+    return StatCard(
       header: const LoadingLine(width: 100, height: 14),
       footer: const LoadingLine(width: 80, height: 14),
       children: const [

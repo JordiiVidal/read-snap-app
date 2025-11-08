@@ -70,7 +70,7 @@ class SessionListItem extends StatelessWidget {
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 4),
-                DisplayTime(
+                TimeDisplay(
                   durationDisplay,
                   valueFontSize: 13,
                   unitFontSize: 10,

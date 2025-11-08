@@ -1,5 +1,5 @@
-export 'form_dynamic_field.dart';
-export 'form_label_field.dart';
-export 'form_page_scaffold.dart';
-export 'form_submit.dart';
+export 'dynamic_form_field.dart';
+export 'label_form_field.dart';
+export 'page_form_scaffold.dart';
+export 'submit_form.dart';
 export 'select_button_group.dart';

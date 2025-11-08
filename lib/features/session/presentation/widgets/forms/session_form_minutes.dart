@@ -17,7 +17,7 @@ class SessionFormMinutes extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 5,
       children: [
-        FormDynamicField(
+        DynamicFormField(
           label: 'Minutes Read',
           hintText: 'Enter duration in minutes',
           controller: minutesController,

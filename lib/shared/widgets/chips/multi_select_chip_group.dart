@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 
-class ChipMultiSelectGroup extends StatelessWidget {
+class MultiSelectChipGroup extends StatelessWidget {
   final String label;
   final List<String> items;
   final List<String> selectedItems;
@@ -9,7 +9,7 @@ class ChipMultiSelectGroup extends StatelessWidget {
   final VoidCallback? onAddCustom;
   final bool allowCustom;
 
-  const ChipMultiSelectGroup({
+  const MultiSelectChipGroup({
     required this.label,
     required this.items,
     required this.selectedItems,
@@ -27,7 +27,7 @@ class ChipMultiSelectGroup extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FormLabelField(label, marginBottom: 0),
+            LabelFormField(label, marginBottom: 0),
             if (allowCustom)
               TextButton.icon(
                 icon: const Icon(Icons.add, size: 18),

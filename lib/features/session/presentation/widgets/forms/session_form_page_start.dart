@@ -21,7 +21,7 @@ class SessionFormPageStart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Label
-            FormLabelField('Start Page'),
+            LabelFormField('Start Page'),
 
             // Action Button
             TextButton(
@@ -38,7 +38,7 @@ class SessionFormPageStart extends StatelessWidget {
         ),
 
         // Start Page Field
-        FormDynamicField(
+        DynamicFormField(
           hintText: 'Enter start page',
           disabled: true,
           controller: startPageController,
