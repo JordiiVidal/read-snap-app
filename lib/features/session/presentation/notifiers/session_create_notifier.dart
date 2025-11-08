@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/di/injection_container.dart';
-import 'package:read_snap/features/book/presentation/presentation.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_detail_notifier.dart';
+import 'package:read_snap/features/book/presentation/notifiers/book_list_notifier.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 
 final sessionCreateNotifierProvider = AsyncNotifierProvider.family

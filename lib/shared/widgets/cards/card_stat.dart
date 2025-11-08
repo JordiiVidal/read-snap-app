@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StatCard extends StatelessWidget {
+class CardStat extends StatelessWidget {
   final Widget header;
   final List<Widget> children;
   final Widget footer;
@@ -9,7 +9,7 @@ class StatCard extends StatelessWidget {
   final double height;
   final double width;
 
-  const StatCard({
+  const CardStat({
     required this.header,
     required this.children,
     required this.footer,

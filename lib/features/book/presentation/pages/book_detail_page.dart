@@ -115,7 +115,7 @@ class _BookDetailContentState extends ConsumerState<_BookDetailContent> {
       AppRoutes.toSessionCreate(context, widget.bookId);
 
   Future<void> _handleDelete() async {
-    final confirmed = await showDeleteConfirmationDialog(
+    final confirmed = await showDialogDeleteConfirmation(
       context: context,
       title: 'Confirm Deletion',
       message:

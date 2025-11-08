@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:read_snap/shared/utils/utils.dart';
-import 'package:read_snap/shared/widgets/display/dispaly.dart';
+import 'package:read_snap/shared/widgets/display/display.dart';
 
 class SessionListItem extends StatelessWidget {
   final SessionEntity session;
@@ -70,7 +70,7 @@ class SessionListItem extends StatelessWidget {
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 4),
-                TimeDisplay(
+                DisplayTime(
                   durationDisplay,
                   valueFontSize: 13,
                   unitFontSize: 10,

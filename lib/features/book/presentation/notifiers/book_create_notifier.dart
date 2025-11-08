@@ -53,6 +53,10 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
     state = AsyncValue.data(currentBookDraft.copyWith(status: status));
   }
 
+  void updateLanguage(String language) {
+    state = AsyncValue.data(currentBookDraft.copyWith(language: language));
+  }
+
   Future<BookEntity> createBook() async {
     final previousState = state;
     state = AsyncValue<BookEntity>.loading().copyWithPrevious(previousState);

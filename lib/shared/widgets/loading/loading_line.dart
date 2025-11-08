@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SkeletonLine extends StatelessWidget {
+class LoadingLine extends StatelessWidget {
   final double width;
   final double height;
 
-  const SkeletonLine({
+  const LoadingLine({
     this.width = double.infinity,
     this.height = 16.0,
     super.key,

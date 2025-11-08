@@ -1,1 +1,1 @@
-export 'delete_confirmation_dialog.dart';
+export 'dialog_delete_confirmation.dart';

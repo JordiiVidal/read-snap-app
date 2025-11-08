@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<bool> showDeleteConfirmationDialog({
+Future<bool> showDialogDeleteConfirmation({
   required BuildContext context,
   required String title,
   required String message,

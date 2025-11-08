@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/di/injection_container.dart';
-import 'package:read_snap/features/book/domain/entities/book_entity.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 
 class BookSearchDelegate extends SearchDelegate<BookEntity?> {
+  final String initialQuery;
+  final Set<String> existingExternalIds;
+  bool _hasInitialized = false;
+
+  BookSearchDelegate(this.initialQuery, this.existingExternalIds) : super();
+
+  void _initializeQuery() {
+    if (!_hasInitialized && initialQuery.isNotEmpty) {
+      super.query = initialQuery;
+      _hasInitialized = true;
+    }
+  }
+
+  bool _isBookAlreadyAdded(BookEntity book) {
+    return book.externalId != null &&
+        existingExternalIds.contains(book.externalId);
+  }
+
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
@@ -24,17 +42,13 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
           showSuggestions(context);
         },
       ),
-      IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () {
-          showResults(context);
-        },
-      ),
     ];
   }
 
   @override
   Widget buildResults(BuildContext context) {
+    _initializeQuery();
+
     if (query.isEmpty) {
       return const Center(
         child: Text('Introduce un título o autor para buscar.'),
@@ -66,6 +80,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
+                final isAlreadyAdded = _isBookAlreadyAdded(book);
 
                 Widget leadingWidget;
 
@@ -88,15 +103,21 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
                 }
 
                 return ListTile(
+                  enabled: !isAlreadyAdded,
                   leading: leadingWidget,
                   title: Text(book.title),
                   subtitle: Text(
                     book.author,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  onTap: () {
-                    close(context, book);
-                  },
+                  trailing: isAlreadyAdded
+                      ? Icon(Icons.check_circle, color: Colors.orange.shade700)
+                      : null,
+                  onTap: isAlreadyAdded
+                      ? null
+                      : () {
+                          close(context, book);
+                        },
                 );
               },
             );
@@ -108,11 +129,12 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    _initializeQuery();
+
     if (query.isEmpty) {
       return const Center(child: Text('Busca por título, autor o ISBN.'));
     }
 
-    // TODO LIVE SEARCH
     return buildResults(context);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TimeDisplay extends StatelessWidget {
+class DisplayTime extends StatelessWidget {
   final Map<String, int> timeParts;
   final double gap;
   final double spaceBetween;
@@ -8,7 +8,7 @@ class TimeDisplay extends StatelessWidget {
   final double unitFontSize;
   final bool shortText;
 
-  const TimeDisplay(
+  const DisplayTime(
     this.timeParts, {
     super.key,
     this.gap = 9,

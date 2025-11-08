@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/shared/widgets/cards/stat_card.dart';
+import 'package:read_snap/shared/widgets/cards/card_stat.dart';
 
 class BookCardProgress extends StatelessWidget {
   final BookEntity book;
@@ -11,7 +11,7 @@ class BookCardProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return StatCard(
+    return CardStat(
       header: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

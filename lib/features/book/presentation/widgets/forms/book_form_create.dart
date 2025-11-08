@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
+import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_search_delegate.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
-import 'package:read_snap/shared/widgets/forms/select_button_group.dart';
+import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
 class BookFormCreate extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -63,18 +64,56 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
     super.dispose();
   }
 
-  Future<void> _handleSearch(BuildContext context, WidgetRef ref) async {
+  Future<void> _handleSearch(
+    BuildContext context,
+    WidgetRef ref,
+    String initialQuery,
+  ) async {
+    final allBooksAsync = ref.read(allBooksProvider);
+    final Set<String> existingExternalIds =
+        allBooksAsync.valueOrNull
+            ?.map((book) => book.externalId ?? '')
+            .toSet() ??
+        {};
     final BookEntity? selectedBook = await showSearch<BookEntity?>(
       context: context,
-      delegate: BookSearchDelegate(),
+      delegate: BookSearchDelegate(initialQuery, existingExternalIds),
     );
 
     if (selectedBook != null) {
       ref
           .read(bookCreateNotifierProvider.notifier)
           .updateFromSearch(selectedBook);
-      widget.formKey.currentState?.validate();
+      if (context.mounted) {
+        FocusScope.of(context).unfocus();
+      }
     }
+  }
+
+  Widget _buildIncrementButton({
+    required IconData icon,
+    required bool isIncrement,
+    required VoidCallback onPressed,
+  }) {
+    return InkWell(
+      onTap: onPressed,
+      onLongPress: () {
+        if (context.mounted) {
+          FocusScope.of(context).unfocus();
+        }
+        final currentValue = int.tryParse(_pagesController.text) ?? 0;
+        final increment = isIncrement ? 10 : -10;
+        final newValue = (currentValue + increment).clamp(0, 9999);
+        _pagesController.text = newValue.toString();
+        ref
+            .read(bookCreateNotifierProvider.notifier)
+            .updateTotalPages(newValue);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(icon, size: 20),
+      ),
+    );
   }
 
   @override
@@ -85,7 +124,6 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
 
     return Form(
       key: widget.formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         spacing: 15,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +154,8 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
             onChanged: bookCreateNotifier.updateTitle,
             prefixIcon: IconButton(
               icon: const Icon(Icons.search),
-              onPressed: () => _handleSearch(context, ref),
+              onPressed: () =>
+                  _handleSearch(context, ref, _titleController.text),
             ),
           ),
 
@@ -140,7 +179,45 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
               final pages = int.tryParse(value) ?? 0;
               bookCreateNotifier.updateTotalPages(pages);
             },
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildIncrementButton(
+                  icon: Icons.remove,
+                  isIncrement: false,
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    final currentValue =
+                        int.tryParse(_pagesController.text) ?? 0;
+                    if (currentValue > 0) {
+                      final newValue = currentValue - 1;
+                      _pagesController.text = newValue.toString();
+                      bookCreateNotifier.updateTotalPages(newValue);
+                    }
+                  },
+                ),
+                const SizedBox(width: 4),
+                _buildIncrementButton(
+                  icon: Icons.add,
+                  isIncrement: true,
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    final currentValue =
+                        int.tryParse(_pagesController.text) ?? 0;
+                    final newValue = currentValue + 1;
+                    _pagesController.text = newValue.toString();
+                    bookCreateNotifier.updateTotalPages(newValue);
+                  },
+                ),
+              ],
+            ),
           ),
+
+          // Language Selector
+          FormLabelField('Language', marginBottom: 0),
+          SelectorLangauge((language) {
+            bookCreateNotifier.updateLanguage(language);
+          }, selectedLanguage: bookState.language),
         ],
       ),
     );
