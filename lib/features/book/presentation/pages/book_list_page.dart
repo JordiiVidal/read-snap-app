@@ -42,7 +42,11 @@ class BookListPage extends StatelessWidget {
               title: 'Your library',
               subtitle: 'All your saved books',
               actionWidget: IconButton.filled(
-                icon: const Icon(Icons.add, size: 18),
+                icon: Icon(
+                  Icons.add,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
                 onPressed: () => _navigateToCreate(context),
               ),
             ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/presentation/extensions/book_ui_extensions.dart';
 
 class BookHeader extends StatelessWidget {
   final BookEntity book;
@@ -14,12 +13,16 @@ class BookHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 50,
-          height: 80,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: book.flutterColor,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4.0),
+          child: Image.network(
+            book.imageThumbnail!,
+            fit: BoxFit.cover,
+            width: 60,
+            height: 100,
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.broken_image, size: 40);
+            },
           ),
         ),
         const SizedBox(width: 12),
