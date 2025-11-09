@@ -17,7 +17,7 @@ class CategoryMapper {
     return {
       id: entity.id,
       name: entity.name,
-      selectedByUser: entity.selectedByUser,
+      selectedByUser: entity.selectedByUser ? 1 : 0,
       iconEmoji: entity.iconEmoji,
       aliases: jsonEncode(entity.aliases),
       createdAt: entity.createdAt.millisecondsSinceEpoch,
@@ -38,7 +38,7 @@ class CategoryMapper {
     return CategoryEntity(
       id: map[id],
       name: map[name],
-      selectedByUser: map[selectedByUser],
+      selectedByUser: map[selectedByUser] == 1,
       iconEmoji: map[iconEmoji],
       aliases: parsedAliases,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt]),

@@ -31,6 +31,7 @@ class GoogleBooksMapper {
     final now = DateTime.now();
 
     List<String> finalCategories = [];
+
     if (categories.isNotEmpty) {
       try {
         finalCategories = await findCategoriesUseCase.call(categories);

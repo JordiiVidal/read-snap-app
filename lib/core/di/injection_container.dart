@@ -15,6 +15,7 @@ import 'package:sqflite/sqflite.dart';
 final databaseProvider = FutureProvider<Database>((ref) async {
   DatabaseHelper.registerTableCreation(createBookTable);
   DatabaseHelper.registerTableCreation(createSessionTable);
+  DatabaseHelper.registerTableCreation(createCategoryTable);
   final dbHelper = DatabaseHelper();
   return await dbHelper.database;
 });
@@ -67,9 +68,7 @@ final categoryRepositoryProvider = Provider<CategoryRepository>((ref) {
   if (database == null) {
     throw Exception('Database not initialized for CategoryRepository');
   }
-  final repo = CategoryRepositoryImpl(database);
-  CategorySeed.seedCategories(repo);
-  return repo;
+  return CategoryRepositoryImpl(database);
 });
 
 /* ============================================================ */

@@ -4,7 +4,7 @@ import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_search_delegate.dart';
-import 'package:read_snap/features/book/presentation/widgets/book_selector_category.dart';
+import 'package:read_snap/features/category/presentation/widgets/category_selector.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
@@ -174,7 +174,7 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
           }, selectedLanguage: bookState.language),
 
           // Categories Selector
-          BookSelectorCategory(
+          CategorySelector(
             selectedCategories: bookState.categories,
             onCategoriesChanged: (categories) {
               FocusScope.of(context).unfocus();
