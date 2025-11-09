@@ -4,6 +4,8 @@ import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/category/data/data.dart';
 import 'package:read_snap/features/category/domain/domain.dart';
+import 'package:read_snap/features/language/data/data.dart';
+import 'package:read_snap/features/language/domain/domain.dart';
 import 'package:read_snap/features/session/data/data.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:sqflite/sqflite.dart';
@@ -16,6 +18,7 @@ final databaseProvider = FutureProvider<Database>((ref) async {
   DatabaseHelper.registerTableCreation(createBookTable);
   DatabaseHelper.registerTableCreation(createSessionTable);
   DatabaseHelper.registerTableCreation(createCategoryTable);
+  DatabaseHelper.registerTableCreation(createLanguageTable);
   final dbHelper = DatabaseHelper();
   return await dbHelper.database;
 });
@@ -69,6 +72,14 @@ final categoryRepositoryProvider = Provider<CategoryRepository>((ref) {
     throw Exception('Database not initialized for CategoryRepository');
   }
   return CategoryRepositoryImpl(database);
+});
+
+final languageRepositoryProvider = Provider<LanguageRepository>((ref) {
+  final database = ref.watch(databaseProvider).value;
+  if (database == null) {
+    throw Exception('Database not initialized for LanguageRepository');
+  }
+  return LanguageRepositoryImpl(database);
 });
 
 /* ============================================================ */
@@ -164,3 +175,11 @@ final findCategoriesByAliasUseCaseProvider =
         ref.watch(categoryRepositoryProvider),
       );
     });
+
+/* ============================================================ */
+/*                   LANGUAGE USE CASES                         */
+/* ============================================================ */
+
+final getLanguagesUseCaseProvider = Provider<GetLanguagesUseCase>((ref) {
+  return GetLanguagesUseCase(ref.watch(languageRepositoryProvider));
+});

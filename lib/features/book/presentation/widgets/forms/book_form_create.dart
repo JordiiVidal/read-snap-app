@@ -5,8 +5,8 @@ import 'package:read_snap/features/book/presentation/notifiers/book_create_notif
 import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_search_delegate.dart';
 import 'package:read_snap/features/category/presentation/widgets/category_selector.dart';
+import 'package:read_snap/features/language/presentation/presentation.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
-import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
 class BookFormCreate extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -168,10 +168,13 @@ class _BookFormCreateState extends ConsumerState<BookFormCreate> {
 
           // Language Selector
           LabelFormField('Language', marginBottom: 0),
-          LangauageSelector((language) {
-            FocusScope.of(context).unfocus();
-            bookCreateNotifier.updateLanguage(language);
-          }, selectedLanguage: bookState.language),
+          LanguageSelector(
+            selectedLanguage: bookState.language,
+            onLanguageChanged: (language) {
+              FocusScope.of(context).unfocus();
+              bookCreateNotifier.updateLanguage(language);
+            },
+          ),
 
           // Categories Selector
           CategorySelector(
