@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/database/database_helper.dart';
 import 'package:read_snap/features/book/data/data.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/category/data/data.dart';
+import 'package:read_snap/features/category/domain/domain.dart';
 import 'package:read_snap/features/session/data/data.dart';
 import 'package:read_snap/features/session/domain/domain.dart';
 import 'package:sqflite/sqflite.dart';
@@ -46,7 +48,10 @@ final bookRepositoryProvider = Provider<BookRepository>((ref) {
 });
 
 final bookSearchRepositoryProvider = Provider<BookSearchRepository>((ref) {
-  return BookSearchRepositoryImpl(ref.watch(googleBooksDatasourceProvider));
+  return BookSearchRepositoryImpl(
+    ref.watch(googleBooksDatasourceProvider),
+    ref.watch(findCategoriesByAliasUseCaseProvider),
+  );
 });
 
 final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
@@ -55,6 +60,16 @@ final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
     throw Exception('Database not initialized for SessionRepository');
   }
   return SessionRepositoryImpl(database);
+});
+
+final categoryRepositoryProvider = Provider<CategoryRepository>((ref) {
+  final database = ref.watch(databaseProvider).value;
+  if (database == null) {
+    throw Exception('Database not initialized for CategoryRepository');
+  }
+  final repo = CategoryRepositoryImpl(database);
+  CategorySeed.seedCategories(repo);
+  return repo;
 });
 
 /* ============================================================ */
@@ -121,3 +136,32 @@ final getTotalReadingTimeUseCaseProvider = Provider<GetTotalReadingTimeUseCase>(
     return GetTotalReadingTimeUseCase(ref.watch(sessionRepositoryProvider));
   },
 );
+
+/* ============================================================ */
+/*                   CATEGORY USE CASES                         */
+/* ============================================================ */
+
+final getCategoriesUseCaseProvider = Provider<GetCategoriesUseCase>((ref) {
+  return GetCategoriesUseCase(ref.watch(categoryRepositoryProvider));
+});
+
+final getCategoryByNameUseCaseProvider = Provider<GetCategoryByNameUseCase>((
+  ref,
+) {
+  return GetCategoryByNameUseCase(ref.watch(categoryRepositoryProvider));
+});
+
+final createCategoryUseCaseProvider = Provider<CreateCategoryUseCase>((ref) {
+  return CreateCategoryUseCase(ref.watch(categoryRepositoryProvider));
+});
+
+final deleteCategoryUseCaseProvider = Provider<DeleteCategoryUseCase>((ref) {
+  return DeleteCategoryUseCase(ref.watch(categoryRepositoryProvider));
+});
+
+final findCategoriesByAliasUseCaseProvider =
+    Provider<FindCategoriesByAliasUseCase>((ref) {
+      return FindCategoriesByAliasUseCase(
+        ref.watch(categoryRepositoryProvider),
+      );
+    });

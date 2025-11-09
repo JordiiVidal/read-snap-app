@@ -46,6 +46,7 @@ class BookRepositoryImpl implements BookRepository {
     final List<Map<String, dynamic>> maps = await _db.query(
       BookMapper.table,
       where: '${BookMapper.id} = ?',
+      limit: 1,
       whereArgs: [id],
     );
     if (maps.isEmpty) {
@@ -62,6 +63,7 @@ class BookRepositoryImpl implements BookRepository {
     final List<Map<String, dynamic>> maps = await _db.query(
       BookMapper.table,
       where: '${BookMapper.title} = ? AND ${BookMapper.author} = ?',
+      limit: 1,
       whereArgs: [title, author],
     );
     if (maps.isEmpty) {

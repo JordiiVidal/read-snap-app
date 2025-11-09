@@ -1,7 +1,11 @@
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/category/domain/domain.dart';
 
 class GoogleBooksMapper {
-  static BookEntity fromGoogleBooksJson(Map<String, dynamic> json) {
+  static Future<BookEntity> fromGoogleBooksJson(
+    Map<String, dynamic> json,
+    FindCategoriesByAliasUseCase findCategoriesUseCase,
+  ) async {
     final String externalId = json['id'] as String? ?? '';
     final volumeInfo = json['volumeInfo'];
     final String title = volumeInfo['title'] as String? ?? 'Title Not Found';
@@ -26,6 +30,15 @@ class GoogleBooksMapper {
 
     final now = DateTime.now();
 
+    List<String> finalCategories = [];
+    if (categories.isNotEmpty) {
+      try {
+        finalCategories = await findCategoriesUseCase.call(categories);
+      } catch (e) {
+        finalCategories = categories;
+      }
+    }
+
     return BookEntity(
       id: '',
       externalId: externalId,
@@ -36,7 +49,7 @@ class GoogleBooksMapper {
       totalPages: totalPages,
       publisher: publisher,
       publishedDate: publishedDate,
-      categories: categories,
+      categories: finalCategories,
       description: description,
       subtitle: subtitle,
       imageThumbnail: imageThumbnail,

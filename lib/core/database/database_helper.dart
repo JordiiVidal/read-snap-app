@@ -20,7 +20,7 @@ class DatabaseHelper {
   Future<Database> initDatabase() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'readsnap_database.db');
-    return await openDatabase(path, version: 3, onCreate: _onCreate);
+    return await openDatabase(path, version: 4, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
