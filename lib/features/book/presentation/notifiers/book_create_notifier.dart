@@ -3,12 +3,9 @@ import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
 final bookCreateNotifierProvider =
-    StateNotifierProvider.autoDispose<
-      BookCreateNotifier,
-      AsyncValue<BookEntity>
-    >((ref) {
-      final crateBookUseCase = ref.watch(createBookUseCaseProvider);
-      return BookCreateNotifier(crateBookUseCase);
+    StateNotifierProvider<BookCreateNotifier, AsyncValue<BookEntity>>((ref) {
+      final createBookUseCase = ref.watch(createBookUseCaseProvider);
+      return BookCreateNotifier(createBookUseCase);
     });
 
 class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
@@ -59,6 +56,36 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
 
   void updateCategories(List<String> categories) {
     state = AsyncValue.data(currentBookDraft.copyWith(categories: categories));
+  }
+
+  void updateCurrentPage(int currentPage) {
+    state = AsyncValue.data(
+      currentBookDraft.copyWith(currentPage: currentPage),
+    );
+  }
+
+  void updateStartedAt(DateTime startDate) {
+    state = AsyncValue.data(currentBookDraft.copyWith(startedAt: startDate));
+  }
+
+  void updateFinishedAt(DateTime endDate) {
+    state = AsyncValue.data(currentBookDraft.copyWith(finishedAt: endDate));
+  }
+
+  void reset() {
+    state = AsyncValue.data(
+      BookEntity(
+        id: '',
+        title: '',
+        author: '',
+        totalPages: 0,
+        currentPage: 0,
+        status: BookStatus.toRead,
+        color: '#673AB7',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    );
   }
 
   Future<BookEntity> createBook() async {
