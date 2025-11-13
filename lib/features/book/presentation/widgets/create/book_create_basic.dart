@@ -22,15 +22,6 @@ class BookCreateBasicState extends State<BookCreateBasic> {
     super.dispose();
   }
 
-  void _handleSubmit(BuildContext context) {
-    if (_formKey.currentState?.validate() ?? false) {
-      widget.onSubmit(
-        title: _titleController.text.trim(),
-        author: _authorController.text.trim(),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -76,5 +67,14 @@ class BookCreateBasicState extends State<BookCreateBasic> {
         ],
       ),
     );
+  }
+
+  void _handleSubmit(BuildContext context) {
+    if (_formKey.currentState?.validate() ?? false) {
+      widget.onSubmit(
+        title: _titleController.text.trim(),
+        author: _authorController.text.trim(),
+      );
+    }
   }
 }

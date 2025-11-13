@@ -11,40 +11,6 @@ class BookStepSearch extends ConsumerWidget {
 
   const BookStepSearch({super.key, required this.onNext});
 
-  Future<void> _handleSearch(BuildContext context, WidgetRef ref) async {
-    final allBooksAsync = ref.read(allBooksProvider);
-    final Set<String> existingExternalIds =
-        allBooksAsync.valueOrNull
-            ?.map((book) => book.externalId ?? '')
-            .toSet() ??
-        {};
-
-    final selectedBook = await showSearch<BookEntity?>(
-      context: context,
-      delegate: BookSearchDelegate('', existingExternalIds),
-    );
-
-    if (selectedBook != null && context.mounted) {
-      ref
-          .read(bookCreateNotifierProvider.notifier)
-          .updateFromSearch(selectedBook);
-
-      onNext();
-    }
-  }
-
-  void _handleManualEntry(
-    BuildContext context,
-    WidgetRef ref,
-    String title,
-    String author,
-  ) {
-    final notifier = ref.read(bookCreateNotifierProvider.notifier);
-    notifier.updateTitle(title);
-    notifier.updateAuthor(author);
-    onNext();
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
@@ -96,27 +62,48 @@ class BookStepSearch extends ConsumerWidget {
   }
 
   Future<void> _showBasicFormDialog(BuildContext context, WidgetRef ref) async {
-    final result = await showModalBottomSheet<Map<String, String>>(
+    await showModalBottomSheet<Map<String, String>>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: BookCreateBasic(
-            ({title, author}) =>
-                Navigator.of(context).pop({'title': title, 'author': author}),
+      builder: (modalContext) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(modalContext).viewInsets.bottom,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: BookCreateBasic(({title, author}) {
+              final notifier = ref.read(bookCreateNotifierProvider.notifier);
+              notifier.updateTitle(title!);
+              notifier.updateAuthor(author!);
+              Navigator.of(modalContext).pop();
+              onNext();
+            }),
           ),
         ),
       ),
     );
+  }
 
-    if (result != null && context.mounted) {
-      _handleManualEntry(
-        context,
-        ref,
-        result['title'] ?? '',
-        result['author'] ?? '',
-      );
+  Future<void> _handleSearch(BuildContext context, WidgetRef ref) async {
+    final allBooksAsync = ref.read(allBooksProvider);
+    final Set<String> existingExternalIds =
+        allBooksAsync.valueOrNull
+            ?.map((book) => book.externalId ?? '')
+            .toSet() ??
+        {};
+
+    final selectedBook = await showSearch<BookEntity?>(
+      context: context,
+      delegate: BookSearchDelegate('', existingExternalIds),
+    );
+
+    if (selectedBook != null && context.mounted) {
+      ref
+          .read(bookCreateNotifierProvider.notifier)
+          .updateFromSearch(selectedBook);
+
+      onNext();
     }
   }
 }
