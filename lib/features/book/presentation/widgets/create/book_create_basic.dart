@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 
 class BookCreateBasic extends StatefulWidget {
-  final Function({String? title, String? author}) onSubmit;
+  final Function({
+    required String title,
+    required String author,
+    required BuildContext context,
+  })
+  onSubmit;
 
   const BookCreateBasic(this.onSubmit, {super.key});
 
@@ -74,6 +79,7 @@ class BookCreateBasicState extends State<BookCreateBasic> {
       widget.onSubmit(
         title: _titleController.text.trim(),
         author: _authorController.text.trim(),
+        context: context,
       );
     }
   }

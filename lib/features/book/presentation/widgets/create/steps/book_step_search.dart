@@ -62,7 +62,7 @@ class BookStepSearch extends ConsumerWidget {
   }
 
   Future<void> _showBasicFormDialog(BuildContext context, WidgetRef ref) async {
-    await showModalBottomSheet<Map<String, String>>(
+    final result = await showModalBottomSheet<Map<String, String>>(
       context: context,
       isScrollControlled: true,
       builder: (modalContext) => Padding(
@@ -72,17 +72,27 @@ class BookStepSearch extends ConsumerWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: BookCreateBasic(({title, author}) {
-              final notifier = ref.read(bookCreateNotifierProvider.notifier);
-              notifier.updateTitle(title!);
-              notifier.updateAuthor(author!);
-              Navigator.of(modalContext).pop();
-              onNext();
+            child: BookCreateBasic(({
+              required title,
+              required author,
+              required context,
+            }) {
+              final data = {'title': title, 'author': author};
+              Navigator.of(context).pop(data);
             }),
           ),
         ),
       ),
     );
+
+    if (result != null) {
+      final notifier = ref.read(bookCreateNotifierProvider.notifier);
+
+      notifier.updateTitle(result['title']!);
+      notifier.updateAuthor(result['author']!);
+
+      onNext();
+    }
   }
 
   Future<void> _handleSearch(BuildContext context, WidgetRef ref) async {
