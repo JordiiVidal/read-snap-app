@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/features/book/presentation/widgets/steps/ui/book_step_header.dart';
 
 class BookStepPreview extends ConsumerWidget {
   final VoidCallback onBack;
@@ -16,8 +17,11 @@ class BookStepPreview extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Preview'),
-        Text('Review the book details before creating it'),
+        BookStepHeader(
+          title: 'Preview',
+          subtitle: 'Review the book details before submitting',
+        ),
+
         Spacer(),
 
         SizedBox(

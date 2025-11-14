@@ -24,6 +24,13 @@ class AppRoutes {
     );
   }
 
+  static void toBookDetailReplacing(BuildContext context, String bookId) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => BookDetailPage(bookId)),
+    );
+  }
+
   static void toBookCreate(BuildContext context) {
     Navigator.push(
       context,

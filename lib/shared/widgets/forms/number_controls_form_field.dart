@@ -125,7 +125,7 @@ class _NumberControlsFormFieldState extends State<NumberControlsFormField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildControlButton(icon: Icons.remove, delta: -widget.longPressStep),
-        Divider(),
+        Container(width: 1, height: 20, color: Colors.grey[300]),
         _buildControlButton(icon: Icons.add, delta: widget.longPressStep),
       ],
     );

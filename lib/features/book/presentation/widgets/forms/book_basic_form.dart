@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 
-class BookCreateBasic extends StatefulWidget {
+class BookBasicForm extends StatefulWidget {
   final Function({
     required String title,
     required String author,
@@ -9,13 +9,13 @@ class BookCreateBasic extends StatefulWidget {
   })
   onSubmit;
 
-  const BookCreateBasic(this.onSubmit, {super.key});
+  const BookBasicForm(this.onSubmit, {super.key});
 
   @override
-  State<BookCreateBasic> createState() => BookCreateBasicState();
+  State<BookBasicForm> createState() => BookBasicFormState();
 }
 
-class BookCreateBasicState extends State<BookCreateBasic> {
+class BookBasicFormState extends State<BookBasicForm> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _authorController = TextEditingController();

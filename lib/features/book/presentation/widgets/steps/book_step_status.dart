@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_status_selector.dart';
+import 'package:read_snap/features/book/presentation/widgets/steps/ui/book_step_header.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
 
 class BookStepStatus extends ConsumerStatefulWidget {
@@ -16,7 +18,7 @@ class BookStepStatus extends ConsumerStatefulWidget {
 
 class _BookStepStatusState extends ConsumerState<BookStepStatus> {
   final _formKey = GlobalKey<FormState>();
-  final _dateFormat = DateFormat('yyyy-MM-dd');
+  final _dateFormat = DateFormat('dd/MM/yyyy');
   late TextEditingController _pagesController;
   late TextEditingController _currentPageController;
   late TextEditingController _startDateController;
@@ -61,10 +63,14 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 24,
         children: [
-          Text('Details'),
-          Text('Provide the reading status and some additional information'),
+          BookStepHeader(
+            title: 'Status',
+            subtitle:
+                'Provide the reading status and some additional information',
+          ),
 
           // Status Select Button Group
           BookStatusSelector(
@@ -92,9 +98,9 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
               hintText: 'Enter current page',
               controller: _currentPageController,
               keyboardType: TextInputType.number,
-              suffixText: '/${bookState.totalPages}',
               suffixIcon: NumberControlsFormField(
                 controller: _currentPageController,
+                maxValue: bookState.totalPages,
                 onValueChanged: bookCreateNotifier.updateCurrentPage,
               ),
               readOnly: true,
@@ -106,10 +112,14 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
               hintText: 'Enter start date',
               keyboardType: TextInputType.datetime,
               controller: _startDateController,
-              prefixIcon: IconButton(
-                icon: Icon(Icons.calendar_today),
-                onPressed: () =>
-                    _selectDate(context, bookCreateNotifier.updateStartedAt),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.calendar_today, color: AppColors.primary),
+                onPressed: () => _selectDate(
+                  context,
+                  _startDateController,
+                  bookCreateNotifier.updateStartedAt,
+                  null,
+                ),
               ),
               onChanged: (value) {
                 final date = DateTime.parse(value);
@@ -121,12 +131,22 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
             DynamicFormField(
               label: 'End Date',
               hintText: 'Enter end date',
+              disabled: bookState.startedAt == null,
               keyboardType: TextInputType.datetime,
               controller: _endDateController,
-              prefixIcon: IconButton(
-                icon: Icon(Icons.calendar_today),
-                onPressed: () =>
-                    _selectDate(context, bookCreateNotifier.updateFinishedAt),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.calendar_today,
+                  color: bookState.startedAt == null
+                      ? Colors.grey
+                      : AppColors.primary,
+                ),
+                onPressed: () => _selectDate(
+                  context,
+                  _endDateController,
+                  bookCreateNotifier.updateFinishedAt,
+                  bookState.startedAt,
+                ),
               ),
               onChanged: (value) {
                 final date = DateTime.parse(value);
@@ -146,15 +166,18 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
 
   Future<void> _selectDate(
     BuildContext context,
+    TextEditingController controller,
     Function(DateTime) onDateChanged,
+    DateTime? firstDate,
   ) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: firstDate ?? DateTime(2000),
       lastDate: DateTime.now(),
     );
     if (picked != null) {
+      controller.text = _dateFormat.format(picked);
       onDateChanged(picked);
     }
   }

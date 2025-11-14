@@ -16,6 +16,7 @@ class DynamicFormField extends StatelessWidget {
   final double borderRadius;
   final bool readOnly;
   final FocusNode? focusNode;
+  final Widget? suffixWidget;
 
   const DynamicFormField({
     this.label,
@@ -32,6 +33,7 @@ class DynamicFormField extends StatelessWidget {
     this.borderRadius = 8,
     this.readOnly = false,
     this.focusNode,
+    this.suffixWidget,
     super.key,
   });
 
@@ -57,15 +59,10 @@ class DynamicFormField extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             prefixIcon: prefixIcon,
+            suffix: suffixWidget,
             suffixText: suffixText,
             suffixIcon: suffixIcon,
-            suffixIconConstraints: suffixIcon != null
-                ? const BoxConstraints(minWidth: 80, minHeight: 48)
-                : null,
-            suffixStyle: const TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-            ),
+            suffixIconConstraints: const BoxConstraints(),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 14,
               vertical: 12,

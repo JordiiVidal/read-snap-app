@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
+import 'package:read_snap/features/book/presentation/widgets/steps/ui/book_step_header.dart';
 import 'package:read_snap/features/category/presentation/widgets/category_selector.dart';
 import 'package:read_snap/features/language/presentation/widgets/language_selector.dart';
 import 'package:read_snap/shared/widgets/forms/forms.dart';
@@ -30,10 +31,14 @@ class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 24,
         children: [
-          Text('Details'),
-          Text('Provide the reading status and some additional information'),
+          BookStepHeader(
+            title: 'Details',
+            subtitle:
+                'Provide the reading status and some additional information',
+          ),
 
           // Language Selector
           LabelFormField('Language', marginBottom: 0),
