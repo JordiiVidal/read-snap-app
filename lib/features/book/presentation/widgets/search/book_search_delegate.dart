@@ -23,8 +23,8 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   }
 
   bool _isBookAlreadyAdded(BookEntity book) {
-    return book.externalId != null &&
-        existingExternalIds.contains(book.externalId);
+    return book.googleExternalId != null &&
+        existingExternalIds.contains(book.googleExternalId!);
   }
 
   @override

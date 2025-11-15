@@ -5,6 +5,8 @@ part 'book_entity.g.dart';
 
 enum BookStatus { toRead, reading, completed }
 
+enum BookType { paper, digital }
+
 mixin BookProgressLogic {
   int get currentPage;
   int get totalPages;
@@ -25,22 +27,19 @@ abstract class BookEntity with _$BookEntity, BookProgressLogic {
   const BookEntity._();
   const factory BookEntity({
     required String id,
-    String? externalId,
     required String title,
-    String? subtitle,
-    String? description,
     required String author,
-    String? publisher,
-    String? publishedDate,
-    List<String>? categories,
     required int totalPages,
+    required int currentPage,
+    required List<String> categories,
+    required String language,
     required BookStatus status,
-    String? imageThumbnail,
-    String? language,
-    required String color,
+    required BookType type,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required int currentPage,
+    List<String>? identifiers,
+    String? googleExternalId,
+    String? imageThumbnail,
     DateTime? finishedAt,
     DateTime? startedAt,
   }) = _BookEntity;

@@ -2,6 +2,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 
+final defaultBookEntity = BookEntity(
+  id: '',
+  title: '',
+  author: '',
+  totalPages: 0,
+  currentPage: 0,
+  status: BookStatus.toRead,
+  type: BookType.paper,
+  categories: [],
+  language: 'en',
+  createdAt: DateTime.now(),
+  updatedAt: DateTime.now(),
+);
+
 final bookCreateNotifierProvider =
     StateNotifierProvider<BookCreateNotifier, AsyncValue<BookEntity>>((ref) {
       final createBookUseCase = ref.watch(createBookUseCaseProvider);
@@ -12,21 +26,7 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
   final CreateBookUseCase _createBookUseCase;
 
   BookCreateNotifier(this._createBookUseCase)
-    : super(
-        AsyncValue.data(
-          BookEntity(
-            id: '',
-            title: '',
-            author: '',
-            totalPages: 0,
-            currentPage: 0,
-            status: BookStatus.toRead,
-            color: '#673AB7',
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-          ),
-        ),
-      );
+    : super(AsyncValue.data(defaultBookEntity));
 
   BookEntity get currentBookDraft => state.value!;
 
@@ -73,19 +73,7 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
   }
 
   void reset() {
-    state = AsyncValue.data(
-      BookEntity(
-        id: '',
-        title: '',
-        author: '',
-        totalPages: 0,
-        currentPage: 0,
-        status: BookStatus.toRead,
-        color: '#673AB7',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-    );
+    state = AsyncValue.data(defaultBookEntity);
   }
 
   Future<BookEntity> createBook() async {

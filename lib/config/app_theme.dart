@@ -19,8 +19,7 @@ class AppTheme {
     colorScheme: _colorScheme,
 
     scaffoldBackgroundColor: AppColors.background,
-
-    textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme).apply(
+    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.light().textTheme).apply(
       bodyColor: AppColors.textPrimary,
       displayColor: AppColors.textPrimary,
     ),
@@ -34,34 +33,86 @@ class AppTheme {
     ),
 
     filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-      ),
+      style:
+          FilledButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14.0),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
+            iconSize: 24,
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+            elevation: 4,
+            shadowColor: AppColors.primary.withValues(alpha: 0.5),
+          ).copyWith(
+            backgroundColor: WidgetStateProperty.all(AppColors.primary),
+            elevation: WidgetStateProperty.all(4),
+            shadowColor: WidgetStateProperty.all(
+              AppColors.primary.withValues(alpha: 0.5),
+            ),
+          ),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: const Color.fromARGB(255, 225, 225, 225),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: AppColors.border, width: 1.0),
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: AppColors.border, width: 1.0),
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: AppColors.borderFocus, width: 1.3),
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: AppColors.primary, width: 2.0),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: AppColors.error, width: 1.5),
       ),
-      hintStyle: TextStyle(color: AppColors.textSecondary),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: AppColors.error, width: 2.0),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: Colors.grey.shade200, width: 1.0),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      hintStyle: TextStyle(
+        color: Colors.grey.shade500,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.2,
+      ),
+      labelStyle: TextStyle(
+        color: Colors.grey.shade700,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      floatingLabelStyle: TextStyle(
+        color: AppColors.primary,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.3,
+      ),
+      floatingLabelBehavior: FloatingLabelBehavior.auto,
+      prefixIconColor: Colors.grey.shade600,
+      suffixIconColor: Colors.grey.shade600,
+      errorStyle: TextStyle(
+        color: AppColors.error,
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        height: 1.2,
+      ),
+      errorMaxLines: 2,
     ),
 
     iconTheme: IconThemeData(color: AppColors.textPrimary),

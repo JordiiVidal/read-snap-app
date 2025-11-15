@@ -64,7 +64,7 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 24,
+        spacing: 20,
         children: [
           BookStepHeader(
             title: 'Status',

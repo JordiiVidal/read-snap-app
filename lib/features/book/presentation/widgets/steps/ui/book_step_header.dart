@@ -19,7 +19,7 @@ class BookStepHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
-        spacing: 18,
+        spacing: 12,
         crossAxisAlignment: alignment,
         children: [
           if (icon != null)
@@ -37,7 +37,7 @@ class BookStepHeader extends StatelessWidget {
                 : TextAlign.start,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context).colorScheme.secondary,
-              fontSize: 18,
+              fontSize: 16,
             ),
           ),
         ],

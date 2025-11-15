@@ -4,46 +4,41 @@ class BookMapper {
   static const String table = 'books';
 
   static const String id = 'id';
-  static const String externalId = 'external_id';
   static const String title = 'title';
-  static const String subtitle = 'subtitle';
-  static const String description = 'description';
   static const String author = 'author';
-  static const String publisher = 'publisher';
-  static const String publishedDate = 'published_date';
-  static const String categories = 'categories';
   static const String totalPages = 'total_pages';
-  static const String status = 'status';
-  static const String color = 'color';
   static const String currentPage = 'current_page';
-  static const String imageThumbnail = 'image_thumbnail';
+  static const String categories = 'categories';
   static const String language = 'language';
+  static const String status = 'status';
+  static const String type = 'type';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
+  static const String identifiers = 'identifiers';
+  static const String googleExternalId = 'google_external_id';
+  static const String imageThumbnail = 'image_thumbnail';
   static const String finishedAt = 'finished_at';
   static const String startedAt = 'started_at';
 
   static const BookStatus defaultStatus = BookStatus.toRead;
+  static const BookType defaultType = BookType.paper;
 
   static Map<String, dynamic> toMap(BookEntity entity) {
     return {
       id: entity.id,
-      externalId: entity.externalId,
       title: entity.title,
-      subtitle: entity.subtitle,
-      description: entity.description,
       author: entity.author,
-      publisher: entity.publisher,
-      publishedDate: entity.publishedDate,
       totalPages: entity.totalPages,
-      imageThumbnail: entity.imageThumbnail,
-      language: entity.language,
-      categories: entity.categories?.join(';'),
       currentPage: entity.currentPage,
+      categories: entity.categories.join(';'),
+      language: entity.language,
       status: entity.status.name,
-      color: entity.color,
+      type: entity.type.name,
       createdAt: entity.createdAt.millisecondsSinceEpoch,
       updatedAt: entity.updatedAt.millisecondsSinceEpoch,
+      identifiers: entity.identifiers?.join(';'),
+      googleExternalId: entity.googleExternalId,
+      imageThumbnail: entity.imageThumbnail,
       finishedAt: entity.finishedAt?.millisecondsSinceEpoch,
       startedAt: entity.startedAt?.millisecondsSinceEpoch,
     };
@@ -54,7 +49,12 @@ class BookMapper {
       (e) => e.name == map[status],
       orElse: () => defaultStatus,
     );
-    final List<String>? categoriesList = (map[categories] as String?)?.split(
+    final typeValue = BookType.values.firstWhere(
+      (e) => e.name == map[type],
+      orElse: () => defaultType,
+    );
+    final List<String> categoriesList = (map[categories] as String).split(';');
+    final List<String> identifiersList = (map[identifiers] as String).split(
       ';',
     );
 
@@ -64,18 +64,15 @@ class BookMapper {
       author: map[author] as String,
       totalPages: map[totalPages] as int,
       currentPage: map[currentPage] as int,
+      categories: categoriesList,
+      language: map[language] as String,
       status: statusValue,
-      color: map[color] as String,
+      type: typeValue,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map[createdAt] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map[updatedAt] as int),
-      externalId: map[externalId] as String?,
-      subtitle: map[subtitle] as String?,
-      description: map[description] as String?,
-      publisher: map[publisher] as String?,
-      publishedDate: map[publishedDate] as String?,
+      identifiers: identifiersList,
+      googleExternalId: map[googleExternalId] as String?,
       imageThumbnail: map[imageThumbnail] as String?,
-      language: map[language] as String?,
-      categories: categoriesList,
       finishedAt: map[finishedAt] != null
           ? DateTime.fromMillisecondsSinceEpoch(map[finishedAt] as int)
           : null,

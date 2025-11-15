@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookEntity {
 
- String get id; String? get externalId; String get title; String? get subtitle; String? get description; String get author; String? get publisher; String? get publishedDate; List<String>? get categories; int get totalPages; BookStatus get status; String? get imageThumbnail; String? get language; String get color; DateTime get createdAt; DateTime get updatedAt; int get currentPage; DateTime? get finishedAt; DateTime? get startedAt;
+ String get id; String get title; String get author; int get totalPages; int get currentPage; List<String> get categories; String get language; BookStatus get status; BookType get type; DateTime get createdAt; DateTime get updatedAt; List<String>? get identifiers; String? get googleExternalId; String? get imageThumbnail; DateTime? get finishedAt; DateTime? get startedAt;
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $BookEntityCopyWith<BookEntity> get copyWith => _$BookEntityCopyWithImpl<BookEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.externalId, externalId) || other.externalId == externalId)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.author, author) || other.author == author)&&(identical(other.publisher, publisher) || other.publisher == publisher)&&(identical(other.publishedDate, publishedDate) || other.publishedDate == publishedDate)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.imageThumbnail, imageThumbnail) || other.imageThumbnail == imageThumbnail)&&(identical(other.language, language) || other.language == language)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.language, language) || other.language == language)&&(identical(other.status, status) || other.status == status)&&(identical(other.type, type) || other.type == type)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.identifiers, identifiers)&&(identical(other.googleExternalId, googleExternalId) || other.googleExternalId == googleExternalId)&&(identical(other.imageThumbnail, imageThumbnail) || other.imageThumbnail == imageThumbnail)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,externalId,title,subtitle,description,author,publisher,publishedDate,const DeepCollectionEquality().hash(categories),totalPages,status,imageThumbnail,language,color,createdAt,updatedAt,currentPage,finishedAt,startedAt]);
+int get hashCode => Object.hash(runtimeType,id,title,author,totalPages,currentPage,const DeepCollectionEquality().hash(categories),language,status,type,createdAt,updatedAt,const DeepCollectionEquality().hash(identifiers),googleExternalId,imageThumbnail,finishedAt,startedAt);
 
 @override
 String toString() {
-  return 'BookEntity(id: $id, externalId: $externalId, title: $title, subtitle: $subtitle, description: $description, author: $author, publisher: $publisher, publishedDate: $publishedDate, categories: $categories, totalPages: $totalPages, status: $status, imageThumbnail: $imageThumbnail, language: $language, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage, finishedAt: $finishedAt, startedAt: $startedAt)';
+  return 'BookEntity(id: $id, title: $title, author: $author, totalPages: $totalPages, currentPage: $currentPage, categories: $categories, language: $language, status: $status, type: $type, createdAt: $createdAt, updatedAt: $updatedAt, identifiers: $identifiers, googleExternalId: $googleExternalId, imageThumbnail: $imageThumbnail, finishedAt: $finishedAt, startedAt: $startedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $BookEntityCopyWith<$Res>  {
   factory $BookEntityCopyWith(BookEntity value, $Res Function(BookEntity) _then) = _$BookEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String? externalId, String title, String? subtitle, String? description, String author, String? publisher, String? publishedDate, List<String>? categories, int totalPages, BookStatus status, String? imageThumbnail, String? language, String color, DateTime createdAt, DateTime updatedAt, int currentPage, DateTime? finishedAt, DateTime? startedAt
+ String id, String title, String author, int totalPages, int currentPage, List<String> categories, String language, BookStatus status, BookType type, DateTime createdAt, DateTime updatedAt, List<String>? identifiers, String? googleExternalId, String? imageThumbnail, DateTime? finishedAt, DateTime? startedAt
 });
 
 
@@ -65,26 +65,23 @@ class _$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? externalId = freezed,Object? title = null,Object? subtitle = freezed,Object? description = freezed,Object? author = null,Object? publisher = freezed,Object? publishedDate = freezed,Object? categories = freezed,Object? totalPages = null,Object? status = null,Object? imageThumbnail = freezed,Object? language = freezed,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,Object? finishedAt = freezed,Object? startedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? author = null,Object? totalPages = null,Object? currentPage = null,Object? categories = null,Object? language = null,Object? status = null,Object? type = null,Object? createdAt = null,Object? updatedAt = null,Object? identifiers = freezed,Object? googleExternalId = freezed,Object? imageThumbnail = freezed,Object? finishedAt = freezed,Object? startedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,externalId: freezed == externalId ? _self.externalId : externalId // ignore: cast_nullable_to_non_nullable
-as String?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
-as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
-as String,publisher: freezed == publisher ? _self.publisher : publisher // ignore: cast_nullable_to_non_nullable
-as String?,publishedDate: freezed == publishedDate ? _self.publishedDate : publishedDate // ignore: cast_nullable_to_non_nullable
-as String?,categories: freezed == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>?,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as BookStatus,imageThumbnail: freezed == imageThumbnail ? _self.imageThumbnail : imageThumbnail // ignore: cast_nullable_to_non_nullable
-as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
-as String?,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
+as String,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
+as int,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as BookStatus,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as BookType,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,identifiers: freezed == identifiers ? _self.identifiers : identifiers // ignore: cast_nullable_to_non_nullable
+as List<String>?,googleExternalId: freezed == googleExternalId ? _self.googleExternalId : googleExternalId // ignore: cast_nullable_to_non_nullable
+as String?,imageThumbnail: freezed == imageThumbnail ? _self.imageThumbnail : imageThumbnail // ignore: cast_nullable_to_non_nullable
+as String?,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -171,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? externalId,  String title,  String? subtitle,  String? description,  String author,  String? publisher,  String? publishedDate,  List<String>? categories,  int totalPages,  BookStatus status,  String? imageThumbnail,  String? language,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt,  DateTime? startedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String author,  int totalPages,  int currentPage,  List<String> categories,  String language,  BookStatus status,  BookType type,  DateTime createdAt,  DateTime updatedAt,  List<String>? identifiers,  String? googleExternalId,  String? imageThumbnail,  DateTime? finishedAt,  DateTime? startedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
-return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.description,_that.author,_that.publisher,_that.publishedDate,_that.categories,_that.totalPages,_that.status,_that.imageThumbnail,_that.language,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt,_that.startedAt);case _:
+return $default(_that.id,_that.title,_that.author,_that.totalPages,_that.currentPage,_that.categories,_that.language,_that.status,_that.type,_that.createdAt,_that.updatedAt,_that.identifiers,_that.googleExternalId,_that.imageThumbnail,_that.finishedAt,_that.startedAt);case _:
   return orElse();
 
 }
@@ -192,10 +189,10 @@ return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? externalId,  String title,  String? subtitle,  String? description,  String author,  String? publisher,  String? publishedDate,  List<String>? categories,  int totalPages,  BookStatus status,  String? imageThumbnail,  String? language,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt,  DateTime? startedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String author,  int totalPages,  int currentPage,  List<String> categories,  String language,  BookStatus status,  BookType type,  DateTime createdAt,  DateTime updatedAt,  List<String>? identifiers,  String? googleExternalId,  String? imageThumbnail,  DateTime? finishedAt,  DateTime? startedAt)  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity():
-return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.description,_that.author,_that.publisher,_that.publishedDate,_that.categories,_that.totalPages,_that.status,_that.imageThumbnail,_that.language,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt,_that.startedAt);case _:
+return $default(_that.id,_that.title,_that.author,_that.totalPages,_that.currentPage,_that.categories,_that.language,_that.status,_that.type,_that.createdAt,_that.updatedAt,_that.identifiers,_that.googleExternalId,_that.imageThumbnail,_that.finishedAt,_that.startedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -212,10 +209,10 @@ return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? externalId,  String title,  String? subtitle,  String? description,  String author,  String? publisher,  String? publishedDate,  List<String>? categories,  int totalPages,  BookStatus status,  String? imageThumbnail,  String? language,  String color,  DateTime createdAt,  DateTime updatedAt,  int currentPage,  DateTime? finishedAt,  DateTime? startedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String author,  int totalPages,  int currentPage,  List<String> categories,  String language,  BookStatus status,  BookType type,  DateTime createdAt,  DateTime updatedAt,  List<String>? identifiers,  String? googleExternalId,  String? imageThumbnail,  DateTime? finishedAt,  DateTime? startedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _BookEntity() when $default != null:
-return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.description,_that.author,_that.publisher,_that.publishedDate,_that.categories,_that.totalPages,_that.status,_that.imageThumbnail,_that.language,_that.color,_that.createdAt,_that.updatedAt,_that.currentPage,_that.finishedAt,_that.startedAt);case _:
+return $default(_that.id,_that.title,_that.author,_that.totalPages,_that.currentPage,_that.categories,_that.language,_that.status,_that.type,_that.createdAt,_that.updatedAt,_that.identifiers,_that.googleExternalId,_that.imageThumbnail,_that.finishedAt,_that.startedAt);case _:
   return null;
 
 }
@@ -227,34 +224,37 @@ return $default(_that.id,_that.externalId,_that.title,_that.subtitle,_that.descr
 @JsonSerializable()
 
 class _BookEntity extends BookEntity {
-  const _BookEntity({required this.id, this.externalId, required this.title, this.subtitle, this.description, required this.author, this.publisher, this.publishedDate, final  List<String>? categories, required this.totalPages, required this.status, this.imageThumbnail, this.language, required this.color, required this.createdAt, required this.updatedAt, required this.currentPage, this.finishedAt, this.startedAt}): _categories = categories,super._();
+  const _BookEntity({required this.id, required this.title, required this.author, required this.totalPages, required this.currentPage, required final  List<String> categories, required this.language, required this.status, required this.type, required this.createdAt, required this.updatedAt, final  List<String>? identifiers, this.googleExternalId, this.imageThumbnail, this.finishedAt, this.startedAt}): _categories = categories,_identifiers = identifiers,super._();
   factory _BookEntity.fromJson(Map<String, dynamic> json) => _$BookEntityFromJson(json);
 
 @override final  String id;
-@override final  String? externalId;
 @override final  String title;
-@override final  String? subtitle;
-@override final  String? description;
 @override final  String author;
-@override final  String? publisher;
-@override final  String? publishedDate;
- final  List<String>? _categories;
-@override List<String>? get categories {
-  final value = _categories;
-  if (value == null) return null;
+@override final  int totalPages;
+@override final  int currentPage;
+ final  List<String> _categories;
+@override List<String> get categories {
   if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
+}
+
+@override final  String language;
+@override final  BookStatus status;
+@override final  BookType type;
+@override final  DateTime createdAt;
+@override final  DateTime updatedAt;
+ final  List<String>? _identifiers;
+@override List<String>? get identifiers {
+  final value = _identifiers;
+  if (value == null) return null;
+  if (_identifiers is EqualUnmodifiableListView) return _identifiers;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(value);
 }
 
-@override final  int totalPages;
-@override final  BookStatus status;
+@override final  String? googleExternalId;
 @override final  String? imageThumbnail;
-@override final  String? language;
-@override final  String color;
-@override final  DateTime createdAt;
-@override final  DateTime updatedAt;
-@override final  int currentPage;
 @override final  DateTime? finishedAt;
 @override final  DateTime? startedAt;
 
@@ -271,16 +271,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.externalId, externalId) || other.externalId == externalId)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.author, author) || other.author == author)&&(identical(other.publisher, publisher) || other.publisher == publisher)&&(identical(other.publishedDate, publishedDate) || other.publishedDate == publishedDate)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.status, status) || other.status == status)&&(identical(other.imageThumbnail, imageThumbnail) || other.imageThumbnail == imageThumbnail)&&(identical(other.language, language) || other.language == language)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.language, language) || other.language == language)&&(identical(other.status, status) || other.status == status)&&(identical(other.type, type) || other.type == type)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other._identifiers, _identifiers)&&(identical(other.googleExternalId, googleExternalId) || other.googleExternalId == googleExternalId)&&(identical(other.imageThumbnail, imageThumbnail) || other.imageThumbnail == imageThumbnail)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,externalId,title,subtitle,description,author,publisher,publishedDate,const DeepCollectionEquality().hash(_categories),totalPages,status,imageThumbnail,language,color,createdAt,updatedAt,currentPage,finishedAt,startedAt]);
+int get hashCode => Object.hash(runtimeType,id,title,author,totalPages,currentPage,const DeepCollectionEquality().hash(_categories),language,status,type,createdAt,updatedAt,const DeepCollectionEquality().hash(_identifiers),googleExternalId,imageThumbnail,finishedAt,startedAt);
 
 @override
 String toString() {
-  return 'BookEntity(id: $id, externalId: $externalId, title: $title, subtitle: $subtitle, description: $description, author: $author, publisher: $publisher, publishedDate: $publishedDate, categories: $categories, totalPages: $totalPages, status: $status, imageThumbnail: $imageThumbnail, language: $language, color: $color, createdAt: $createdAt, updatedAt: $updatedAt, currentPage: $currentPage, finishedAt: $finishedAt, startedAt: $startedAt)';
+  return 'BookEntity(id: $id, title: $title, author: $author, totalPages: $totalPages, currentPage: $currentPage, categories: $categories, language: $language, status: $status, type: $type, createdAt: $createdAt, updatedAt: $updatedAt, identifiers: $identifiers, googleExternalId: $googleExternalId, imageThumbnail: $imageThumbnail, finishedAt: $finishedAt, startedAt: $startedAt)';
 }
 
 
@@ -291,7 +291,7 @@ abstract mixin class _$BookEntityCopyWith<$Res> implements $BookEntityCopyWith<$
   factory _$BookEntityCopyWith(_BookEntity value, $Res Function(_BookEntity) _then) = __$BookEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? externalId, String title, String? subtitle, String? description, String author, String? publisher, String? publishedDate, List<String>? categories, int totalPages, BookStatus status, String? imageThumbnail, String? language, String color, DateTime createdAt, DateTime updatedAt, int currentPage, DateTime? finishedAt, DateTime? startedAt
+ String id, String title, String author, int totalPages, int currentPage, List<String> categories, String language, BookStatus status, BookType type, DateTime createdAt, DateTime updatedAt, List<String>? identifiers, String? googleExternalId, String? imageThumbnail, DateTime? finishedAt, DateTime? startedAt
 });
 
 
@@ -308,26 +308,23 @@ class __$BookEntityCopyWithImpl<$Res>
 
 /// Create a copy of BookEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? externalId = freezed,Object? title = null,Object? subtitle = freezed,Object? description = freezed,Object? author = null,Object? publisher = freezed,Object? publishedDate = freezed,Object? categories = freezed,Object? totalPages = null,Object? status = null,Object? imageThumbnail = freezed,Object? language = freezed,Object? color = null,Object? createdAt = null,Object? updatedAt = null,Object? currentPage = null,Object? finishedAt = freezed,Object? startedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? author = null,Object? totalPages = null,Object? currentPage = null,Object? categories = null,Object? language = null,Object? status = null,Object? type = null,Object? createdAt = null,Object? updatedAt = null,Object? identifiers = freezed,Object? googleExternalId = freezed,Object? imageThumbnail = freezed,Object? finishedAt = freezed,Object? startedAt = freezed,}) {
   return _then(_BookEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,externalId: freezed == externalId ? _self.externalId : externalId // ignore: cast_nullable_to_non_nullable
-as String?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
-as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
-as String,publisher: freezed == publisher ? _self.publisher : publisher // ignore: cast_nullable_to_non_nullable
-as String?,publishedDate: freezed == publishedDate ? _self.publishedDate : publishedDate // ignore: cast_nullable_to_non_nullable
-as String?,categories: freezed == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>?,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as BookStatus,imageThumbnail: freezed == imageThumbnail ? _self.imageThumbnail : imageThumbnail // ignore: cast_nullable_to_non_nullable
-as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
-as String?,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
+as String,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
+as int,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as BookStatus,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as BookType,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,identifiers: freezed == identifiers ? _self._identifiers : identifiers // ignore: cast_nullable_to_non_nullable
+as List<String>?,googleExternalId: freezed == googleExternalId ? _self.googleExternalId : googleExternalId // ignore: cast_nullable_to_non_nullable
+as String?,imageThumbnail: freezed == imageThumbnail ? _self.imageThumbnail : imageThumbnail // ignore: cast_nullable_to_non_nullable
+as String?,finishedAt: freezed == finishedAt ? _self.finishedAt : finishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

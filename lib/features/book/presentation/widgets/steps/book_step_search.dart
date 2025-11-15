@@ -18,26 +18,28 @@ class BookStepSearch extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // HEADER
+        // Header
         BookStepHeader(
           title: 'Add a new Book',
           subtitle: 'Find a book or enter the details manually',
           icon: Icons.book,
           alignment: CrossAxisAlignment.center,
         ),
-
         const SizedBox(height: 30),
-        // Actions
+
+        // Search for a book
         FilledButton.icon(
           onPressed: () => _handleSearch(context, ref),
           icon: const Icon(Icons.search),
-          label: const Text('Search for a book'),
+          label: const Center(child: Text('Search for a book')),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 20),
+
+        // Add manually
         FilledButton.tonalIcon(
           onPressed: () => _showBasicFormDialog(context, ref),
           icon: const Icon(Icons.edit),
-          label: const Text('Add manually'),
+          label: Center(child: Text('Add manually')),
           style: FilledButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.secondary,
             foregroundColor: Colors.white,
@@ -85,7 +87,7 @@ class BookStepSearch extends ConsumerWidget {
     final allBooksAsync = ref.read(allBooksProvider);
     final Set<String> existingExternalIds =
         allBooksAsync.valueOrNull
-            ?.map((book) => book.externalId ?? '')
+            ?.map((book) => book.googleExternalId ?? '')
             .toSet() ??
         {};
 

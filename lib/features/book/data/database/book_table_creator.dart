@@ -5,24 +5,26 @@ Future<void> createBookTable(Database db) async {
   await db.execute('''
       CREATE TABLE ${BookMapper.table} (
         ${BookMapper.id} TEXT PRIMARY KEY,
-        ${BookMapper.externalId} TEXT, 
         ${BookMapper.title} TEXT NOT NULL, 
-        ${BookMapper.subtitle} TEXT,
-        ${BookMapper.description} TEXT,
-        ${BookMapper.publisher} TEXT,
-        ${BookMapper.publishedDate} TEXT,
-        ${BookMapper.categories} TEXT, 
-        ${BookMapper.imageThumbnail} TEXT,
-        ${BookMapper.language} TEXT,
         ${BookMapper.author} TEXT NOT NULL, 
+        ${BookMapper.categories} TEXT NOT NULL, 
+        ${BookMapper.language} TEXT NOT NULL,
         ${BookMapper.totalPages} INTEGER NOT NULL,
-        ${BookMapper.currentPage} INTEGER,
+        ${BookMapper.currentPage} INTEGER NOT NULL,
         ${BookMapper.status} TEXT NOT NULL,
-        ${BookMapper.color} TEXT NOT NULL,
+        ${BookMapper.type} TEXT NOT NULL,
         ${BookMapper.createdAt} INTEGER NOT NULL,
         ${BookMapper.updatedAt} INTEGER NOT NULL,
+        ${BookMapper.identifiers} TEXT,
+        ${BookMapper.googleExternalId} TEXT, 
+        ${BookMapper.imageThumbnail} TEXT,
         ${BookMapper.finishedAt} INTEGER,
         ${BookMapper.startedAt} INTEGER
       )
+  ''');
+
+  await db.execute('''
+    CREATE UNIQUE INDEX idx_book_title 
+    ON ${BookMapper.table}(${BookMapper.title})
   ''');
 }

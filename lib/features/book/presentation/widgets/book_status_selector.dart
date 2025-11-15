@@ -77,9 +77,7 @@ class _StatusCard extends StatelessWidget {
         context,
       ).colorScheme.primaryContainer.withValues(alpha: 0.3);
     }
-    return Theme.of(
-      context,
-    ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3);
+    return Theme.of(context).colorScheme.secondary.withValues(alpha: 0.03);
   }
 
   Color _getBorderColor(BuildContext context) {
@@ -93,19 +91,19 @@ class _StatusCard extends StatelessWidget {
     if (isSelected) {
       return Theme.of(context).colorScheme.primary;
     }
-    return Theme.of(context).colorScheme.onSurfaceVariant;
+    return Theme.of(context).colorScheme.secondary;
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         decoration: BoxDecoration(
           color: _getBackgroundColor(context),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: _getBorderColor(context),
             width: isSelected ? 1.5 : 1,

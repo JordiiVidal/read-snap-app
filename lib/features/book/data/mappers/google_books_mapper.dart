@@ -12,11 +12,7 @@ class GoogleBooksMapper {
     final List<dynamic>? authorsRaw = volumeInfo['authors'] as List<dynamic>?;
     final List<String> authors = authorsRaw?.cast<String>().toList() ?? [];
     final int totalPages = volumeInfo['pageCount'] as int? ?? 0;
-    final String? subtitle = volumeInfo['subtitle'] as String?;
-    final String? description = volumeInfo['description'] as String?;
-    final String? publisher = volumeInfo['publisher'] as String?;
-    final String? publishedDate = volumeInfo['publishedDate'] as String?;
-    final String? language = volumeInfo['language'] as String?;
+    final String language = volumeInfo['language'] as String;
     final List<dynamic>? categoriesRaw =
         volumeInfo['categories'] as List<dynamic>?;
     final List<String> categories =
@@ -27,7 +23,11 @@ class GoogleBooksMapper {
         imageLinks?['large'] ??
         imageLinks?['medium'] ??
         imageLinks?['thumbnail'];
-
+    final industryIdentifiers =
+        volumeInfo['industryIdentifiers'] as List<dynamic>?;
+    final List<String> identifiers =
+        industryIdentifiers?.map((e) => e['identifier'] as String).toList() ??
+        [];
     final now = DateTime.now();
 
     List<String> finalCategories = [];
@@ -40,26 +40,25 @@ class GoogleBooksMapper {
       }
     }
 
+    print('volumeInfo: $volumeInfo');
+
     return BookEntity(
       id: '',
-      externalId: externalId,
-      createdAt: now,
-      updatedAt: now,
       title: title,
       author: authors.join(', '),
       totalPages: totalPages,
-      publisher: publisher,
-      publishedDate: publishedDate,
-      categories: finalCategories,
-      description: description,
-      subtitle: subtitle,
-      imageThumbnail: imageThumbnail,
       currentPage: 0,
-      status: BookStatus.toRead,
+      categories: finalCategories,
       language: language,
-      color: '#A0A0A0',
-      startedAt: null,
+      type: BookType.paper,
+      status: BookStatus.toRead,
+      createdAt: now,
+      updatedAt: now,
+      identifiers: identifiers,
+      googleExternalId: externalId,
+      imageThumbnail: imageThumbnail,
       finishedAt: null,
+      startedAt: null,
     );
   }
 }

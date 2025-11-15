@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/entities/book_entity.dart';
-import 'package:read_snap/features/book/presentation/extensions/book_ui_extensions.dart';
 
 enum BookListItemVariant { card, listTile }
 
@@ -40,7 +39,7 @@ class BookListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: book.flutterColor.withValues(alpha: 0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -61,8 +60,8 @@ class BookListItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              book.flutterColor.withValues(alpha: 0.8),
-                              book.flutterColor.withValues(alpha: 0.6),
+                              Colors.black.withValues(alpha: 0.8),
+                              Colors.black.withValues(alpha: 0.6),
                             ],
                           ),
                         ),
@@ -76,8 +75,8 @@ class BookListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          book.flutterColor.withValues(alpha: 0.8),
-                          book.flutterColor.withValues(alpha: 0.6),
+                          Colors.black.withValues(alpha: 0.8),
+                          Colors.black.withValues(alpha: 0.6),
                         ],
                       ),
                     ),
