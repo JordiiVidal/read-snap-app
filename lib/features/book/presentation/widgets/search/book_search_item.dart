@@ -113,7 +113,7 @@ class BookSearchItem extends StatelessWidget {
 
   Widget _buildMetadata(BuildContext context) {
     final hasPages = book.totalPages > 0;
-    final hasLanguage = book.language != null;
+    final hasLanguage = book.language.isNotEmpty;
 
     if (!hasPages && !hasLanguage) {
       return const SizedBox.shrink();
@@ -135,7 +135,7 @@ class BookSearchItem extends StatelessWidget {
         ],
         if (hasLanguage)
           Text(
-            _getLanguageName(book.language!),
+            _getLanguageName(book.language),
             style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
           ),
       ],

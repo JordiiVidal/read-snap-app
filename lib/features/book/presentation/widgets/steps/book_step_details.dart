@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
-import 'package:read_snap/features/book/presentation/widgets/steps/ui/book_step_header.dart';
-import 'package:read_snap/features/category/presentation/widgets/category_selector.dart';
-import 'package:read_snap/features/language/presentation/widgets/language_selector.dart';
-import 'package:read_snap/shared/widgets/forms/forms.dart';
+import 'package:read_snap/features/category/presentation/widgets/selectors/category_selector.dart';
+import 'package:read_snap/features/language/presentation/widgets/selectors/language_selector.dart';
+import 'package:read_snap/shared/widgets/wizard/wizard.dart';
 
 class BookStepDetails extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -21,50 +21,77 @@ class BookStepDetails extends ConsumerStatefulWidget {
 }
 
 class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
-  final _formKey = GlobalKey<FormState>();
+  static const double _sectionSpacing = 24.0;
 
   @override
   Widget build(BuildContext context) {
     final bookState = ref.watch(bookCreateNotifierProvider).value!;
     final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 24,
-        children: [
-          BookStepHeader(
-            title: 'Details',
-            subtitle:
-                'Provide the reading status and some additional information',
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: _sectionSpacing,
+      children: [
+        // Header
+        const StepHeaderWizard(
+          title: 'Details',
+          subtitle: 'Select the language and categories for this book',
+        ),
 
-          // Language Selector
-          LabelFormField('Language', marginBottom: 0),
-          LanguageSelector(
-            selectedLanguage: bookState.language,
-            onLanguageChanged: (language) {
-              FocusScope.of(context).unfocus();
-              bookCreateNotifier.updateLanguage(language);
-            },
-          ),
+        // Language Selector
+        LanguageSelector(
+          selectedLanguage: bookState.language,
+          onLanguageChanged: (language) {
+            _dismissKeyboard();
+            bookCreateNotifier.updateLanguage(language);
+          },
+        ),
 
-          // Categories Selector
-          CategorySelector(
-            selectedCategories: bookState.categories,
-            onCategoriesChanged: (categories) {
-              FocusScope.of(context).unfocus();
-              bookCreateNotifier.updateCategories(categories);
-            },
-          ),
+        // Categories Selector
+        CategorySelector(
+          selectedCategories: bookState.categories,
+          onCategoriesChanged: (categories) {
+            _dismissKeyboard();
+            bookCreateNotifier.updateCategories(categories);
+          },
+        ),
 
-          Spacer(),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(onPressed: widget.onNext, child: Text('Next')),
+        const Spacer(),
+
+        // Next Button
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton(
+            onPressed: _handleNext,
+            child: const Text('Next'),
           ),
-        ],
+        ),
+      ],
+    );
+  }
+
+  void _handleNext() {
+    final bookState = ref.read(bookCreateNotifierProvider).value!;
+    final error = BookDetailsValidatorService.validateBookDetails(bookState);
+
+    if (error != null) {
+      _showErrorSnackBar(error);
+      return;
+    }
+
+    widget.onNext();
+  }
+
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Theme.of(context).colorScheme.error,
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }

@@ -40,8 +40,6 @@ class GoogleBooksMapper {
       }
     }
 
-    print('volumeInfo: $volumeInfo');
-
     return BookEntity(
       id: '',
       title: title,

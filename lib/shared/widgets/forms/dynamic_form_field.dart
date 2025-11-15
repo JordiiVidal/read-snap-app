@@ -17,6 +17,7 @@ class DynamicFormField extends StatelessWidget {
   final bool readOnly;
   final FocusNode? focusNode;
   final Widget? suffixWidget;
+  final String? Function(String?)? validator;
 
   const DynamicFormField({
     this.label,
@@ -34,6 +35,7 @@ class DynamicFormField extends StatelessWidget {
     this.readOnly = false,
     this.focusNode,
     this.suffixWidget,
+    this.validator,
     super.key,
   });
 
@@ -69,12 +71,14 @@ class DynamicFormField extends StatelessWidget {
             ),
           ),
 
-          validator: (value) {
-            if (required && (value == null || value.isEmpty)) {
-              return '$label is required.';
-            }
-            return null;
-          },
+          validator:
+              validator ??
+              (value) {
+                if (required && (value == null || value.isEmpty)) {
+                  return '$label is required.';
+                }
+                return null;
+              },
         ),
       ],
     );
