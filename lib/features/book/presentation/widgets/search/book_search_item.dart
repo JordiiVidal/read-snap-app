@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/widgets/book_cover.dart';
+import 'package:read_snap/features/language/domain/domain.dart';
 
 class BookSearchItem extends StatelessWidget {
   final BookEntity book;
@@ -31,7 +33,7 @@ class BookSearchItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Book Cover
-            _buildBookCover(),
+            BookCover.small(imageUrl: book.imageThumbnail),
             const SizedBox(width: 16),
 
             // Book Info
@@ -82,35 +84,6 @@ class BookSearchItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBookCover() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: book.imageThumbnail != null && book.imageThumbnail!.isNotEmpty
-          ? Image.network(
-              book.imageThumbnail!,
-              width: 60,
-              height: 90,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return _buildPlaceholderCover();
-              },
-            )
-          : _buildPlaceholderCover(),
-    );
-  }
-
-  Widget _buildPlaceholderCover() {
-    return Container(
-      width: 60,
-      height: 90,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Icon(Icons.book, size: 32, color: Colors.grey.shade400),
-    );
-  }
-
   Widget _buildMetadata(BuildContext context) {
     final hasPages = book.totalPages > 0;
     final hasLanguage = book.language.isNotEmpty;
@@ -135,7 +108,7 @@ class BookSearchItem extends StatelessWidget {
         ],
         if (hasLanguage)
           Text(
-            _getLanguageName(book.language),
+            LanguageUtils.getLanguageName(book.language),
             style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
           ),
       ],
@@ -166,21 +139,5 @@ class BookSearchItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _getLanguageName(String languageCode) {
-    final languages = {
-      'en': 'English',
-      'es': 'Spanish',
-      'fr': 'French',
-      'de': 'German',
-      'it': 'Italian',
-      'pt': 'Portuguese',
-      'ja': 'Japanese',
-      'zh': 'Chinese',
-      'ko': 'Korean',
-      'ru': 'Russian',
-    };
-    return languages[languageCode.toLowerCase()] ?? languageCode.toUpperCase();
   }
 }

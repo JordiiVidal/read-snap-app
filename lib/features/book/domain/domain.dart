@@ -9,6 +9,8 @@ export 'repositories/book_search_repository.dart';
 export 'services/book_validator_service.dart';
 export 'services/book_status_validator_service.dart';
 export 'services/book_details_validators_service.dart';
+// Utils
+export 'utils/book_utils.dart';
 // Use cases
 export 'use_cases/check_book_uniqueness_use_case.dart';
 export 'use_cases/check_reading_limit_use_case.dart';

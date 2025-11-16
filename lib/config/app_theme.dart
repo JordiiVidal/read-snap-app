@@ -19,6 +19,7 @@ class AppTheme {
     colorScheme: _colorScheme,
 
     scaffoldBackgroundColor: AppColors.background,
+
     textTheme: GoogleFonts.poppinsTextTheme(ThemeData.light().textTheme).apply(
       bodyColor: AppColors.textPrimary,
       displayColor: AppColors.textPrimary,
