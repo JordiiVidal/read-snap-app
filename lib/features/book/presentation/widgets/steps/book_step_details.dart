@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
+import 'package:read_snap/features/book/presentation/widgets/selectors/book_type_selector.dart';
 import 'package:read_snap/features/category/presentation/widgets/selectors/category_selector.dart';
 import 'package:read_snap/features/language/presentation/widgets/selectors/language_selector.dart';
 import 'package:read_snap/shared/widgets/wizard/wizard.dart';
@@ -53,6 +54,15 @@ class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
           onCategoriesChanged: (categories) {
             _dismissKeyboard();
             bookCreateNotifier.updateCategories(categories);
+          },
+        ),
+
+        // Book Type Selector
+        BookTypeSelector(
+          selectedType: bookState.type,
+          onTypeChanged: (type) {
+            _dismissKeyboard();
+            bookCreateNotifier.updateType(type);
           },
         ),
 

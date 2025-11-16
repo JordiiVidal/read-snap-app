@@ -64,6 +64,10 @@ class BookCreateNotifier extends StateNotifier<AsyncValue<BookEntity>> {
     );
   }
 
+  void updateType(BookType type) {
+    state = AsyncValue.data(currentBookDraft.copyWith(type: type));
+  }
+
   void updateStartedAt(DateTime startDate) {
     state = AsyncValue.data(currentBookDraft.copyWith(startedAt: startDate));
   }
