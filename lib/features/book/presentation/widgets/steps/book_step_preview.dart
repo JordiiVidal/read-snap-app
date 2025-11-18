@@ -5,7 +5,7 @@ import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_cover.dart';
 import 'package:read_snap/features/language/domain/domain.dart';
-import 'package:read_snap/shared/widgets/wizard/wizard.dart';
+import 'package:read_snap/shared/widgets/steps/steps.dart';
 
 class BookStepPreview extends ConsumerWidget {
   final VoidCallback onBack;
@@ -19,130 +19,133 @@ class BookStepPreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookState = ref.watch(bookCreateNotifierProvider).value!;
+    final book = ref.watch(bookCreateNotifierProvider).value!;
     final theme = Theme.of(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Header
-        StepHeaderWizard(
+        const HeaderStep(
           title: 'Preview',
           subtitle: 'Review the book details before submitting',
         ),
 
-        // Book cover and title section
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 16,
-          children: [
-            // Book cover image
-            BookCover.medium(imageUrl: bookState.imageThumbnail),
-
-            // Title and author
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 4,
+        // Form
+        ContentStep.scrollable(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Book cover and title section
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 16,
                 children: [
-                  Text(
-                    bookState.title,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                  // Book cover image
+                  BookCover.medium(imageUrl: book.imageThumbnail),
+
+                  // Title and author
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 4,
+                      children: [
+                        Text(
+                          book.title,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          book.author,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    bookState.author,
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
 
-        const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-        // Details card
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.border, width: 1),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Status
-              _buildDetailRow(
-                context,
-                label: 'Status',
-                value: _buildStatusBadge(context, bookState.status),
-              ),
+              // Details card
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.border, width: 1),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Status
+                    _buildDetailRow(
+                      context,
+                      label: 'Status',
+                      value: _buildStatusBadge(context, book.status),
+                    ),
 
-              _buildSeparator(),
+                    _buildSeparator(),
 
-              // Total Pages
-              _buildDetailRow(
-                context,
-                label: 'Total Pages',
-                value: Text(
-                  bookState.totalPages.toString(),
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                    fontSize: 13,
-                  ),
+                    // Total Pages
+                    _buildDetailRow(
+                      context,
+                      label: 'Total Pages',
+                      value: Text(
+                        book.totalPages.toString(),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+
+                    _buildSeparator(),
+
+                    // Language
+                    _buildDetailRow(
+                      context,
+                      label: 'Language',
+                      value: _buildLanguageWithFlag(book.language),
+                    ),
+
+                    _buildSeparator(),
+
+                    // Book Type
+                    _buildDetailRow(
+                      context,
+                      label: 'Type',
+                      value: Text(
+                        BookUtils.getBookTypeName(book.type),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
-              _buildSeparator(),
+              const SizedBox(height: 12),
 
-              // Language
-              _buildDetailRow(
-                context,
-                label: 'Language',
-                value: _buildLanguageWithFlag(bookState.language),
-              ),
-
-              _buildSeparator(),
-
-              // Book Type
-              _buildDetailRow(
-                context,
-                label: 'Type',
-                value: Text(
-                  BookUtils.getBookTypeName(bookState.type),
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
+              // Categories section
+              _buildCategoriesSection(context, book),
             ],
           ),
         ),
 
-        const SizedBox(height: 12),
-
-        // Categories section
-        _buildCategoriesSection(context, bookState),
-
-        const Spacer(),
-
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton(onPressed: onSubmit, child: const Text('Ready')),
-        ),
+        // Footer
+        FooterStep(onAction: onSubmit, label: 'Ready'),
       ],
     );
   }

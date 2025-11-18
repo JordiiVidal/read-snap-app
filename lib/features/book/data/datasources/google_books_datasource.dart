@@ -8,7 +8,7 @@ class GoogleBooksDatasource {
   Future<List<Map<String, dynamic>>> searchBooks(String query) async {
     final Map<String, dynamic> queryParameters = {
       'q': query,
-      'maxResults': '10',
+      'maxResults': '15',
       'printType': 'books',
       'filter': 'partial',
     };

@@ -35,16 +35,20 @@ class _BookCreateWizardState extends State<BookCreateWizard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-      child: Column(
-        children: [
-          HeaderWizard(
-            currentStep: _currentStep,
-            totalSteps: 4,
-            onBack: _previousStep,
-          ),
-          BodyWizard(
+    return Column(
+      spacing: 12,
+      children: [
+        // Header
+        HeaderWizard(
+          currentStep: _currentStep,
+          totalSteps: 4,
+          onBack: _previousStep,
+        ),
+
+        // Body
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 18, right: 18, bottom: 18),
             child: switch (_currentStep) {
               0 => BookStepSearch(onNext: _nextStep),
               1 => BookStepStatus(onNext: _nextStep, onBack: _previousStep),
@@ -53,8 +57,8 @@ class _BookCreateWizardState extends State<BookCreateWizard> {
               _ => throw UnimplementedError(),
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

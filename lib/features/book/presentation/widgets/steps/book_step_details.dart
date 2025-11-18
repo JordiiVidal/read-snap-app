@@ -5,7 +5,8 @@ import 'package:read_snap/features/book/presentation/notifiers/book_create_notif
 import 'package:read_snap/features/book/presentation/widgets/selectors/book_type_selector.dart';
 import 'package:read_snap/features/category/presentation/widgets/selectors/category_selector.dart';
 import 'package:read_snap/features/language/presentation/widgets/selectors/language_selector.dart';
-import 'package:read_snap/shared/widgets/wizard/wizard.dart';
+import 'package:read_snap/shared/utils/custom_snack_bar.dart';
+import 'package:read_snap/shared/widgets/steps/steps.dart';
 
 class BookStepDetails extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -26,66 +27,65 @@ class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final bookState = ref.watch(bookCreateNotifierProvider).value!;
-    final bookCreateNotifier = ref.read(bookCreateNotifierProvider.notifier);
+    final book = ref.watch(bookCreateNotifierProvider).value!;
+    final bookNotifier = ref.read(bookCreateNotifierProvider.notifier);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: _sectionSpacing,
       children: [
         // Header
-        const StepHeaderWizard(
+        const HeaderStep(
           title: 'Details',
           subtitle: 'Select the language and categories for this book',
         ),
 
-        // Language Selector
-        LanguageSelector(
-          selectedLanguage: bookState.language,
-          onLanguageChanged: (language) {
-            _dismissKeyboard();
-            bookCreateNotifier.updateLanguage(language);
-          },
-        ),
+        // Form
+        ContentStep.scrollable(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: _sectionSpacing,
+            children: [
+              // Language Selector
+              LanguageSelector(
+                selectedLanguage: book.language,
+                onLanguageChanged: (language) {
+                  _dismissKeyboard();
+                  bookNotifier.updateLanguage(language);
+                },
+              ),
 
-        // Categories Selector
-        CategorySelector(
-          selectedCategories: bookState.categories,
-          onCategoriesChanged: (categories) {
-            _dismissKeyboard();
-            bookCreateNotifier.updateCategories(categories);
-          },
-        ),
+              // Categories Selector
+              CategorySelector(
+                selectedCategories: book.categories,
+                onCategoriesChanged: (categories) {
+                  _dismissKeyboard();
+                  bookNotifier.updateCategories(categories);
+                },
+              ),
 
-        // Book Type Selector
-        BookTypeSelector(
-          selectedType: bookState.type,
-          onTypeChanged: (type) {
-            _dismissKeyboard();
-            bookCreateNotifier.updateType(type);
-          },
-        ),
-
-        const Spacer(),
-
-        // Next Button
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton(
-            onPressed: _handleNext,
-            child: const Text('Next'),
+              // Book Type Selector
+              BookTypeSelector(
+                selectedType: book.type,
+                onTypeChanged: (type) {
+                  _dismissKeyboard();
+                  bookNotifier.updateType(type);
+                },
+              ),
+            ],
           ),
         ),
+
+        // Footer
+        FooterStep(onAction: _handleNext, label: 'Next'),
       ],
     );
   }
 
   void _handleNext() {
-    final bookState = ref.read(bookCreateNotifierProvider).value!;
-    final error = BookDetailsValidatorService.validateBookDetails(bookState);
+    final book = ref.read(bookCreateNotifierProvider).value!;
+    final error = BookDetailsValidatorService.validateBookDetails(book);
 
     if (error != null) {
-      _showErrorSnackBar(error);
+      CustomSnackBar.showError(context, error);
       return;
     }
 
@@ -94,15 +94,5 @@ class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
 
   void _dismissKeyboard() {
     FocusScope.of(context).unfocus();
-  }
-
-  void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Theme.of(context).colorScheme.error,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
   }
 }

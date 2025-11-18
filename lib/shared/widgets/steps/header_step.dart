@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-enum StepHeaderAlignment { start, center }
+enum HeaderStepAlignment { start, center }
 
-class StepHeaderWizard extends StatelessWidget {
+class HeaderStep extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData? icon;
   final String? iconSemanticLabel;
-  final StepHeaderAlignment alignment;
+  final HeaderStepAlignment alignment;
 
-  const StepHeaderWizard({
+  const HeaderStep({
     super.key,
     required this.title,
     required this.subtitle,
-    this.alignment = StepHeaderAlignment.start,
+    this.alignment = HeaderStepAlignment.start,
     this.icon,
     this.iconSemanticLabel,
   });
@@ -24,8 +24,8 @@ class StepHeaderWizard extends StatelessWidget {
     final crossAxisAlignment = _getCrossAxisAlignment();
     final textAlign = _getTextAlign();
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+    return SizedBox(
+      width: double.infinity,
       child: Column(
         spacing: 12,
         crossAxisAlignment: crossAxisAlignment,
@@ -54,13 +54,13 @@ class StepHeaderWizard extends StatelessWidget {
   }
 
   CrossAxisAlignment _getCrossAxisAlignment() {
-    return alignment == StepHeaderAlignment.center
+    return alignment == HeaderStepAlignment.center
         ? CrossAxisAlignment.center
         : CrossAxisAlignment.start;
   }
 
   TextAlign _getTextAlign() {
-    return alignment == StepHeaderAlignment.center
+    return alignment == HeaderStepAlignment.center
         ? TextAlign.center
         : TextAlign.start;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/language/domain/domain.dart';
-import 'package:read_snap/shared/widgets/forms/dynamic_form_field.dart';
+import 'package:read_snap/shared/widgets/fields/dynamic_form_field.dart';
 
 class LanguageSearchModal extends StatefulWidget {
   final List<LanguageEntity> languages;

@@ -94,9 +94,9 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
 
     return Consumer(
       builder: (context, ref, child) {
-        final searchRepository = ref.read(bookSearchRepositoryProvider);
+        final searchNotifier = ref.read(bookSearchRepositoryProvider);
         return FutureBuilder<List<BookEntity>>(
-          future: searchRepository.searchBooks(query),
+          future: searchNotifier.searchBooks(query),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

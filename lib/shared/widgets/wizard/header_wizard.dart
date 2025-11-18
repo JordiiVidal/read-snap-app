@@ -14,31 +14,35 @@ class HeaderWizard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: 48,
-          child: (currentStep > 0)
-              ? IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: onBack,
-                  padding: EdgeInsets.zero,
-                  alignment: Alignment.centerLeft,
-                  constraints: const BoxConstraints(),
-                )
-              : const SizedBox.shrink(),
-        ),
-        Expanded(
-          child: Center(
-            child: _StepIndicator(
-              currentStep: currentStep,
-              totalSteps: totalSteps,
+    return Padding(
+      padding: const EdgeInsets.only(top: 18, left: 8, right: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 48,
+            child: (currentStep > 0)
+                ? Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: onBack,
+                      padding: EdgeInsets.zero,
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+          Expanded(
+            child: Center(
+              child: _StepIndicator(
+                currentStep: currentStep,
+                totalSteps: totalSteps,
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: 48),
-      ],
+          const SizedBox(width: 48),
+        ],
+      ),
     );
   }
 }

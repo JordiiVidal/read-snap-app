@@ -6,7 +6,8 @@ import 'package:read_snap/features/book/presentation/notifiers/book_create_notif
 import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
 import 'package:read_snap/features/book/presentation/widgets/modals/book_basic_modal.dart';
 import 'package:read_snap/features/book/presentation/widgets/search/book_search_delegate.dart';
-import 'package:read_snap/shared/widgets/wizard/wizard.dart';
+import 'package:read_snap/shared/utils/custom_snack_bar.dart';
+import 'package:read_snap/shared/widgets/steps/steps.dart';
 
 class BookStepSearch extends ConsumerWidget {
   final VoidCallback onNext;
@@ -18,27 +19,31 @@ class BookStepSearch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Header
-        const StepHeaderWizard(
-          title: 'Add a new Book',
-          subtitle: 'Find a book or enter the details manually',
-          icon: Icons.book,
-          iconSemanticLabel: 'Book icon',
-          alignment: StepHeaderAlignment.center,
-        ),
-        const SizedBox(height: _headerSpacing),
+    return ContentStep.centered(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Header
+          const HeaderStep(
+            title: 'Add a new Book',
+            subtitle: 'Find a book or enter the details manually',
+            icon: Icons.book,
+            iconSemanticLabel: 'Book icon',
+            alignment: HeaderStepAlignment.center,
+          ),
+          const SizedBox(height: _headerSpacing),
 
-        // Search for a book
-        _SearchButton(onPressed: () => _handleSearch(context, ref)),
-        const SizedBox(height: _buttonSpacing),
+          // Search for a book
+          _SearchButton(onPressed: () => _handleSearch(context, ref)),
+          const SizedBox(height: _buttonSpacing),
 
-        // Add manually
-        _ManualEntryButton(onPressed: () => _showBasicFormDialog(context, ref)),
-      ],
+          // Add manually
+          _ManualEntryButton(
+            onPressed: () => _showBasicFormDialog(context, ref),
+          ),
+        ],
+      ),
     );
   }
 
@@ -53,19 +58,19 @@ class BookStepSearch extends ConsumerWidget {
         final author = result['author'];
 
         if (title == null || author == null) {
-          _showErrorSnackBar(context, 'Invalid book data received');
+          CustomSnackBar.showError(context, 'Invalid book data received');
           return;
         }
 
-        final notifier = ref.read(bookCreateNotifierProvider.notifier);
-        notifier.updateTitle(title);
-        notifier.updateAuthor(author);
+        final bookNotifier = ref.read(bookCreateNotifierProvider.notifier);
+        bookNotifier.updateTitle(title);
+        bookNotifier.updateAuthor(author);
 
         onNext();
       }
     } catch (e) {
       if (!context.mounted) return;
-      _showErrorSnackBar(context, 'Failed to add book: ${e.toString()}');
+      CustomSnackBar.showError(context, 'Failed to add book: ${e.toString()}');
     }
   }
 
@@ -95,18 +100,8 @@ class BookStepSearch extends ConsumerWidget {
       }
     } catch (e) {
       if (!context.mounted) return;
-      _showErrorSnackBar(context, 'Search failed: ${e.toString()}');
+      CustomSnackBar.showError(context, 'Search failed: ${e.toString()}');
     }
-  }
-
-  void _showErrorSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Theme.of(context).colorScheme.error,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
   }
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
-import 'package:read_snap/shared/widgets/forms/forms.dart';
+import 'package:read_snap/shared/widgets/fields/fields.dart';
 
 class BookTypeSelector extends StatelessWidget {
   final BookType selectedType;

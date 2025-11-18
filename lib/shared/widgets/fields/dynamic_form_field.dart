@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/shared/widgets/forms/forms.dart';
+import 'package:read_snap/shared/widgets/fields/fields.dart';
 
 class DynamicFormField extends StatelessWidget {
   final String? label;

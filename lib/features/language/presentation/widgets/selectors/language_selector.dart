@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/language/domain/domain.dart';
 import 'package:read_snap/features/language/presentation/notifiers/language_list_notifier.dart';
 import 'package:read_snap/features/language/presentation/widgets/modals/language_search_modal.dart';
-import 'package:read_snap/shared/widgets/forms/forms.dart';
+import 'package:read_snap/shared/widgets/fields/fields.dart';
 import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
 class LanguageSelector extends ConsumerWidget {

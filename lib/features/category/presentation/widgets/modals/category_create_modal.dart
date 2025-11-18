@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/category/domain/domain.dart';
-import 'package:read_snap/shared/widgets/forms/dynamic_form_field.dart';
+import 'package:read_snap/shared/widgets/fields/dynamic_form_field.dart';
 
 class CategoryCreateModal extends StatefulWidget {
   final List<CategoryEntity> categories;
