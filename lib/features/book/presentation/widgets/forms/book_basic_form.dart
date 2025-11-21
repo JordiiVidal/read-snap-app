@@ -35,16 +35,6 @@ class BookBasicFormState extends State<BookBasicForm> {
         mainAxisSize: MainAxisSize.min,
         spacing: 24,
         children: [
-          // Header
-          Container(
-            width: 50,
-            height: 5,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-
           // Title Field
           DynamicFormField(
             label: 'Title',

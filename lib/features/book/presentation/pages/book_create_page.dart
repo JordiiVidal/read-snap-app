@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/config/routes/app_routes.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
@@ -40,6 +39,8 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
       await ref.read(bookListNotifierProvider.notifier).refreshBooks();
       ref.invalidate(bookDetailNotifierProvider(createdBook.id));
 
+      await Future.delayed(const Duration(milliseconds: 2000));
+
       if (mounted) {
         _navigateToDetail(createdBook);
         bookNotifier.reset();
@@ -60,7 +61,7 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
 
   Widget _buildLoadingOverlay() {
     return Container(
-      color: AppColors.primary.withValues(alpha: 0.2),
+      color: Colors.black.withValues(alpha: 0.2),
       child: const Center(child: CircularProgressIndicator()),
     );
   }

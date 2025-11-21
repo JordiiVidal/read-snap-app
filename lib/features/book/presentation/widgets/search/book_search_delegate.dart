@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/widgets/search/book_search_item.dart';
+import 'package:read_snap/features/book/presentation/widgets/modals/book_preview_modal.dart';
 
 class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   final String initialQuery;
@@ -25,6 +26,14 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   bool _isBookAlreadyAdded(BookEntity book) {
     return book.googleExternalId != null &&
         existingExternalIds.contains(book.googleExternalId!);
+  }
+
+  void _showBookPreview(BuildContext context, BookEntity book) async {
+    final result = await BookPreviewModal.show(context, book);
+
+    if (result == true && context.mounted) {
+      close(context, book);
+    }
   }
 
   @override
@@ -120,9 +129,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
                 return BookSearchItem(
                   book: book,
                   isAlreadyAdded: isAlreadyAdded,
-                  onTap: () {
-                    close(context, book);
-                  },
+                  onTap: () => _showBookPreview(context, book),
                 );
               },
             );

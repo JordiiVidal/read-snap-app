@@ -4,6 +4,15 @@ import 'package:read_snap/features/book/presentation/widgets/forms/book_basic_fo
 class BookBasicModal extends StatelessWidget {
   const BookBasicModal({super.key});
 
+  static Future<Map<String, String>?> show(BuildContext context) {
+    return showModalBottomSheet<Map<String, String>>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (context) => const BookBasicModal(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,14 +32,6 @@ class BookBasicModal extends StatelessWidget {
           }),
         ),
       ),
-    );
-  }
-
-  static Future<Map<String, String>?> show(BuildContext context) {
-    return showModalBottomSheet<Map<String, String>>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => const BookBasicModal(),
     );
   }
 }
