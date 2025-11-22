@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
@@ -135,10 +134,6 @@ class _ManualEntryButton extends StatelessWidget {
       onPressed: onPressed,
       icon: const Icon(Icons.edit),
       label: const Center(child: Text('Add manually')),
-      style: FilledButton.styleFrom(
-        backgroundColor: AppColors.secondary,
-        foregroundColor: Colors.white,
-      ),
     );
   }
 }

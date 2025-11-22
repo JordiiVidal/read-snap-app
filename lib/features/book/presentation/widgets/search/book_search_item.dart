@@ -17,16 +17,19 @@ class BookSearchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: isAlreadyAdded ? null : onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isAlreadyAdded ? Colors.grey.shade50 : Colors.white,
+          color: isAlreadyAdded 
+              ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
+              : theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isAlreadyAdded ? Colors.grey.shade200 : Colors.grey.shade100,
+            color: theme.colorScheme.outline.withValues(alpha: 0.2),
           ),
         ),
         child: Row(
@@ -44,11 +47,7 @@ class BookSearchItem extends StatelessWidget {
                   // Title
                   Text(
                     book.title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      height: 1.3,
-                    ),
+                    style: theme.textTheme.titleMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -57,11 +56,7 @@ class BookSearchItem extends StatelessWidget {
                   // Author
                   Text(
                     book.author,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey.shade700,
-                      height: 1.3,
-                    ),
+                    style: theme.textTheme.bodyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -73,7 +68,7 @@ class BookSearchItem extends StatelessWidget {
                   // Already Added Badge
                   if (isAlreadyAdded) ...[
                     const SizedBox(height: 8),
-                    _buildAlreadyAddedBadge(),
+                    _buildAlreadyAddedBadge(context),
                   ],
                 ],
               ),
@@ -85,6 +80,7 @@ class BookSearchItem extends StatelessWidget {
   }
 
   Widget _buildMetadata(BuildContext context) {
+    final theme = Theme.of(context);
     final hasPages = book.totalPages > 0;
     final hasLanguage = book.language.isNotEmpty;
 
@@ -97,43 +93,52 @@ class BookSearchItem extends StatelessWidget {
         if (hasPages) ...[
           Text(
             '${book.totalPages} pages',
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+            style: theme.textTheme.bodySmall,
           ),
           if (hasLanguage) ...[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text('•', style: TextStyle(color: Colors.grey.shade400)),
+              child: Text(
+                '•',
+                style: theme.textTheme.bodySmall,
+              ),
             ),
           ],
         ],
         if (hasLanguage)
           Text(
             LanguageUtils.getLanguageName(book.language),
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+            style: theme.textTheme.bodySmall,
           ),
       ],
     );
   }
 
-  Widget _buildAlreadyAddedBadge() {
+  Widget _buildAlreadyAddedBadge(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.green.shade50,
+        color: theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.green.shade200, width: 1),
+        border: Border.all(
+          color: theme.colorScheme.tertiary.withValues(alpha: 0.5),
+          width: 1,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check_circle, size: 14, color: Colors.green.shade700),
+          Icon(
+            Icons.check_circle,
+            size: 14,
+            color: theme.colorScheme.tertiary,
+          ),
           const SizedBox(width: 4),
           Text(
             'Already Added',
-            style: TextStyle(
-              color: Colors.green.shade700,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.tertiary,
             ),
           ),
         ],

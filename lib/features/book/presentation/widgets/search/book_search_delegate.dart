@@ -15,10 +15,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
     this.initialQuery,
     this.existingExternalIds,
     this._providerContainer,
-  ) : super(
-        searchFieldLabel: 'Search by title, author, or ISBN.',
-        searchFieldStyle: const TextStyle(fontSize: 16, color: Colors.black87),
-      );
+  );
 
   @override
   void dispose() {
@@ -50,20 +47,9 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   ThemeData appBarTheme(BuildContext context) {
     final theme = Theme.of(context);
     return theme.copyWith(
-      appBarTheme: theme.appBarTheme.copyWith(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        titleTextStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
+      appBarTheme: theme.appBarTheme.copyWith(elevation: 0),
+      inputDecorationTheme: theme.inputDecorationTheme.copyWith(
         filled: true,
-        fillColor: Colors.grey.shade100,
-        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -157,6 +143,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -167,27 +154,25 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: theme.colorScheme.surfaceContainerHighest,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.search, size: 56, color: Colors.grey.shade500),
+              child: Icon(
+                Icons.search,
+                size: 56,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 24),
             Text(
               'Find Your Next Read',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 22,
-              ),
+              style: theme.textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
               'Start typing to search for books by title,\nauthor, or ISBN.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade600,
-                fontSize: 15,
-              ),
+              style: theme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ],
@@ -197,24 +182,20 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   }
 
   Widget _buildErrorState(BuildContext context, Object? error) {
+    final theme = Theme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 64, color: Colors.red.shade300),
+            Icon(Icons.error_outline, size: 64, color: theme.colorScheme.error),
             const SizedBox(height: 16),
-            Text(
-              'Error searching books',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('Error searching books', style: theme.textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
               error.toString(),
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
+              style: theme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ],
@@ -224,24 +205,24 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   }
 
   Widget _buildNoResultsState(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off, size: 64, color: Colors.grey.shade300),
-            const SizedBox(height: 16),
-            Text(
-              'No results found',
-              style: Theme.of(context).textTheme.titleLarge,
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
+            const SizedBox(height: 16),
+            Text('No results found', style: theme.textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
               'Try searching with different keywords',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
+              style: theme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ],

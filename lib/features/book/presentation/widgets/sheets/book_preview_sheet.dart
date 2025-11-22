@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_cover.dart';
 
@@ -56,9 +55,7 @@ class BookPreviewSheet extends StatelessWidget {
               // Author
               Text(
                 book.author,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -72,10 +69,6 @@ class BookPreviewSheet extends StatelessWidget {
                     flex: 2,
                     child: FilledButton.tonal(
                       onPressed: () => Navigator.pop(context, false),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: Colors.white,
-                      ),
                       child: const Text('Cancel'),
                     ),
                   ),

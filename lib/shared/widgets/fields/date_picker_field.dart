@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/shared/widgets/fields/fields.dart';
 
 class DatePickerField extends StatefulWidget {
@@ -68,7 +67,11 @@ class _DatePickerFieldState extends State<DatePickerField> {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Icon(
               Icons.calendar_today,
-              color: widget.enabled ? AppColors.primary : Colors.grey,
+              color: widget.enabled
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               size: 20,
             ),
           ),

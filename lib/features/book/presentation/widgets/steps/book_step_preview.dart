@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/config/app_colors.dart';
+import 'package:read_snap/config/theme/theme.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_cover.dart';
@@ -54,18 +54,13 @@ class BookStepPreview extends ConsumerWidget {
                       children: [
                         Text(
                           book.title,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: theme.textTheme.headlineSmall,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           book.author,
-                          style: theme.textTheme.bodyLarge?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                          style: theme.textTheme.bodyMedium,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -81,9 +76,12 @@ class BookStepPreview extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.border, width: 1),
+                  border: Border.all(
+                    color: theme.colorScheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +93,7 @@ class BookStepPreview extends ConsumerWidget {
                       value: _buildStatusBadge(context, book.status),
                     ),
 
-                    _buildSeparator(),
+                    _buildSeparator(context),
 
                     // Total Pages
                     _buildDetailRow(
@@ -103,15 +101,11 @@ class BookStepPreview extends ConsumerWidget {
                       label: 'Total Pages',
                       value: Text(
                         book.totalPages.toString(),
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
-                          fontSize: 13,
-                        ),
+                        style: theme.textTheme.labelLarge,
                       ),
                     ),
 
-                    _buildSeparator(),
+                    _buildSeparator(context),
 
                     // Language
                     _buildDetailRow(
@@ -120,7 +114,7 @@ class BookStepPreview extends ConsumerWidget {
                       value: _buildLanguageWithFlag(book.language),
                     ),
 
-                    _buildSeparator(),
+                    _buildSeparator(context),
 
                     // Book Type
                     _buildDetailRow(
@@ -128,11 +122,7 @@ class BookStepPreview extends ConsumerWidget {
                       label: 'Type',
                       value: Text(
                         BookUtils.getBookTypeName(book.type),
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
-                          fontSize: 13,
-                        ),
+                        style: theme.textTheme.labelLarge,
                       ),
                     ),
                   ],
@@ -153,7 +143,7 @@ class BookStepPreview extends ConsumerWidget {
     );
   }
 
-  Widget _buildSeparator() {
+  Widget _buildSeparator(BuildContext context) {
     return SizedBox(
       height: 24,
       child: Center(
@@ -161,9 +151,11 @@ class BookStepPreview extends ConsumerWidget {
           height: 1,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.transparent,
             border: Border.all(
-              color: AppColors.border.withValues(alpha: 0.3),
+              color: Theme.of(
+                context,
+              ).colorScheme.outline.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -181,27 +173,22 @@ class BookStepPreview extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: AppColors.textSecondary,
-            fontSize: 13,
-          ),
-        ),
+        Text(label, style: Theme.of(context).textTheme.labelMedium),
         value,
       ],
     );
   }
 
   Widget _buildStatusBadge(BuildContext context, BookStatus status) {
+    final theme = Theme.of(context);
     Color backgroundColor;
     Color textColor;
     String label;
 
     switch (status) {
       case BookStatus.toRead:
-        backgroundColor = AppColors.primary.withValues(alpha: 0.15);
-        textColor = AppColors.primary;
+        backgroundColor = theme.colorScheme.primary.withValues(alpha: 0.15);
+        textColor = theme.colorScheme.primary;
         label = BookUtils.getBookStatusName(BookStatus.toRead);
         break;
       case BookStatus.reading:
@@ -224,20 +211,15 @@ class BookStepPreview extends ConsumerWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: textColor,
-          fontWeight: FontWeight.w600,
-          fontSize: 13,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(color: textColor),
       ),
     );
   }
 
   Widget _buildLanguageWithFlag(String languageCode) {
-    return Text(
-      LanguageUtils.getLanguageFlag(languageCode),
-      style: const TextStyle(fontSize: 18),
-    );
+    return Text(LanguageUtils.getLanguageFlag(languageCode));
   }
 
   Widget _buildCategoriesSection(BuildContext context, BookEntity book) {
@@ -246,10 +228,7 @@ class BookStepPreview extends ConsumerWidget {
     if (book.categories.isEmpty) {
       return Text(
         'No categories selected',
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: AppColors.textSecondary,
-          fontStyle: FontStyle.italic,
-        ),
+        style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
       );
     }
 
