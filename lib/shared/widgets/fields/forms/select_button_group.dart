@@ -59,13 +59,7 @@ class SelectButtonGroup extends StatelessWidget {
             return FilterChip(
               selected: isSelected,
               showCheckmark: showCheckmark,
-              label: Text(
-                label,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.black87,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                ),
-              ),
+              label: Text(label),
               onSelected: (selected) => _handleSelection(value),
             );
           }).toList(),

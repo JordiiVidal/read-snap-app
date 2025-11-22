@@ -113,8 +113,6 @@ class _LanguageChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  static const double _flagSize = 16.0;
-  static const double _textSize = 12.0;
   static const double _spacing = 8.0;
 
   const _LanguageChip({
@@ -129,15 +127,9 @@ class _LanguageChip extends StatelessWidget {
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(language.flag, style: const TextStyle(fontSize: _flagSize)),
+          Text(language.flag),
           const SizedBox(width: _spacing),
-          Text(
-            language.name,
-            style: TextStyle(
-              fontSize: _textSize,
-              color: selected ? Colors.white : Colors.black,
-            ),
-          ),
+          Text(language.name),
         ],
       ),
       selected: selected,

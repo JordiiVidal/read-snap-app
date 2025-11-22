@@ -65,6 +65,11 @@ class _TypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final iconColor = isSelected
+        ? theme.colorScheme.onPrimaryContainer
+        : theme.colorScheme.onSurface;
+        
     return FilterChip(
       selected: isSelected,
       showCheckmark: false,
@@ -72,15 +77,8 @@ class _TypeCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(icon, size: 25, color: isSelected ? Colors.white : Colors.black),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? Colors.white : Colors.black,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          Icon(icon, size: 25, color: iconColor),
+          Text(label, textAlign: TextAlign.center),
         ],
       ),
       onSelected: (_) => onTap(),

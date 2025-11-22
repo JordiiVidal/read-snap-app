@@ -42,13 +42,7 @@ class MultiSelector extends StatelessWidget {
           children: items.map((item) {
             final isSelected = selectedItems.contains(item);
             return FilterChip(
-              label: Text(
-                item,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isSelected ? Colors.white : Colors.black,
-                ),
-              ),
+              label: Text(item),
               selected: isSelected,
               onSelected: (selected) {
                 final newSelection = List<String>.from(selectedItems);

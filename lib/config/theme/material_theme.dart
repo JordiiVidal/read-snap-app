@@ -345,6 +345,19 @@ class MaterialTheme {
     ),
     scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,
+
+    // Chip Theme (includes FilterChip)
+    chipTheme: ChipThemeData(
+      backgroundColor: colorScheme.surface,
+      selectedColor: colorScheme.primaryContainer,
+      checkmarkColor: colorScheme.onPrimaryContainer,
+      labelStyle: textTheme.labelMedium?.copyWith(color: colorScheme.onSurface),
+      secondaryLabelStyle: textTheme.labelMedium?.copyWith(
+        color: colorScheme.onPrimaryContainer,
+      ),
+      side: BorderSide(color: colorScheme.outline.withValues(alpha: 0.5)),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    ),
   );
 
   List<ExtendedColor> get extendedColors => [];

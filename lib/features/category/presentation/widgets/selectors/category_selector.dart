@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:read_snap/features/category/domain/domain.dart';
 import 'package:read_snap/features/category/presentation/notifiers/category_list_notifier.dart';
-import 'package:read_snap/features/category/presentation/widgets/modals/category_create_modal.dart';
+import 'package:read_snap/features/category/presentation/widgets/sheets/category_create_sheet.dart';
 import 'package:read_snap/shared/widgets/selectors/selectors.dart';
 
 class CategorySelector extends ConsumerWidget {
@@ -48,7 +48,7 @@ void _showAddCustomCategoryDialog(
   List<CategoryEntity> categories,
 ) async {
   try {
-    final result = await CategoryCreateModal.show(context, categories);
+    final result = await CategoryCreateSheet.show(context, categories);
 
     if (!context.mounted) return;
 
