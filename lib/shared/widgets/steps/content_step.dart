@@ -18,13 +18,8 @@ class ContentStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24.0),
-        child: scrollable
-            ? SingleChildScrollView(child: child)
-            : Center(child: child),
-      ),
-    );
+    return scrollable
+        ? Expanded(child: SingleChildScrollView(child: child))
+        : Center(child: child);
   }
 }

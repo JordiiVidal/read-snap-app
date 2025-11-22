@@ -17,12 +17,15 @@ class BookStepPreview extends ConsumerWidget {
     required this.onSubmit,
   });
 
+  static const double _sectionSpacing = 24.0;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final book = ref.watch(bookCreateNotifierProvider).value!;
     final theme = Theme.of(context);
 
     return Column(
+      spacing: _sectionSpacing,
       children: [
         // Header
         const HeaderStep(

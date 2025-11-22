@@ -16,22 +16,31 @@ class BookCreatePage extends ConsumerStatefulWidget {
 }
 
 class _BookCreatePageState extends ConsumerState<BookCreatePage> {
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(bookCreateNotifierProvider.notifier).reset();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bookAsync = ref.watch(bookCreateNotifierProvider);
-    final isLoading = bookAsync.isLoading;
-
     return Scaffold(
       body: Stack(
         children: [
           SafeArea(child: BookCreateWizard(_handleSubmit)),
-          if (isLoading) _buildLoadingOverlay(),
+          if (_isLoading) _buildLoadingOverlay(),
         ],
       ),
     );
   }
 
   Future<void> _handleSubmit() async {
+    setState(() => _isLoading = true);
+
     try {
       final bookNotifier = ref.read(bookCreateNotifierProvider.notifier);
       final createdBook = await bookNotifier.createBook();
@@ -43,15 +52,16 @@ class _BookCreatePageState extends ConsumerState<BookCreatePage> {
 
       if (mounted) {
         _navigateToDetail(createdBook);
-        bookNotifier.reset();
       }
     } on ArgumentError catch (e) {
       if (mounted) {
         CustomSnackBar.showError(context, 'Error: ${e.message}');
+        setState(() => _isLoading = false);
       }
     } catch (e) {
       if (mounted) {
         CustomSnackBar.showError(context, 'Could not save book');
+        setState(() => _isLoading = false);
       }
     }
   }

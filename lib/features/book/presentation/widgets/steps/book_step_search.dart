@@ -4,7 +4,7 @@ import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/notifiers/book_create_notifier.dart';
 import 'package:read_snap/features/book/presentation/providers/book_list_selectors_provider.dart';
-import 'package:read_snap/features/book/presentation/widgets/modals/book_basic_modal.dart';
+import 'package:read_snap/features/book/presentation/widgets/sheets/book_basic_sheet.dart';
 import 'package:read_snap/features/book/presentation/widgets/search/book_search_delegate.dart';
 import 'package:read_snap/shared/utils/custom_snack_bar.dart';
 import 'package:read_snap/shared/widgets/steps/steps.dart';
@@ -49,7 +49,7 @@ class BookStepSearch extends ConsumerWidget {
 
   Future<void> _showBasicFormDialog(BuildContext context, WidgetRef ref) async {
     try {
-      final result = await BookBasicModal.show(context);
+      final result = await BookBasicSheet.show(context);
 
       if (!context.mounted) return;
 
@@ -86,7 +86,11 @@ class BookStepSearch extends ConsumerWidget {
 
       final selectedBook = await showSearch<BookEntity?>(
         context: context,
-        delegate: BookSearchDelegate('', existingExternalIds),
+        delegate: BookSearchDelegate(
+          '',
+          existingExternalIds,
+          ProviderScope.containerOf(context),
+        ),
       );
 
       if (!context.mounted) return;

@@ -3,11 +3,11 @@ import 'package:read_snap/config/app_colors.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
 import 'package:read_snap/features/book/presentation/widgets/book_cover.dart';
 
-class BookPreviewModal extends StatelessWidget {
+class BookPreviewSheet extends StatelessWidget {
   final BookEntity book;
   final VoidCallback onConfirm;
 
-  const BookPreviewModal({
+  const BookPreviewSheet({
     super.key,
     required this.book,
     required this.onConfirm,
@@ -18,7 +18,7 @@ class BookPreviewModal extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (context) => BookPreviewModal(
+      builder: (context) => BookPreviewSheet(
         book: book,
         onConfirm: () => Navigator.pop(context, true),
       ),
@@ -48,6 +48,8 @@ class BookPreviewModal extends StatelessWidget {
                 book.title,
                 style: Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 8),
 
@@ -58,6 +60,8 @@ class BookPreviewModal extends StatelessWidget {
                   context,
                 ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                 textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 24),
 

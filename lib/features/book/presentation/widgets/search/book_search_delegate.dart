@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:read_snap/core/di/injection_container.dart';
 import 'package:read_snap/features/book/domain/domain.dart';
+import 'package:read_snap/features/book/presentation/providers/book_search_provider.dart';
+import 'package:read_snap/features/book/presentation/widgets/sheets/book_preview_sheet.dart';
 import 'package:read_snap/features/book/presentation/widgets/search/book_search_item.dart';
-import 'package:read_snap/features/book/presentation/widgets/modals/book_preview_modal.dart';
 
 class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   final String initialQuery;
   final Set<String> existingExternalIds;
+  final ProviderContainer _providerContainer;
   bool _hasInitialized = false;
 
-  BookSearchDelegate(this.initialQuery, this.existingExternalIds)
-    : super(
+  BookSearchDelegate(
+    this.initialQuery,
+    this.existingExternalIds,
+    this._providerContainer,
+  ) : super(
         searchFieldLabel: 'Search by title, author, or ISBN.',
         searchFieldStyle: const TextStyle(fontSize: 16, color: Colors.black87),
       );
+
+  @override
+  void dispose() {
+    _providerContainer.invalidate(bookSearchProvider);
+    super.dispose();
+  }
 
   void _initializeQuery() {
     if (!_hasInitialized && initialQuery.isNotEmpty) {
@@ -29,7 +39,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   }
 
   void _showBookPreview(BuildContext context, BookEntity book) async {
-    final result = await BookPreviewModal.show(context, book);
+    final result = await BookPreviewSheet.show(context, book);
 
     if (result == true && context.mounted) {
       close(context, book);
@@ -103,24 +113,16 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
 
     return Consumer(
       builder: (context, ref, child) {
-        final searchNotifier = ref.read(bookSearchRepositoryProvider);
-        return FutureBuilder<List<BookEntity>>(
-          future: searchNotifier.searchBooks(query),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        final searchAsync = ref.watch(bookSearchProvider(query.trim()));
 
-            if (snapshot.hasError) {
-              return _buildErrorState(context, snapshot.error);
-            }
-
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        return searchAsync.when(
+          data: (books) {
+            if (books.isEmpty) {
               return _buildNoResultsState(context);
             }
 
-            final books = snapshot.data!;
             return ListView.builder(
+              key: ValueKey(query),
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
@@ -134,6 +136,10 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
               },
             );
           },
+
+          loading: () => const Center(child: CircularProgressIndicator()),
+
+          error: (error, stack) => _buildErrorState(context, error),
         );
       },
     );
@@ -143,7 +149,7 @@ class BookSearchDelegate extends SearchDelegate<BookEntity?> {
   Widget buildSuggestions(BuildContext context) {
     _initializeQuery();
 
-    if (query.isEmpty) {
+    if (query.trim().isEmpty) {
       return _buildEmptyState(context);
     }
 

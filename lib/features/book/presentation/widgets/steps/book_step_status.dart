@@ -19,6 +19,7 @@ class BookStepStatus extends ConsumerStatefulWidget {
 
 class _BookStepStatusState extends ConsumerState<BookStepStatus> {
   static const double _fieldSpacing = 20.0;
+  static const double _sectionSpacing = 24.0;
   static const String _dateFormatPattern = 'dd/MM/yyyy';
 
   final _formKey = GlobalKey<FormState>();
@@ -52,6 +53,7 @@ class _BookStepStatusState extends ConsumerState<BookStepStatus> {
     final isReading = book.status == BookStatus.reading;
 
     return Column(
+      spacing: _sectionSpacing,
       children: [
         // Header
         const HeaderStep(

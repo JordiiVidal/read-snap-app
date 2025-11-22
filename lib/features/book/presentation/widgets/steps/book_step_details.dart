@@ -31,6 +31,7 @@ class _BookStepDetailsState extends ConsumerState<BookStepDetails> {
     final bookNotifier = ref.read(bookCreateNotifierProvider.notifier);
 
     return Column(
+      spacing: _sectionSpacing,
       children: [
         // Header
         const HeaderStep(

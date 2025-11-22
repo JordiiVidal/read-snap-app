@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:read_snap/features/book/presentation/widgets/forms/book_basic_form.dart';
 
-class BookBasicModal extends StatelessWidget {
-  const BookBasicModal({super.key});
+class BookBasicSheet extends StatelessWidget {
+  const BookBasicSheet({super.key});
 
   static Future<Map<String, String>?> show(BuildContext context) {
     return showModalBottomSheet<Map<String, String>>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (context) => const BookBasicModal(),
+      builder: (context) => const BookBasicSheet(),
     );
   }
 
